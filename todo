@@ -1,0 +1,22 @@
+
+XEcrire R: & Nombre de cas journaliers => OK
+X1000 500 250 vitesse => Ok
+Xrappeler date sur la carte => OK
+Xdate de depart: 02/02/2020
+Xmettre en gris les pays sans données
+Xaparaitre nouveaux cas journaliers
+Xrajouter un titre (World Estimated R(t))
+Xla légende
+
+-Changer le titre: "Daily estimates of the covid-19 reproduction number R(t): Animated maps"
+-Bouton pour l'animation
+-Credits: Model: Patrice + (Lien vers l'article)
+-Data: Plus d'infos (lien cliquable)
+-Colorbar 0 => 2, afficher valeur Réelle sur la carte
+-RFast & Rapide par défaut
+-faire varier le nombre de cas selon la population (rajouter une ligne par 100k)
+-fond tooltip en blanc
+-gérer les pays avec NaN > 80% de la série = 0 ou NaN => NaN
+-parametrer ce qui apparait
+-maj auto
+-mieux intégrer les controles (sur 2 lignes)

@@ -1,0 +1,46 @@
+
+<g id ="caissons">
+<rect x="32" y="200" width="8" height="5" stroke-width="0" stroke="rgb(138, 197, 0)" fill="rgb(138, 197, 0)" opacity="0.7"/>
+<text x="21.5" y="202.5" style="font-size:3px" >0.06</text>
+<rect x="32" y="195" width="8" height="5" stroke-width="0" stroke="rgb(147, 191, 0)" fill="rgb(147, 191, 0)" opacity="0.7"/>
+<text x="21.5" y="197.5" style="font-size:3px" >0.18</text>
+<rect x="32" y="190" width="8" height="5" stroke-width="0" stroke="rgb(156, 185, 0)" fill="rgb(156, 185, 0)" opacity="0.7"/>
+<text x="21.5" y="192.5" style="font-size:3px" >0.31</text>
+<rect x="32" y="185" width="8" height="5" stroke-width="0" stroke="rgb(165, 178, 0)" fill="rgb(165, 178, 0)" opacity="0.7"/>
+<text x="21.5" y="187.5" style="font-size:3px" >0.44</text>
+<rect x="32" y="180" width="8" height="5" stroke-width="0" stroke="rgb(174, 170, 0)" fill="rgb(174, 170, 0)" opacity="0.7"/>
+<text x="21.5" y="182.5" style="font-size:3px" >0.56</text>
+<rect x="32" y="175" width="8" height="5" stroke-width="0" stroke="rgb(183, 162, 0)" fill="rgb(183, 162, 0)" opacity="0.7"/>
+<text x="21.5" y="177.5" style="font-size:3px" >0.68</text>
+<rect x="32" y="170" width="8" height="5" stroke-width="0" stroke="rgb(192, 153, 0)" fill="rgb(192, 153, 0)" opacity="0.7"/>
+<text x="21.5" y="172.5" style="font-size:3px" >0.81</text>
+<rect x="32" y="165" width="8" height="5" stroke-width="0" stroke="rgb(200, 143, 0)" fill="rgb(200, 143, 0)" opacity="0.7"/>
+<text x="21.5" y="167.5" style="font-size:3px" >0.94</text>
+<rect x="32" y="160" width="8" height="5" stroke-width="0" stroke="rgb(208, 133, 0)" fill="rgb(208, 133, 0)" opacity="0.7"/>
+<text x="21.5" y="162.5" style="font-size:3px" >1.06</text>
+<rect x="32" y="155" width="8" height="5" stroke-width="0" stroke="rgb(215, 122, 0)" fill="rgb(215, 122, 0)" opacity="0.7"/>
+<text x="21.5" y="157.5" style="font-size:3px" >1.18</text>
+<rect x="32" y="150" width="8" height="5" stroke-width="0" stroke="rgb(222, 111, 0)" fill="rgb(222, 111, 0)" opacity="0.7"/>
+<text x="21.5" y="152.5" style="font-size:3px" >1.31</text>
+<rect x="32" y="145" width="8" height="5" stroke-width="0" stroke="rgb(228, 100, 0)" fill="rgb(228, 100, 0)" opacity="0.7"/>
+<text x="21.5" y="147.5" style="font-size:3px" >1.44</text>
+<rect x="32" y="140" width="8" height="5" stroke-width="0" stroke="rgb(233, 88, 0)" fill="rgb(233, 88, 0)" opacity="0.7"/>
+<text x="21.5" y="142.5" style="font-size:3px" >1.56</text>
+<rect x="32" y="135" width="8" height="5" stroke-width="0" stroke="rgb(238, 77, 0)" fill="rgb(238, 77, 0)" opacity="0.7"/>
+<text x="21.5" y="137.5" style="font-size:3px" >1.68</text>
+<rect x="32" y="130" width="8" height="5" stroke-width="0" stroke="rgb(242, 65, 0)" fill="rgb(242, 65, 0)" opacity="0.7"/>
+<text x="21.5" y="132.5" style="font-size:3px" >1.81</text>
+<rect x="32" y="125" width="8" height="5" stroke-width="0" stroke="rgb(245, 54, 0)" fill="rgb(245, 54, 0)" opacity="0.7"/>
+<text x="21.5" y="127.5" style="font-size:3px" >1.94</text>
+<rect x="32" y="120" width="8" height="5" stroke-width="0" stroke="rgb(248, 42, 0)" fill="rgb(248, 42, 0)" opacity="0.7"/>
+<text x="21.5" y="122.5" style="font-size:3px" >2.06</text>
+<rect x="32" y="115" width="8" height="5" stroke-width="0" stroke="rgb(251, 31, 0)" fill="rgb(251, 31, 0)" opacity="0.7"/>
+<text x="21.5" y="117.5" style="font-size:3px" >2.18</text>
+<rect x="32" y="110" width="8" height="5" stroke-width="0" stroke="rgb(253, 20, 0)" fill="rgb(253, 20, 0)" opacity="0.7"/>
+<text x="21.5" y="112.5" style="font-size:3px" >2.31</text>
+<rect x="32" y="105" width="8" height="5" stroke-width="0" stroke="rgb(254, 10, 0)" fill="rgb(254, 10, 0)" opacity="0.7"/>
+<text x="21.5" y="107.5" style="font-size:3px" >2.44</text>
+<text x="32" y="212.5" style="font-size:4px;  font-family:Helvetica" >Min= 0</text>
+<text x="32" y="100" style="font-size:4px; font-family:Helvetica" >Max chosen= 2.5</text>
+<text x="32" y="88"  style="font-size:4px; font-family:Helvetica" ></text>
+</g>
