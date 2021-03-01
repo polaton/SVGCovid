@@ -3099,12 +3099,12 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
             initiateColors();
             //Insertion de l'objet slider, mise à jour du label de date et mise à jour des données des pays
 
-            $.get("Morts", function (data) {
+            $.get("methode-mortsaccrjourpop", function (data) {
                 data = $.csv.toArrays(data);
                 data.shift();
                 data.shift();
                 data.forEach(element => dataMorts[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));
-                $.get("Confirmes", function (data) {
+                $.get("methode-confirmesaccrjourpop", function (data) {
                     data = $.csv.toArrays(data);
                     data.shift();
                     data.shift();
