@@ -3258,13 +3258,18 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
     }
 
     function initiateColors(){
-        if ($("#coloration").val() == "Standard" || $("#coloration").val() == "Fast") {
+        if ($("#coloration").val() == "Standard") {
             dataMax = 2;
-        }else if ($("#coloration").val() == "Confirmed" || $("#coloration").val() == "Death"){
+        }else if($("#coloration").val() == "Fast"){
+            dataMax = 2;
+        }else if ($("#coloration").val() == "Confirmed"){
+            dataMax = 6;
+        }else if ($("#coloration").val() == "Death"){
             dataMax = 10;
         }
+        
         var iLegText = 0;
-
+        
         $( ".legText" ).each(function( index ) {
             iLegText++;
             $( this ).text(String(dataMax*0.1*iLegText).substring(0,3));
