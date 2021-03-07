@@ -3142,7 +3142,7 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
 
 
     });
-    
+
 
     $("#first").click( function(e) {
         $("#dateRange").val(1);
@@ -3168,6 +3168,7 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
         $("#upDate").prop( "disabled", false );
         $("#last").prop( "disabled", false );
         $("#pas").prop( "disabled", false );
+        $("#vitesse").prop( "disabled", false );
         clearInterval(tim);
     });
 
@@ -3179,7 +3180,8 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
         $("#upDate").prop( "disabled", true );
         $("#last").prop( "disabled", true );
         $("#pas").prop( "disabled", true );
-
+        $("#vitesse").prop( "disabled", true );
+        
         tim = setInterval(function(e) {
             $("#dateRange").val(parseInt($("#dateRange").val()) + parseInt($("#pas").val()));
             var selectedDate = $("#dateRange").val();
@@ -3406,7 +3408,7 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
                     // $('path[id^='+this.id.substring(0,3)+'-]').css({ fill: chaineCouleur }); 
                 }
             }else{
-                console.log("Nope:" + this.id.substring(0,3));
+                // console.log("Nope:" + this.id.substring(0,3));
                 var chaineCouleur = 'rgb(211,211,211)';
                 $('path[id^='+this.id.substring(0,3)+'-]').attr('fill',chaineCouleur );
                 // $('path[id^='+this.id.substring(0,3)+'-]').css({ fill: chaineCouleur });
