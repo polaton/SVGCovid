@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Covid temporel</title>
+    <title>Evolution de métriques liées au COVID dans le monde </title>
     <meta charset="UTF-8">
-    <meta name="description" content="Carte positionnant les antennes réseaux et le carroyage de l'INSEE">
-    <meta name="keywords" content="Data,map,covid,antennas,Insee">
+    <meta name="description" content="Carte animée présentant l'évolution de certains métriques liées au covid: R (Slow et Fast), nombre de nouveaux cas et nombre de morts.">
+    <meta name="keywords" content="Data,map,covid">
     <meta name="author" content="Antoine Chemardin">
     <meta name="author" content="Eric Guichard">
     <meta name="author" content="Patrice Abry">
@@ -12,9 +12,13 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="jquerycsv.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="monde.css" rel="stylesheet" />
 <head>
 <body>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox=" 10 13 420 202" width="100%" height="90%" style="background-color:rgb(181, 225, 255)" >
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox=" 10 13 420 202" width="100%" height="90%" style="background-color:rgb(207, 233, 250)" >
 <!-- Faire au besoin des carrés pour 
 COM Comoros
 CPV Cape Verde
@@ -35,8 +39,8 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
 <rect x="15" y="10" width="390" height="210" />
 </g> -->
 <!-- TITRE -->
-<g xmlns="http://www.w3.org/2000/svg" id="titre"> <text x="315" y="20" style="font-size:6px; font-family:Helvetica" opacity="1"> Daily estimates of the covid-19</text>
-    <text x="315" y="26" style="font-size:6px; font-family:Helvetica" opacity="1"> reproduction number R(t) </text>
+<g xmlns="http://www.w3.org/2000/svg" id="titre"> <text x="315" y="20" style="font-size:6px; font-family:Helvetica" opacity="1" id="txt-titre"> Atlas des données de la COVID-19:</text>
+    <text x="315" y="26" id="txt-titre2" style="font-size:4.5px; font-family:Helvetica" opacity="1"> </text>
     <!-- <a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="infoscartes.html"> <text x="270" y="160" style="font-size:4px; font-family:Helvetica" fill="orange">
     Sources : click here</text></a> -->
     <text x="150" y="108" style="font-size:4px; font-family:Helvetica" fill="blue" opacity="1"> Select a country </text>
@@ -54,24 +58,28 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
 
 <g id ="caissons">
     <rect class='legBoxAberrant' x="32" y="206" width="8" height="6" stroke-width="0" stroke="rgb(142, 68, 173)" fill="rgb(142, 68, 173)" opacity="1"/>
-    <text class='legAberrant' x="20" y="211" style="font-size:3px" >Aberrant</text>
-    <rect class='legBox' x="32" y="190" width="8" height="10" stroke-width="0" stroke="rgb(155, 203, 0)" fill="rgb(155, 203, 0)" opacity="1"/>
+    <text class='legAberrant' x="11" y="208" style="font-size:2.75px" >Valeurs aberrantes</text>
+    <text class='legAberrant' x="10" y="211" style="font-size:2.65px" >(ex.: morts négatifs)</text>
+    <rect class='legBox' x="32" y="190" width="8" height="10" stroke-width="0" stroke="rgb(155, 203, 0)" fill="rgb(50, 200, 20)" opacity="1"/>
     <text class='legText' x="26" y="190.5" style="font-size:3px" ></text>
-    <rect class='legBox' x="32" y="180" width="8" height="10" stroke-width="0" stroke="rgb(171, 208, 0)" fill="rgb(171, 208, 0)" opacity="1"/>
+    <rect class='legBox' x="32" y="180" width="8" height="10" stroke-width="0" stroke="rgb(171, 208, 0)" fill="rgb(90, 220, 20)" opacity="1"/>
     <text class='legText' x="26" y="180.5" style="font-size:3px" ></text>
-    <rect class='legBox' x="32" y="170" width="8" height="10" stroke-width="0" stroke="rgb(186, 213, 0)" fill="rgb(186, 213, 0)" opacity="1"/>
+    <rect class='legBox' x="32" y="170" width="8" height="10" stroke-width="0" stroke="rgb(186, 213, 0)" fill="rgb(160, 230, 25)" opacity="1"/>
     <text class='legText' x="26" y="170.5" style="font-size:3px" ></text>
-    <rect class='legBox' x="32" y="160" width="8" height="10" stroke-width="0" stroke="rgb(201, 217, 0)" fill="rgb(201, 217, 0)" opacity="1"/>
+    <rect class='legBox' x="32" y="160" width="8" height="10" stroke-width="0" stroke="rgb(201, 217, 0)" fill="rgb(205,235,30)" opacity="1"/>
     <text class='legText' x="26" y="160.5" style="font-size:3px" ></text>
-    <rect class='legBox' x="32" y="150" width="8" height="10" stroke-width="0" stroke="rgb(266, 200, 0)" fill="rgb(266, 200, 0)" opacity="1"/>
+    <rect class='legBox' x="32" y="150" width="8" height="10" stroke-width="0" stroke="rgb(266, 200, 0)" fill="rgb(252,220,50)" opacity="1"/>
+    <!-- rgb(252,247,94) -->
+    <!-- pastel rgb(253,253,150) -->
+    <!-- original rgb(255, 200, 0) -->
     <text class='legText' x="26" y="150.5" style="font-size:3px" ></text>
-    <rect class='legBox' x="32" y="140" width="8" height="10" stroke-width="0" stroke="rgb(272, 165, 0)" fill="rgb(272, 165, 0)" opacity="1"/>
+    <rect class='legBox' x="32" y="140" width="8" height="10" stroke-width="0" stroke="rgb(272, 165, 0)" fill="rgb(255, 150, 0)" opacity="1"/>
     <text class='legText' x="26" y="140.5" style="font-size:3px" ></text>
-    <rect class='legBox' x="32" y="130" width="8" height="10" stroke-width="0" stroke="rgb(276, 127, 0)" fill="rgb(276, 127, 0)" opacity="1"/>
+    <rect class='legBox' x="32" y="130" width="8" height="10" stroke-width="0" stroke="rgb(276, 127, 0)" fill="rgb(240, 100, 0)" opacity="1"/>
     <text class='legText' x="26" y="130.5" style="font-size:3px" ></text>
-    <rect class='legBox' x="32" y="120" width="8" height="10" stroke-width="0" stroke="rgb(276, 85, 0)" fill="rgb(276, 85, 0)" opacity="1"/>
+    <rect class='legBox' x="32" y="120" width="8" height="10" stroke-width="0" stroke="rgb(276, 85, 0)" fill="rgb(240, 40, 0)" opacity="1"/>
     <text class='legText' x="26" y="120.5" style="font-size:3px" ></text>
-    <rect class='legBox' x="32" y="110" width="8" height="10" stroke-width="0" stroke="rgb(269, 42, 0)" fill="rgb(269, 42, 0)" opacity="1"/>
+    <rect class='legBox' x="32" y="110" width="8" height="10" stroke-width="0" stroke="rgb(269, 42, 0)" fill="rgb(200, 20, 20)" opacity="1"/>
     <text x="32" y="204" style="font-size:4px;  font-family:Helvetica" >Min= 0</text>
     <text x="32" y="108" style="font-size:4px; font-family:Helvetica" >Max=  <tspan id="legMax">2</tspan></text>
     <text x="32" y="101"  style="font-size:4px; font-family:Helvetica" id="legTitle"></text>
@@ -3028,6 +3036,35 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
 <text xmlns="http://www.w3.org/2000/svg" x="153" y="75" style="font-size:6px; font-family:Helvetica" fill="black" opacity="1">Date: </text>
 <text id="textDate" xmlns="http://www.w3.org/2000/svg" x="168" y="75" style="font-size:5px; font-family:Helvetica" fill="black" opacity="1"></text>
 
+<g id ="legendecercles">
+    <text x="60" y="197" style="font-size:4px; font-family:Helvetica"
+     >Populations</text>
+    <circle id="C1" cx="70" cy="209" r="0" stroke="purple" stroke-width=".3"
+     fill="none" opacity="0.3" />
+    <text x="86" y="209" style="font-size:3px; font-family:Helvetica"
+     >0</text>
+    <line x1="70" y1="209" x2="86" y2="209" stroke="purple" stroke-width=".2"
+    />
+    <circle id="C2" cx="70" cy="207" r="2" stroke="purple" stroke-width=".3"
+    fill="none" opacity="0.3" />
+    <text x="86" y="205" style="font-size:3px; font-family:Helvetica" >40 000
+    000</text>
+    <line x1="70" y1="205" x2="86" y2="205" stroke="purple" stroke-width=".2"
+    />
+    <circle id="C3" cx="70" cy="205" r="4" stroke="purple" stroke-width=".3"
+    fill="none" opacity="0.3" />
+    <text x="86" y="201" style="font-size:3px; font-family:Helvetica" >160 000
+    000</text>
+    <line x1="70" y1="201" x2="86" y2="201" stroke="purple" stroke-width=".2"
+    />
+    <circle id="C4" cx="70" cy="197" r="12" stroke="purple" stroke-width=".3"
+    fill="none" opacity="0.3" />
+    <text x="86" y="185" style="font-size:3px; font-family:Helvetica" >1 440
+    000 000</text>
+    <line x1="70" y1="185" x2="86" y2="185" stroke="purple" stroke-width=".2"
+    />
+    </g>
+
 <g id="TT-FIXED"> 
     <text x="170" y="138.5" style="font-size:5px; font-family:Helvetica" id="Pays-fixed"></text>
     <text x="170" y="144" style="font-size:4px; font-family:Helvetica" id="Habs-fixed"></text> 
@@ -3037,7 +3074,12 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
     <text x="170" y="160" style="font-size:4px; font-family:Helvetica" id="Confirmed-fixed"></text></g>
 <!-- ZONE2POURINSERTION -->
 </svg>
-<div id="controls" style="position: fixed;right:24%;bottom: 5%;background-color:rgb(181, 225, 255);">
+<!-- <div id="popupStats" style="position: fixed;right:40%;bottom: 40%;background-color:rgb(207, 233, 250);"> -->
+    <div id="popupStats" class="modal">
+    <h2>France</h2>
+        <div id="plotStat"></div>
+    </div>
+<div id="controls" style="position: fixed;right:20%;bottom: 5%;background-color:rgb(207, 233, 250);">
     <div id="slider">
     </div>
     <button id="first" type="button">&#x23EE</button>
@@ -3046,10 +3088,13 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
     <button id="play" type="button">&#x25B6</button>
     <button id="upDate" type="button">&#x23E9</button>
     <button id="last" type="button">&#x23ED</button>
+    <!-- <a href="#popupStats" onclick="displayStats()" rel="modal:open">&#x1F4C8</a>
+    <a href="#doc">&#x2753</a> -->
+
     <br>
     <label for="pas">Pas</label>
     <select id="pas">
-        <option value="1">Jour</option>
+        <option value="1" selected="true">Jour</option>
         <option value="7">Semaine</option>
         <option value="30">Mois</option>
     </select>
@@ -3057,19 +3102,18 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
     <select id="vitesse">
         <option value="1000">Lent</option>
         <option value="500">Moyen</option>
-        <option value="250">Rapide</option>
+        <option value="250" selected="true">Rapide</option>
     </select>
     <br>
     <label for="coloration">Coloration</label>
     <select id="coloration">
-        <option value="Standard" selected>RSlow</option>
-        <option selected="true" value="Fast">RFast</option>
-        <option value="Confirmed" selected>Confirmed par 10k hab</option>
-        <option value="Death">Morts par 1M hab</option>
+        <option value="Standard">R: estimation moins réactive</option>
+        <option selected="true" value="Fast">R: estimation réactive</option>
+        <option value="Confirmed">Nouveaux cas pour 10k hab</option>
+        <option value="Death">Nouveaux décès pour 1M hab</option>
     </select>
     <label for="customMax">Maximum</label>
-    <input type="number" id="customMax" name="customMax"
-        min="0.5" max="50" step="0.5">
+    <input type="number" id="customMax" name="customMax" min="0.5" max="50" step="0.5">
 </div>
 
 
@@ -3134,7 +3178,7 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
                             data.forEach(element => dataNew[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));
 
                             //Insertion de l'objet slider, mise à jour du label de date et mise à jour des données des pays
-                            $("#slider").append('<input type="range" id="dateRange" name="dateRange" step="1" min="0" max="'+daysPast+'" value="'+daysPast+'">  <label id="selectedDate" for="dateRange"></label>');
+                            $("#slider").append('<input type="range" id="dateRange" name="dateRange" step="1" min="0" max="'+daysPast+'" value="'+daysPast+'" style="width:70%;">  <label id="selectedDate" for="dateRange"></label>');
                             initiateSvg();
                             changeSliderDateLabel(returnDateFormatted(daysPast));
                             majData($("#dateRange").val());
@@ -3254,16 +3298,35 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
         majFixed();
     };
 
+    // function displayStats(){
+    //     console.log("CC");
+    //     var trace1 = {
+    //         y: dataFast["FRA"],
+    //         x: Array(dataFast["FRA"].length).keys(),
+    //         type: 'scatter'
+    //     };
+    //     var trace2 = {
+    //         y: dataFull["FRA"],
+    //         x: Array(dataFull["FRA"].length).keys(),
+    //         type: 'scatter'
+    //     };
+    //     var data = [trace1,trace2];
+    //     console.log(trace1);
+    //     Plotly.newPlot('plotStat', data);
+        
+    // };
+
+    
     function showTT(tooltip){
         selectedCountry=tooltip;
         majFixed();    
-        document.getElementById(tooltip).setAttribute('visibility','visible');
+        // document.getElementById(tooltip).setAttribute('visibility','visible');
     };
 
     function hideTT(tooltip){
         selectedCountry="";
         majFixed();
-        document.getElementById(tooltip).setAttribute('visibility','hidden');
+        // document.getElementById(tooltip).setAttribute('visibility','hidden');
     };
 
     function majFixed(){
@@ -3308,6 +3371,16 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
     }
 
     function initiateColors(custom){
+        if ($("#coloration").val() == "Standard") {
+                $("#txt-titre2").text("Taux de reproduction, estimation moins réactive");
+            }else if($("#coloration").val() == "Fast"){
+                $("#txt-titre2").text("Taux de reproduction, estimation réactive");
+            }else if ($("#coloration").val() == "Confirmed"){
+                $("#txt-titre2").text("Nombre de cas confirmés pour 10000 habitants");
+            }else if ($("#coloration").val() == "Death"){
+                $("#txt-titre2").text("Nombre de décès pour 1 million d'habitants");
+        }
+        
         if (custom) {
             dataMax = $("#customMax").val();
         }else{
@@ -3325,7 +3398,7 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
         
         $( ".legText" ).each(function( index ) {
             iLegText++;
-            $( this ).text(String(dataMax*iLegText/nbCaissons).substring(0,3));
+            $( this ).text(String(dataMax*iLegText/nbCaissons).substring(0,4));
         });
 
         var iLegBox = 0;
@@ -3348,19 +3421,19 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
 	        txtElem.setAttributeNS(null,"x",$(this).find("text:nth-child(2)").prop("x").animVal[0].valueAsString);
 	        txtElem.setAttributeNS(null,"y",parseFloat($(this).find("text:nth-child(2)").prop("y").animVal[0].valueAsString) + 4);
             txtElem.setAttributeNS(null,"style","font-size:4px; font-family:Helvetica");
-            txtElem.setAttributeNS(null,"text","Ncas");
+            txtElem.setAttributeNS(null,"text","Nouveaux cas");
             document.getElementById(this.id).appendChild(txtElem);
             var txtElem = document.createElementNS("http://www.w3.org/2000/svg", "text");
 	        txtElem.setAttributeNS(null,"x",$(this).find("text:nth-child(2)").prop("x").animVal[0].valueAsString);
 	        txtElem.setAttributeNS(null,"y",parseFloat($(this).find("text:nth-child(2)").prop("y").animVal[0].valueAsString) + 8);
             txtElem.setAttributeNS(null,"style","font-size:4px; font-family:Helvetica");
-            txtElem.setAttributeNS(null,"text","Morts");
+            txtElem.setAttributeNS(null,"text","Nouveaux décès / million");
             document.getElementById(this.id).appendChild(txtElem);
             var txtElem = document.createElementNS("http://www.w3.org/2000/svg", "text");
 	        txtElem.setAttributeNS(null,"x",$(this).find("text:nth-child(2)").prop("x").animVal[0].valueAsString);
 	        txtElem.setAttributeNS(null,"y",parseFloat($(this).find("text:nth-child(2)").prop("y").animVal[0].valueAsString) + 12);
             txtElem.setAttributeNS(null,"style","font-size:4px; font-family:Helvetica");
-            txtElem.setAttributeNS(null,"text","Confirmes");
+            txtElem.setAttributeNS(null,"text","Nouvelles infections / 10000");
             document.getElementById(this.id).appendChild(txtElem);
             
             // var SVGRect = document.getElementById(this.id).getBBox();
@@ -3381,36 +3454,36 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
         $("g[id$=-TT]").each(function( index ) {
             if (this.id.substring(0,3) in dataFull && $("#coloration").val()=='Standard') {
                 if (dataFull[this.id.substring(0,3)]==-1){
-                    $(this).find("text:nth-child(2)").text("RSlow: No data");
+                    $(this).find("text:nth-child(2)").text("RSlow: Pas de données");
                 }else{
                     $(this).find("text:nth-child(2)").text("RSlow: " + dataFull[this.id.substring(0,3)][offset]);                           
                 }
             }else if (this.id.substring(0,3) in dataFast) {
                 if (dataFast[this.id.substring(0,3)]==-1){
-                    $(this).find("text:nth-child(2)").text("RFast: No data");
+                    $(this).find("text:nth-child(2)").text("RFast: Pas de données");
                 }else{
                     $(this).find("text:nth-child(2)").text("RFast: " + dataFast[this.id.substring(0,3)][offset]);                           
                 }
             }else{
-                $(this).find("text:nth-child(2)").text("RFast: No data");
+                $(this).find("text:nth-child(2)").text("RFast: Pas de données");
             }
 
             if (this.id.substring(0,3) in dataNew) {
-                $(this).find("text:nth-child(3)").text("New infections: " + dataNew[this.id.substring(0,3)][offset]);    
+                $(this).find("text:nth-child(3)").text("Nouveaux cas: " + dataNew[this.id.substring(0,3)][offset]);    
             }else{
-                $(this).find("text:nth-child(3)").text("New infections: No data");
+                $(this).find("text:nth-child(3)").text("Nouveaux cas: Pas de données");
             }
 
             if (this.id.substring(0,3) in dataMorts) {
-                $(this).find("text:nth-child(4)").text("New deaths /1M: " + dataMorts[this.id.substring(0,3)][offset]);    
+                $(this).find("text:nth-child(5)").text("Nouveaux décès / million: " + dataMorts[this.id.substring(0,3)][offset]);    
             }else{
-                $(this).find("text:nth-child(4)").text("New deaths /1M: No data");
+                $(this).find("text:nth-child(5)").text("Nouveaux décès / million: Pas de données");
             }
                     
             if (this.id.substring(0,3) in dataConfirmed) {
-                $(this).find("text:nth-child(5)").text("New confirmés /10k : " + dataConfirmed[this.id.substring(0,3)][offset]);       
+                $(this).find("text:nth-child(4)").text("Nouveaux cas / 10000 : " + dataConfirmed[this.id.substring(0,3)][offset]);       
             }else{
-                $(this).find("text:nth-child(5)").text("New confirmés /10k: No data");
+                $(this).find("text:nth-child(4)").text("Nouveaux cas / 10000: Pas de données");
             }
             
 
