@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Evolution de métriques liées au COVID dans le monde </title>
+    <title>Evolution de métriques liées à la Covid-19 dans le monde </title>
     <meta charset="UTF-8">
     <meta name="description" content="Carte animée présentant l'évolution de certains métriques liées au covid: R (Slow et Fast), nombre de nouveaux cas et nombre de morts.">
     <meta name="keywords" content="Data,map,covid">
@@ -39,19 +39,26 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
 <rect x="15" y="10" width="390" height="210" />
 </g> -->
 <!-- TITRE -->
-<g xmlns="http://www.w3.org/2000/svg" id="titre"> <text x="315" y="20" style="font-size:6px; font-family:Helvetica" opacity="1" id="txt-titre"> Atlas des données de la COVID-19:</text>
+<g xmlns="http://www.w3.org/2000/svg" id="titre"> <text x="315" y="20" style="font-size:6px; font-family:Helvetica" opacity="1" id="txt-titre"> Atlas des données de la
+Covid-19</text>
     <text x="315" y="26" id="txt-titre2" style="font-size:4.5px; font-family:Helvetica" opacity="1"> </text>
     <!-- <a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="infoscartes.html"> <text x="270" y="160" style="font-size:4px; font-family:Helvetica" fill="orange">
     Sources : click here</text></a> -->
-    <text x="150" y="108" style="font-size:4px; font-family:Helvetica" fill="blue" opacity="1"> Select a country </text>
-    <text x="150" y="112.5" style="font-size:4px; font-family:Helvetica" fill="blue" opacity="1"> to obtain figures.</text>
+    <text x="150" y="108" style="font-size:4px; font-family:Helvetica" fill="blue" opacity="1">
+    Cliquez sur un pays </text>
+    <text x="150" y="112.5" style="font-size:4px; font-family:Helvetica" fill="blue" opacity="1">
+    pour voir ses valeurs.</text>
 </g>
 <!-- CREDITS -->
 <g xmlns="http://www.w3.org/2000/svg" id="credits">
-    <text xmlns="http://www.w3.org/2000/svg" x="152" y="195" style="font-size:3px; font-family:Helvetica" opacity="1"> Model and data:</text>
-    <text xmlns="http://www.w3.org/2000/svg" x="152" y="199.5" style="font-size:3px; font-family:Helvetica" opacity="1"> Patrice Abry &  team SISyPhe-IXXI (Ens de Lyon)</text>
-    <text xmlns="http://www.w3.org/2000/svg" x="152" y="204" style="font-size:3px; font-family:Helvetica" opacity="1"> Cartography: Éric Guichard (Triangle + IXXI), July-October 2020,</text>
-    <text xmlns="http://www.w3.org/2000/svg" x="152" y="208.5" style="font-size:3px; font-family:Helvetica" opacity="1"> Antoine Chemardin (INRIA Nancy), October-November 2020</text>
+    <text xmlns="http://www.w3.org/2000/svg" x="152" y="195" style="font-size:3px; font-family:Helvetica" opacity="1">
+    Modèle et sources</text>
+    <text xmlns="http://www.w3.org/2000/svg" x="152" y="199.5" style="font-size:3px; font-family:Helvetica" opacity="1"> Patrice Abry &
+    équipe SISyPhe-IXXI (Ens de Lyon)</text>
+    <text xmlns="http://www.w3.org/2000/svg" x="152" y="204" style="font-size:3px; font-family:Helvetica" opacity="1">
+    Cartographie: Éric Guichard (Triangle + IXXI), juil-oct. 2020,</text>
+    <text xmlns="http://www.w3.org/2000/svg" x="152" y="208.5" style="font-size:3px; font-family:Helvetica" opacity="1"> Antoine Chemardin (INRIA Nancy),
+    oct. 2020-mars 2021.</text>
 </g>
 <!-- LEGENDE -->
 
@@ -3161,7 +3168,6 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
                     $.get("RFast", function (data) {
                         //transformation en tableau, suppression du header et création du dictionnaire de correspondance entre nom complet / 3 lettres  (corresPays)
                         data = $.csv.toArrays(data);
-                        daysPast = data[0].length - 2;
                         data.shift();
                         data.shift();
                         data.forEach(element => dataFast[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));
@@ -3172,7 +3178,6 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
                         $.get("NCas", function (data) {
                             //transformation en tableau, suppression du header et création du dictionnaire de correspondance entre nom complet / 3 lettres  (corresPays)
                             data = $.csv.toArrays(data);
-                            daysPast = data[0].length - 2;
                             data.shift();
                             data.shift();
                             data.forEach(element => dataNew[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));
@@ -3449,7 +3454,7 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
     }
 
     function majData(offset){
-        offset = parseInt(offset) - 1;
+        // offset = parseInt(offset) - 1;
         // console.log(offset);
         $("g[id$=-TT]").each(function( index ) {
             if (this.id.substring(0,3) in dataFull && $("#coloration").val()=='Standard') {
@@ -3493,7 +3498,7 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
     };
     
     function majCouleurs(offset){
-        offset = parseInt(offset) - 1;
+        // offset = parseInt(offset) - 1;
         $("g[id$=-TT]").each(function( index ) {
             switch ($("#coloration").val()) {
                 case 'Standard':
