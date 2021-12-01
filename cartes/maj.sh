@@ -1,20 +1,20 @@
-rm -rf france
-mkdir france
-mkdir france/data
-mkdir france/includes
+rm -rf francee
+mkdir francee
+mkdir francee/data
+mkdir francee/includes
 
-wget https://raw.githubusercontent.com/polaton/SVGCovid/main/cartes/france/france.html
-mv france.html france/
+wget https://raw.githubusercontent.com/polaton/SVGCovid/main/cartes/francee/france.html
+mv france.html francee/
 
-wget https://raw.githubusercontent.com/polaton/SVGCovid/main/cartes/france/includes/jquerycsv.js
-mv jquerycsv.js france/includes/
-wget https://raw.githubusercontent.com/polaton/SVGCovid/main/cartes/france/includes/france.js
-mv france.js france/includes/
+wget https://raw.githubusercontent.com/polaton/SVGCovid/main/cartes/francee/includes/jquerycsv.js
+mv jquerycsv.js francee/includes/
+wget https://raw.githubusercontent.com/polaton/SVGCovid/main/cartes/francee/includes/france.js
+mv france.js francee/includes/
 
 wget http://barthes.enssib.fr/coronavirus/cartes/RFrance/France
-mv France france/data/
+mv France francee/data/
 wget http://barthes.enssib.fr/coronavirus/cartes/RFrance/Infections
-mv Infections france/data/
+mv Infections francee/data/
 
 
 
