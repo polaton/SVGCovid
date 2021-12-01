@@ -1,7 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<!DOCTYPE svg  PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  
-viewBox=" 0 0 3300 3300" width="100%" height="100%" >
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Covid temporel</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Carte montrant l'évolution du R en France en fonction du temps.">
+    <meta name="keywords" content="Data,map,covid,antennas,Insee">
+    <meta name="author" content="Antoine Chemardin">
+    <meta name="author" content="Eric Guichard">
+    <meta name="author" content="Patrice Abry">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="includes/jquerycsv.js"></script>
+<head>
+<body>
+
+
+    <!--  Déclaration du SVG ==> EXTERNALISER ???-->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox=" 0 0 3300 3300" width="100%" height="870px" >
 
 <g id ="Cadre.H0" fill="rgb(0, 0, 250)" fill-opacity="0.02" stroke="rgb(0, 0, 220)" stroke-width="1">
 <rect x="5" y="5" width="3290" height="3290" />
@@ -504,58 +520,40 @@ viewBox=" 0 0 3300 3300" width="100%" height="100%" >
 
 
 <g id ="caissons">
-<rect x="200" y="2500" width="80" height="50" stroke-width="0" stroke="rgb(148, 207, 80)" fill="rgb(148, 207, 80)" opacity="0.7"/>
-<text x="60" y="2525" style="font-size:40px" >0.87</text>
-<rect x="200" y="2450" width="80" height="50" stroke-width="0" stroke="rgb(157, 201, 78)" fill="rgb(157, 201, 78)" opacity="0.7"/>
-<text x="60" y="2475" style="font-size:40px" >0.94</text>
-<rect x="200" y="2400" width="80" height="50" stroke-width="0" stroke="rgb(165, 194, 75)" fill="rgb(165, 194, 75)" opacity="0.7"/>
-<text x="60" y="2425" style="font-size:40px" >1.01</text>
-<rect x="200" y="2350" width="80" height="50" stroke-width="0" stroke="rgb(174, 187, 72)" fill="rgb(174, 187, 72)" opacity="0.7"/>
-<text x="60" y="2375" style="font-size:40px" >1.08</text>
-<rect x="200" y="2300" width="80" height="50" stroke-width="0" stroke="rgb(183, 178, 69)" fill="rgb(183, 178, 69)" opacity="0.7"/>
-<text x="60" y="2325" style="font-size:40px" >1.15</text>
-<rect x="200" y="2250" width="80" height="50" stroke-width="0" stroke="rgb(191, 170, 66)" fill="rgb(191, 170, 66)" opacity="0.7"/>
-<text x="60" y="2275" style="font-size:40px" >1.22</text>
-<rect x="200" y="2200" width="80" height="50" stroke-width="0" stroke="rgb(199, 160, 62)" fill="rgb(199, 160, 62)" opacity="0.7"/>
-<text x="60" y="2225" style="font-size:40px" >1.28</text>
-<rect x="200" y="2150" width="80" height="50" stroke-width="0" stroke="rgb(207, 151, 58)" fill="rgb(207, 151, 58)" opacity="0.7"/>
-<text x="60" y="2175" style="font-size:40px" >1.35</text>
-<rect x="200" y="2100" width="80" height="50" stroke-width="0" stroke="rgb(215, 140, 54)" fill="rgb(215, 140, 54)" opacity="0.7"/>
-<text x="60" y="2125" style="font-size:40px" >1.42</text>
-<rect x="200" y="2050" width="80" height="50" stroke-width="0" stroke="rgb(222, 129, 50)" fill="rgb(222, 129, 50)" opacity="0.7"/>
-<text x="60" y="2075" style="font-size:40px" >1.49</text>
-<rect x="200" y="2000" width="80" height="50" stroke-width="0" stroke="rgb(228, 117, 45)" fill="rgb(228, 117, 45)" opacity="0.7"/>
-<text x="60" y="2025" style="font-size:40px" >1.56</text>
-<rect x="200" y="1950" width="80" height="50" stroke-width="0" stroke="rgb(234, 106, 41)" fill="rgb(234, 106, 41)" opacity="0.7"/>
-<text x="60" y="1975" style="font-size:40px" >1.63</text>
-<rect x="200" y="1900" width="80" height="50" stroke-width="0" stroke="rgb(240, 94, 36)" fill="rgb(240, 94, 36)" opacity="0.7"/>
-<text x="60" y="1925" style="font-size:40px" >1.70</text>
-<rect x="200" y="1850" width="80" height="50" stroke-width="0" stroke="rgb(244, 81, 31)" fill="rgb(244, 81, 31)" opacity="0.7"/>
-<text x="60" y="1875" style="font-size:40px" >1.77</text>
-<rect x="200" y="1800" width="80" height="50" stroke-width="0" stroke="rgb(248, 69, 27)" fill="rgb(248, 69, 27)" opacity="0.7"/>
-<text x="60" y="1825" style="font-size:40px" >1.84</text>
-<rect x="200" y="1750" width="80" height="50" stroke-width="0" stroke="rgb(251, 57, 22)" fill="rgb(251, 57, 22)" opacity="0.7"/>
-<text x="60" y="1775" style="font-size:40px" >1.91</text>
-<rect x="200" y="1700" width="80" height="50" stroke-width="0" stroke="rgb(253, 45, 17)" fill="rgb(253, 45, 17)" opacity="0.7"/>
-<text x="60" y="1725" style="font-size:40px" >1.97</text>
-<rect x="200" y="1650" width="80" height="50" stroke-width="0" stroke="rgb(254, 33, 13)" fill="rgb(254, 33, 13)" opacity="0.7"/>
-<text x="60" y="1675" style="font-size:40px" >2.04</text>
-<rect x="200" y="1600" width="80" height="50" stroke-width="0" stroke="rgb(255, 22, 8)" fill="rgb(255, 22, 8)" opacity="0.7"/>
-<text x="60" y="1625" style="font-size:40px" >2.11</text>
-<rect x="200" y="1550" width="80" height="50" stroke-width="0" stroke="rgb(255, 11, 4)" fill="rgb(255, 11, 4)" opacity="0.7"/>
-<text x="60" y="1575" style="font-size:40px" >2.18</text>
-<text x="200" y="2625" style="font-size:40px;  font-family:Helvetica" >Min= 0.84</text>
-<text x="200" y="1500" style="font-size:40px; font-family:Helvetica" >Max choisi= 2.22</text>
+<rect class='legBoxAberrant' x="200" y="2560" width="80" height="100" stroke-width="0" stroke="rgb(142, 68, 173)" fill="rgb(142, 68, 173)" opacity="1"/>
+<text class='legAberrant' x="100" y="2700" style="font-size:40px" >Valeurs aberrantes</text>
+<text class='legAberrant' x="100" y="2740" style="font-size:40px" >(ex.: morts négatifs)</text>
+<rect class='legBox' x="200" y="2400" width="80" height="100" stroke-width="0" stroke="rgb(155, 203, 0)" fill="rgb(50, 200, 20)" opacity="1"/>
+<text class='legText' x="100" y="2420" style="font-size:40px" ></text>
+<rect class='legBox' x="200" y="2300" width="80" height="100" stroke-width="0" stroke="rgb(171, 208, 0)" fill="rgb(90, 220, 20)" opacity="1"/>
+<text class='legText' x="100" y="2320" style="font-size:40px" ></text>
+<rect class='legBox' x="200" y="2200" width="80" height="100" stroke-width="0" stroke="rgb(186, 213, 0)" fill="rgb(160, 230, 25)" opacity="1"/>
+<text class='legText' x="100" y="2220" style="font-size:40px" ></text>
+<rect class='legBox' x="200" y="2100" width="80" height="100" stroke-width="0" stroke="rgb(201, 217, 0)" fill="rgb(205, 235, 30)" opacity="1"/>
+<text class='legText' x="100" y="2120" style="font-size:40px" ></text>
+<rect class='legBox' x="200" y="2000" width="80" height="100" stroke-width="0" stroke="rgb(266, 200, 0)" fill="rgb(252, 220, 50)" opacity="1"/>
+<text class='legText' x="100" y="2020" style="font-size:40px" ></text>
+<rect class='legBox' x="200" y="1900" width="80" height="100" stroke-width="0" stroke="rgb(272, 165, 0)" fill="rgb(255, 150, 0)" opacity="1"/>
+<text class='legText' x="100" y="1920" style="font-size:40px" ></text>
+<rect class='legBox' x="200" y="1800" width="80" height="100" stroke-width="0" stroke="rgb(276, 127, 0)" fill="rgb(240, 100, 0)" opacity="1"/>
+<text class='legText' x="100" y="1820" style="font-size:40px" ></text>
+<rect class='legBox' x="200" y="1700" width="80" height="100" stroke-width="0" stroke="rgb(276, 85, 0)" fill="rgb(240, 40, 0)" opacity="1"/>
+<text class='legText' x="100" y="1720" style="font-size:40px" ></text>
+<rect class='legBox' x="200" y="1600" width="80" height="100" stroke-width="0" stroke="rgb(269, 42, 0)" fill="rgb(200, 20, 20)" opacity="1"/>
+<!-- <text class='legText' x="100" y="1620" style="font-size:40px" ></text> -->
+<text x="200" y="2545" style="font-size:40px;  font-family:Helvetica" >Min= 0</text>
+<text x="200" y="1575" style="font-size:40px; font-family:Helvetica" >Max= <tspan id="legMax">2</tspan></text>
+<text x="200" y="1500"  style="font-size:40px; font-family:Helvetica" id="legTitle"></text>
 
 </g>
 <text x="60" y="100" style="font-size:80px; font-family:Serif" fill="blue" opacity="1">Covid-19 - France continentale</text>
 <text x="60" y="192" style="font-size:80px; font-family:Serif" fill="blue" opacity="1"></text>
-<text x="60" y="284" style="font-size:80px; font-family:Serif" fill="blue" opacity="1">Valeur du R(t) modélisé. Carte du</text>
-<text x="60" y="376" style="font-size:80px; font-family:Serif" fill="blue" opacity="1">lundi 2 novembre 2020 (2020-M11-J02)</text>
+<text x="60" y="284" style="font-size:80px; font-family:Serif" fill="blue" opacity="1" id="txt-titre2"></text>
 <text x="2000" y="200" style="font-size:50px; font-family:Helvetica" fill="black" opacity="1">Modélisation:</text>
 <text x="2000" y="257.5" style="font-size:50px; font-family:Helvetica" fill="black" opacity="1">P. Abry + équipe  SISyPhe (Ens de Lyon).</text>
 <text x="2000" y="315" style="font-size:50px; font-family:Helvetica" fill="black" opacity="1">Cartographie:</text>
 <text x="2000" y="372.5" style="font-size:50px; font-family:Helvetica" fill="black" opacity="1">Éric Guichard (Triangle + IXXI)</text>
+<text x="2000" y="430" style="font-size:50px; font-family:Helvetica" fill="black" opacity="1">Antoine Chemardin (INRIA Nancy)</text>
 <text x="2620" y="1450" style="font-size:40px; font-family:Helvetica" fill="blue" opacity="1">Quand votre</text>
 <text x="2620" y="1496" style="font-size:40px; font-family:Helvetica" fill="blue" opacity="1">souris passe sur</text>
 <text x="2620" y="1542" style="font-size:40px; font-family:Helvetica" fill="blue" opacity="1">un département,</text>
@@ -568,5 +566,365 @@ viewBox=" 0 0 3300 3300" width="100%" height="100%" >
 <text x="2620" y="1864" style="font-size:40px; font-family:Helvetica" fill="blue" opacity="1">(zoom possible).</text>
 
 <!-- Ajouts2 -->
-
+<text xmlns="http://www.w3.org/2000/svg" x="200" y="3000" style="font-size:70px; font-family:Helvetica" fill="black" opacity="1">Date: </text>
+<text id="textDate" xmlns="http://www.w3.org/2000/svg" x="200" y="3070" style="font-size:70px; font-family:Helvetica" fill="black" opacity="1"></text>
 </svg>
+
+<!-- Panneau de commandes -->
+<!-- Selecteur de dates -->
+<div id="slider">
+</div>
+<!-- Boutons d'interaction -->
+<button id="first" type="button">&#x23EE</button>
+<button id="downDate" type="button">&#x23EA</button>
+<button id="pause" type="button" disabled>&#x23F8</button>
+<button id="play" type="button">&#x25B6</button>
+<button id="upDate" type="button">&#x23E9</button>
+<button id="last" type="button">&#x23ED</button>
+
+<!-- Listes d'optiopns -->
+<label for="pas">Pas</label>
+<select id="pas">
+    <option value="1">Jour</option>
+    <option value="7">Semaine</option>
+    <option value="30">Mois</option>
+</select>
+<label for="vitesse">Vitesse</label>
+<select id="vitesse">
+    <option value="1000">Lent</option>
+    <option value="500">Moyen</option>
+    <option value="250" selected="true">Rapide</option>
+</select>
+<label for="coloration">Coloration</label>
+<select id="coloration">
+    <option value="Standard" selected="true">R</option>
+    <option  value="Confirmed">Nombre de cas</option>
+</select>
+
+<!-- Configuration de la légende -->
+<label for="customMax">Maximum</label>
+<input type="number" id="customMax" name="customMax" min="0.5" max="50" step="0.5">
+
+
+<script>
+//Déclaration des variables
+var dataFull = {}; //Tableau des données R
+var dataConfirmed = {}; //Tableau des données Cas
+var firstDay = "03/19/2020";//Premier jour des données
+var daysPast;//Nombres de jours depuis le début des données
+var dataMax = 2;//Maximum de la légende
+var dataMin = 0;//Minimum de la légende
+var tim;//Fonction d'intervalle pour l'animations
+var nbCaissons = $(".legBox").length;//Nombre de caissons pour la légende
+var colors = {};//Tableau des couleurs utilisés par la légende
+
+$(function() {//Une fois le chargement de la page terminé
+    //Chargement des données R
+    $.get("data/France", function (data) {
+        data = $.csv.toArrays(data); //transformation en tableau
+        daysPast = data[0].length - 2; //initialisation à la date actuelle
+        data.forEach(element => dataFull[element.shift()] = element.map(function(v) {return parseFloat(v, 10);})); //ajout au tableau de données
+
+        
+        initiateColors(false);
+
+        //Chargement des données Cas
+        $.get("data/Infections", function (data) {
+            data = $.csv.toArrays(data);
+            daysPast = data[0].length - 2;
+            data.forEach(element => dataConfirmed[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));//ajout au tableau de données
+            
+            //Création du range de dates et ajout à la page HTML
+            $("#slider").append('<input type="range" id="dateRange" name="dateRange" step="1" min="0" max="'+daysPast+'" value="'+daysPast+'" style="width:20%;">  <label id="selectedDate" for="dateRange"></label>');
+            
+            initiateSvg();
+            changeSliderDateLabel(returnDateFormatted(daysPast));
+            majData($("#dateRange").val());
+            majCouleurs($("#dateRange").val());               
+        });
+        
+    });
+
+
+});
+
+//Evenement clique bouton retour au début
+$("#first").click( function(e) {
+    $("#dateRange").val(1);//On amène le slider de dates à la première date
+    //On fait la mise à jour de la carte
+    var selectedDate = $("#dateRange").val();//On récup la date choisie
+    changeSliderDateLabel(returnDateFormatted(selectedDate));//On maj les textes de dates
+    majData(selectedDate);//Puis les données
+    majCouleurs(selectedDate);//Et les couleurs
+});
+
+//Evenement clique bouton -1 "pas"
+$("#downDate").click( function(e) {
+    $("#dateRange").val($("#dateRange").val() - $("#pas").val());//On fait baisser la date d'un pas
+    //On fait la mise à jour de la carte
+    var selectedDate = $("#dateRange").val();
+    changeSliderDateLabel(returnDateFormatted(selectedDate));
+    majData(selectedDate);
+    majCouleurs(selectedDate);
+});
+
+//Evenement clique pause
+$("#pause").click( function(e) {
+    //On réactive tous les composants utilisateurs
+    $("#first").prop( "disabled", false );
+    $("#downDate").prop( "disabled", false );
+    $("#pause").prop( "disabled", true );
+    $("#play").prop( "disabled", false );
+    $("#upDate").prop( "disabled", false );
+    $("#last").prop( "disabled", false );
+    $("#pas").prop( "disabled", false );
+    //On arrête la fonction d'animation
+    clearInterval(tim);
+});
+
+//Evenement clique lecture
+$("#play").click( function(e) {
+    //On désactive tous les composants utilisateurs
+    $("#first").prop( "disabled", true );
+    $("#downDate").prop( "disabled", true );
+    $("#pause").prop( "disabled", false );
+    $("#play").prop( "disabled", true );
+    $("#upDate").prop( "disabled", true );
+    $("#last").prop( "disabled", true );
+    $("#pas").prop( "disabled", true );
+
+    //On définit la fonction qui sera répétée pour l'animation
+    tim = setInterval(function(e) {
+        $("#dateRange").val(parseInt($("#dateRange").val()) + parseInt($("#pas").val()));//On incrémente la date d'un pas
+        //On fait la mise à jour de la carte
+        var selectedDate = $("#dateRange").val();
+        changeSliderDateLabel(returnDateFormatted(selectedDate));
+        majData(selectedDate);
+        majCouleurs(selectedDate);
+    },$("#vitesse").val());//Ici on indique l'intervalle à laquelle la fonction doit se répéter
+});
+
+//Evenement clique +1 "pas"
+$("#upDate").click( function(e) {
+    $("#dateRange").val(parseInt($("#dateRange").val()) + parseInt($("#pas").val())); //On incrémente la date d'un pas
+    var selectedDate = $("#dateRange").val();
+    //On fait la mise à jour de la carte
+    changeSliderDateLabel(returnDateFormatted(selectedDate));
+    majData(selectedDate);
+    majCouleurs(selectedDate);
+});
+
+//Evenement clique dernier
+$("#last").click( function(e) {
+    $("#dateRange").val(daysPast);//On amène le slider de dates à la dernière date
+    //On fait la mise à jour de la carte
+    var selectedDate = $("#dateRange").val();
+    changeSliderDateLabel(returnDateFormatted(selectedDate));
+    majData(selectedDate);
+    majCouleurs(selectedDate);
+});
+
+//Evenement changement coloration
+$("#coloration").change( function(e) {
+    var selectedDate = $("#dateRange").val();
+    initiateColors(false);
+    majData(selectedDate);
+    majCouleurs(selectedDate);
+});
+
+//Evenement changement max de la légende
+$("#customMax").change( function(e) {
+    var selectedDate = $("#dateRange").val();
+    initiateColors(true);
+    majData(selectedDate);
+    majCouleurs(selectedDate);
+});
+
+//Evenement changement de date via le slider
+$("#slider").change( function(e) {
+    var selectedDate = $("#dateRange").val();
+    changeSliderDateLabel(returnDateFormatted(selectedDate));
+    majData(selectedDate);
+    majCouleurs(selectedDate);
+});
+
+//Mise à jour des textes relatifs aux dates
+function changeSliderDateLabel(val){
+    $("#selectedDate").text(val);
+    $("#textDate").text(val);
+}
+
+//Retourne la date dans un format spécifique
+function returnDateFormatted(offset) {
+    offset = parseInt(offset); 
+    var today = new Date(firstDay);
+    // console.log(today);
+    today.setDate(today.getDate() + offset);
+    // console.log(today);
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
+    today = dd + '/' + mm + '/' + yyyy;
+    // console.log(today);
+    return today;
+}
+
+//Initialise les paramètres de légende
+function initiateColors(custom){
+
+    //changement du texte de titre
+    if ($("#coloration").val() == "Standard") {
+            $("#txt-titre2").text("Taux de reproduction estimé R(T)");
+        }else if($("#coloration").val() == "Fast"){
+            $("#txt-titre2").text("Taux de reproduction, estimation réactive");
+        }else if ($("#coloration").val() == "Confirmed"){
+            $("#txt-titre2").text("Nombre de cas confirmés pour 10000 habitants");
+        }else if ($("#coloration").val() == "Death"){
+            $("#txt-titre2").text("Nombre de décès pour 1 million d'habitants");
+    }
+    
+    //modification du max de la légende
+    if (custom) {
+        dataMax = $("#customMax").val();
+    }else{
+        if ($("#coloration").val() == "Standard") {
+            dataMax = 2;
+        }else if($("#coloration").val() == "Fast"){
+            dataMax = 2;
+        }else if ($("#coloration").val() == "Confirmed"){
+            dataMax = 200;
+        }else if ($("#coloration").val() == "Death"){
+            dataMax = 10;
+        }
+    }
+
+
+    var iLegText = 0;
+    //récupération des couleurs de la légende
+    $( ".legText" ).each(function( index ) {
+        iLegText++;
+        $( this ).text(String(dataMax*iLegText/nbCaissons).substring(0,4));
+    });
+
+    //initialisation du tableau de couleurs
+    var iLegBox = 0;
+    $( ".legBox" ).each(function( index ) {
+        iLegBox++;
+        colors[iLegBox]=$(this).attr('fill');
+    });
+
+    //modification des textes de titre de la légende, du max de la légende et du champ de configuration
+    $("#legTitle").text($("#coloration option:selected").text());
+    $("#legMax").text(String(dataMax));
+    $("#customMax").val(dataMax);
+}
+
+//Initialisation du SVG
+function initiateSvg(){
+    
+    //On ajoute de nouvelles lignes aux tooltips de tous les départements
+    $("g[id$=-TT]").each(function( index ) {
+        
+        var txtElem = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txtElem.setAttributeNS(null,"x",$(this).find("text:nth-child(2)").prop("x").animVal[0].valueAsString);
+        txtElem.setAttributeNS(null,"y",parseFloat($(this).find("text:nth-child(2)").prop("y").animVal[0].valueAsString) + 50);
+        txtElem.setAttributeNS(null,"style","font-size:50px; font-family:Helvetica");
+        txtElem.setAttributeNS(null,"text","TMPTEXT");
+        document.getElementById(this.id).appendChild(txtElem);
+    
+
+    });        
+}
+
+//Mise à jour des données
+function majData(offset){
+
+    //On traite les tootlitps un par un
+    $("g[id$=-TT]").each(function( index ) {
+        //Si on trouve une clé correpondant au numéro du département associé au tooltip ( this.id.substring(1,3) ) dans les données R
+        if (this.id.substring(1,3) in dataFull) {
+            //Si la donnée == -1
+            if (dataFull[this.id.substring(1,3)][offset]==-1){
+                //On modifie en pas de données
+                $(this).find("text:nth-child(2)").text("No data");
+            }else{
+                //On met à jour le texte en conséquence
+                $(this).find("text:nth-child(2)").text("R : " + dataFull[this.id.substring(1,3)][offset]);    
+            }
+        }else{
+            //On modifie en pas de données
+            $(this).find("text:nth-child(2)").text("No data");
+        }
+        
+        // On effectue le même traitement pour les données Cas
+        if (this.id.substring(1,3) in dataConfirmed) {
+            $(this).find("text:nth-child(3)").text("Nouveaux cas: " + dataConfirmed[this.id.substring(1,3)][offset]);    
+        }else{
+            $(this).find("text:nth-child(3)").text("Nouveaux cas: Pas de données");
+        }
+    });
+};
+
+//Mise à jour des couleurs de la carte
+function majCouleurs(offset){
+    //Pour chaque tooltip
+    $("g[id$=-TT]").each(function( index ) {
+        //Selon la coloration choisie par l'utilisateur, 
+        switch ($("#coloration").val()) {
+            case 'Standard':
+                if (this.id.substring(1,3) in dataFull) {
+                    //on récupère la valeur du jour pour le département
+                    var valeurDuJour = dataFull[this.id.substring(1,3)][offset];
+                }else{
+                    //on récupère la valeur du jour pour le département
+                    var valeurDuJour = "NA";
+                }
+                break;
+            case 'Confirmed':
+                if (this.id.substring(1,3) in dataConfirmed) {
+                     //on récupère la valeur du jour pour le département
+                    var valeurDuJour = dataConfirmed[this.id.substring(1,3)][offset];
+                }else{
+                    //on récupère la valeur du jour pour le département
+                    var valeurDuJour = "NA";
+                }                    
+                break;
+        }
+        //On effectue ensuite les traitements en fonction de valeurDuJour
+        if (valeurDuJour != "NA") {
+            if (valeurDuJour >= 0) {
+                (valeurDuJour>dataMax?valeurDuJour=dataMax-(dataMax/(nbCaissons*2)):valeurDuJour);//Si la valeur du jour est supérieur au max de la légende, on ramène la valeur du jour pour qu'elle corresponde à notre caisson le plus élevé
+                var chaineCouleur = processColor(valeurDuJour);
+                //On remplit le département avec la couleur
+                $('path[id=D'+this.id.substring(1,3)+']').attr('fill',chaineCouleur );    
+            }else{ //Si la valeur == 0 
+                if ($("#coloration").val() == "Standard" || $("#coloration").val() == "Confirmed" ||typeof valeurDuJour === 'undefined' ) { //Si on est en coloration standard ou que la valeurDuJour n'est pas définie
+                    var chaineCouleur = 'rgb(211,211,211)';
+                    //On colore le département en gris
+                    $('path[id=D'+this.id.substring(1,3)+']').attr('fill',chaineCouleur );
+                }
+                
+            }
+        }else{//Si valeurDuJour == "NA"
+            var chaineCouleur = 'rgb(211,211,211)';
+            //On colore le département en gris
+            $('path[id^='+this.id.substring(0,3)+'-]').attr('fill',chaineCouleur );
+        }
+        
+    });
+};
+
+//Renvoie la couleur correspondante à la valeur donnée
+function processColor(valeurDuJour){
+    //On fait correspondre la valeur à un de nos caissons
+    var couleurJour =  parseInt((valeurDuJour / dataMax)*nbCaissons) + 1;
+    //On retourne la couleur depuis notre tableau de couleurs
+    return(colors[couleurJour]);   
+}
+
+
+
+</script>
+</body>
+</html>

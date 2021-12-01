@@ -11,13 +11,15 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="jquerycsv.js"></script>
+    <script src="includes/jquerycsv.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <link href="monde.css" rel="stylesheet" />
+    <link href="includes/monde.css" rel="stylesheet" />
 <head>
 <body>
+
+        <!--  Déclaration du SVG ==> EXTERNALISER ???-->
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox=" 10 13 420 202" width="100%" height="90%" style="background-color:rgb(207, 233, 250)" >
 <!-- Faire au besoin des carrés pour 
 COM Comoros
@@ -756,7 +758,6 @@ Covid-19</text>
  </path>
 <path id="FLK-9" onclick="lockCountry('FLK')" onmouseover="showTT('FLK-TT')" onmouseout="hideTT('FLK-TT')"  fill="rgb(255, 255, 200)" opacity="1" stroke-width=".1" stroke="rgb(0,0,0)" d="M142.94 208.34 L142.85 208.26 L142.97 208.26 L142.94 208.34 L142.94 208.34 L142.94 208.34 "> 
  </path>
-
 <path id="FRA-1" onclick="lockCountry('FRA')" onmouseover="showTT('FRA-TT')" onmouseout="hideTT('FRA-TT')"  fill="rgb(255, 255, 200)" opacity="1" stroke-width=".1" stroke="rgb(0,0,0)" d="M206.92 72.55 L208.58 73.77 L208.56 74.23 L209.26 73.94 L209.30 74.50 L210.26 74.88 L210.83 75.01 L212.74 75.75 L212.08 77.01 L212.08 77.80 L211.47 77.93 L210.42 79.82 L211.27 79.49 L211.52 80.22 L211.28 80.44 L211.61 81.20 L211.09 81.42 L211.51 81.82 L211.46 82.61 L212.16 82.77 L212.02 83.32 L211.93 83.37 L211.91 83.35 L211.88 83.38 L211.88 83.41 L210.63 84.38 L209.47 83.66 L208.37 83.68 L207.47 84.35 L207.57 85.25 L206.08 85.15 L206.14 85.07 L205.79 85.02 L203.74 84.76 L202.49 83.94 L203.25 82.05 L203.03 82.06 L203.20 80.76 L203.77 81.73 L203.52 80.91 L203.04 80.56 L203.22 80.26 L203.17 79.66 L202.13 78.90 L202.28 78.61 L202.09 78.47 L202.13 78.25 L202.54 78.35 L202.26 78.19 L201.97 78.31 L201.71 78.22 L201.90 77.92 L201.55 77.72 L201.13 77.96 L199.84 77.47 L199.48 77.12 L200.03 76.74 L199.42 76.43 L201.02 75.89 L201.56 76.44 L202.91 76.23 L202.33 74.61 L203.02 74.67 L203.17 75.15 L204.75 75.02 L204.39 74.91 L205.81 74.01 L205.98 72.87 L206.92 72.55 L206.92 72.55 L206.92 72.55 "> 
  </path>
 <path id="FRA-2" onclick="lockCountry('FRA')" onmouseover="showTT('FRA-TT')" onmouseout="hideTT('FRA-TT')"  fill="rgb(255, 255, 200)" opacity="1" stroke-width=".1" stroke="rgb(0,0,0)" d="M213.99 84.91 L214.10 85.71 L213.72 86.77 L213.31 86.50 L213.10 85.33 L213.83 84.91 L213.89 84.45 L213.99 84.91 L213.99 84.91 L213.99 84.91 "> 
@@ -3078,27 +3079,34 @@ Covid-19</text>
     <text x="170" y="148" style="font-size:4px; font-family:Helvetica" id="RValue-fixed"></text>
     <text x="170" y="152" style="font-size:4px; font-family:Helvetica" id="Ncas-fixed"></text>
     <text x="170" y="156" style="font-size:4px; font-family:Helvetica" id="Morts-fixed"></text>
-    <text x="170" y="160" style="font-size:4px; font-family:Helvetica" id="Confirmed-fixed"></text></g>
+    <text x="170" y="160" style="font-size:4px; font-family:Helvetica" id="Confirmed-fixed"></text>
+</g>
 <!-- ZONE2POURINSERTION -->
 </svg>
-<!-- <div id="popupStats" style="position: fixed;right:40%;bottom: 40%;background-color:rgb(207, 233, 250);"> -->
-    <div id="popupStats" class="modal">
+
+<!-- Popup des statistiques -->
+<div id="popupStats" style="position: fixed;right:40%;bottom: 40%;background-color:rgb(207, 233, 250);">
+<!-- <div id="popupStats" class="modal"> -->
     <h2>France</h2>
-        <div id="plotStat"></div>
-    </div>
+    <div id="plotStat"></div>
+</div>
+<!-- Panneau de commandes -->
 <div id="controls" style="position: fixed;right:20%;bottom: 5%;background-color:rgb(207, 233, 250);">
-    <div id="slider">
-    </div>
+    <!-- Selecteur de dates -->
+    <div id="slider"></div>
+    <!-- Boutons d'interaction -->
     <button id="first" type="button">&#x23EE</button>
     <button id="downDate" type="button">&#x23EA</button>
     <button id="pause" type="button" disabled>&#x23F8</button>
     <button id="play" type="button">&#x25B6</button>
     <button id="upDate" type="button">&#x23E9</button>
     <button id="last" type="button">&#x23ED</button>
-    <!-- <a href="#popupStats" onclick="displayStats()" rel="modal:open">&#x1F4C8</a>
-    <a href="#doc">&#x2753</a> -->
+    <!-- Bouton d'affichage des stats -->
+    <a href="#popupStats" onclick="displayStats()" rel="modal:open">&#x1F4C8</a>
+    <a href="#doc">&#x2753</a>
 
     <br>
+    <!-- Listes d'optiopns -->
     <label for="pas">Pas</label>
     <select id="pas">
         <option value="1" selected="true">Jour</option>
@@ -3119,6 +3127,8 @@ Covid-19</text>
         <option value="Confirmed">Nouveaux cas pour 10k hab</option>
         <option value="Death">Nouveaux décès pour 1M hab</option>
     </select>
+
+    <!-- Configuration de la légende -->
     <label for="customMax">Maximum</label>
     <input type="number" id="customMax" name="customMax" min="0.5" max="50" step="0.5">
 </div>
@@ -3127,62 +3137,57 @@ Covid-19</text>
 
 
 <script>
-    var dataFull = {};
-    var dataFast = {};
-    var dataNew = {};
-    var dataMorts = {};
-    var dataConfirmed = {};
-    var firstDay = "02/02/2020";
-    var daysPast;
-    var nbCaissons = $(".legBox").length;
-    var dataMax = 2;
-    var dataMin = 0;
-    var corresPays = {};
-    var tim;
-    var colors = {};
-    var selectedCountry = "";
-    var lockedCountry="";
+    //Déclaration des variables
+    var dataFull = {};//Tableau des données RStandard
+    var dataFast = {};//Tableau des données RFast
+    var dataNew = {};//Tableau des données NCas
+    var dataMorts = {};//Tableau des données AggMorts
+    var dataConfirmed = {};//Tableau des données AggConfirmed
+    var firstDay = "02/02/2020";//Premier jour des données
+    var daysPast;//Nombres de jours depuis le début des données
+    var nbCaissons = $(".legBox").length;//Nombre de caissons pour la légende
+    var dataMax = 2;//Maximum de la légende
+    var dataMin = 0;//Minimum de la légende
+    var tim;//Fonction d'intervalle pour l'animations
+    var colors = {};//Tableau des couleurs utilisés par la légende
+    var selectedCountry = "";//Pays selectionné
+    var lockedCountry="";//Pays vérouillé
+
     $(function() {
-        //Chargement des noms de pays
-        $.get("RStandard", function (data) {
-            //transformation en tableau, suppression du header et création du dictionnaire de correspondance entre nom complet / 3 lettres  (corresPays)
-            data = $.csv.toArrays(data);
-            daysPast = data[0].length - 2;
-            data.shift();
-            data.shift();
-            data.forEach(element => dataFull[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));
+        //Chargement des données
+        $.get("data/RStandard", function (data) {//On charge RStandard
+            //transformation en tableau, 
+            data = $.csv.toArrays(data);//transformation en tableau
+            daysPast = data[0].length - 2;//initialisation à la date actuelle
+            data.shift();//suppression du header1
+            data.shift();//suppression du header2
+            data.forEach(element => dataFull[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));//ajout au tableau de données R
 
             initiateColors(false);
-            //Insertion de l'objet slider, mise à jour du label de date et mise à jour des données des pays
 
-            $.get("methode-mortsaccrjourpop", function (data) {
+            $.get("data/methode-mortsaccrjourpop", function (data) {//On charge AggMorts
                 data = $.csv.toArrays(data);
                 data.shift();
                 data.shift();
                 data.forEach(element => dataMorts[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));
-                $.get("methode-confirmesaccrjourpop", function (data) {
+                $.get("data/methode-confirmesaccrjourpop", function (data) {//On charge AggConfirmés
                     data = $.csv.toArrays(data);
                     data.shift();
                     data.shift();
                     data.forEach(element => dataConfirmed[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));
-                    $.get("RFast", function (data) {
-                        //transformation en tableau, suppression du header et création du dictionnaire de correspondance entre nom complet / 3 lettres  (corresPays)
+                    $.get("data/RFast", function (data) {//On charge RFast
                         data = $.csv.toArrays(data);
                         data.shift();
                         data.shift();
                         data.forEach(element => dataFast[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));
-
-                        // if (dataMin == -0) dataMin = 0;
-                        //Insertion de l'objet slider, mise à jour du label de date et mise à jour des données des pays
-
-                        $.get("NCas", function (data) {
-                            //transformation en tableau, suppression du header et création du dictionnaire de correspondance entre nom complet / 3 lettres  (corresPays)
+                        $.get("data/NCas", function (data) {//On charge Confirmés
                             data = $.csv.toArrays(data);
                             data.shift();
                             data.shift();
                             data.forEach(element => dataNew[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));
 
-                            //Insertion de l'objet slider, mise à jour du label de date et mise à jour des données des pays
+                            //Création du range de dates et ajout à la page HTML
+
                             $("#slider").append('<input type="range" id="dateRange" name="dateRange" step="1" min="0" max="'+daysPast+'" value="'+daysPast+'" style="width:70%;">  <label id="selectedDate" for="dateRange"></label>');
                             initiateSvg();
                             changeSliderDateLabel(returnDateFormatted(daysPast));
@@ -3302,24 +3307,25 @@ Covid-19</text>
         }
         majFixed();
     };
-
-    // function displayStats(){
-    //     console.log("CC");
-    //     var trace1 = {
-    //         y: dataFast["FRA"],
-    //         x: Array(dataFast["FRA"].length).keys(),
-    //         type: 'scatter'
-    //     };
-    //     var trace2 = {
-    //         y: dataFull["FRA"],
-    //         x: Array(dataFull["FRA"].length).keys(),
-    //         type: 'scatter'
-    //     };
-    //     var data = [trace1,trace2];
-    //     console.log(trace1);
-    //     Plotly.newPlot('plotStat', data);
+    
+    //Fonction d'affichage des stats
+    function displayStats(){
+        console.log("CC");
+        var trace1 = {
+            y: dataFast["FRA"],
+            x: Array(dataFast["FRA"].length).keys(),
+            type: 'scatter'
+        };
+        var trace2 = {
+            y: dataFull["FRA"],
+            x: Array(dataFull["FRA"].length).keys(),
+            type: 'scatter'
+        };
+        var data = [trace1,trace2];
+        console.log(trace1);
+        Plotly.newPlot('plotStat', data);
         
-    // };
+    };
 
     
     function showTT(tooltip){
@@ -3374,8 +3380,10 @@ Covid-19</text>
         // console.log(today);
         return today;
     }
-
+    
+    //Initialise les paramètres de légende
     function initiateColors(custom){
+        //changement du texte de titre
         if ($("#coloration").val() == "Standard") {
                 $("#txt-titre2").text("Taux de reproduction, estimation moins réactive");
             }else if($("#coloration").val() == "Fast"){
@@ -3386,6 +3394,7 @@ Covid-19</text>
                 $("#txt-titre2").text("Nombre de décès pour 1 million d'habitants");
         }
         
+        //modification du max de la légende
         if (custom) {
             dataMax = $("#customMax").val();
         }else{
@@ -3399,19 +3408,22 @@ Covid-19</text>
                 dataMax = 10;
             }
         }
+
         var iLegText = 0;
-        
+        //récupération des couleurs de la légende
         $( ".legText" ).each(function( index ) {
             iLegText++;
             $( this ).text(String(dataMax*iLegText/nbCaissons).substring(0,4));
         });
 
+        //initialisation du tableau de couleurs
         var iLegBox = 0;
         $( ".legBox" ).each(function( index ) {
             iLegBox++;
             colors[iLegBox]=$(this).attr('fill');
         });
 
+        //modification des textes de titre de la légende, du max de la légende et du champ de configuration
         $("#legTitle").text($("#coloration option:selected").text());
         $("#legMax").text(String(dataMax));
         $("#customMax").val(dataMax);
@@ -3420,8 +3432,8 @@ Covid-19</text>
 
     
     function initiateSvg(){
+        //On ajoute de nouvelles lignes aux tooltips de tous les départements
         $("g[id$=-TT]").each(function( index ) {
-            // console.log(dataFull[this.id.substring(0,3)]);
             var txtElem = document.createElementNS("http://www.w3.org/2000/svg", "text");
 	        txtElem.setAttributeNS(null,"x",$(this).find("text:nth-child(2)").prop("x").animVal[0].valueAsString);
 	        txtElem.setAttributeNS(null,"y",parseFloat($(this).find("text:nth-child(2)").prop("y").animVal[0].valueAsString) + 4);
@@ -3440,16 +3452,6 @@ Covid-19</text>
             txtElem.setAttributeNS(null,"style","font-size:4px; font-family:Helvetica");
             txtElem.setAttributeNS(null,"text","Nouvelles infections / 10000");
             document.getElementById(this.id).appendChild(txtElem);
-            
-            // var SVGRect = document.getElementById(this.id).getBBox();
-            // var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-            // rect.setAttribute("x", SVGRect.x - 1);
-            // rect.setAttribute("y", SVGRect.y - 1 );
-            // rect.setAttribute("width", SVGRect.width + 2);
-            // rect.setAttribute("height", SVGRect.height + 6);
-            // rect.setAttribute("fill", "white");
-            // document.getElementById(this.id).appendChild(rect);
-
         });        
     }
 
