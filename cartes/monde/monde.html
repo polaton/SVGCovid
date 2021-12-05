@@ -3085,9 +3085,458 @@ Covid-19</text>
 </svg>
 
 <!-- Popup des statistiques -->
-<div id="popupStats" style="position: fixed;right:40%;bottom: 40%;background-color:rgb(207, 233, 250);">
-<!-- <div id="popupStats" class="modal"> -->
-    <h2>France</h2>
+<!-- <div id="popupStats" style="position: fixed;right:40%;bottom: 40%;background-color:rgb(207, 233, 250);"> -->
+<div id="popupStats" class="modal">
+    <select id="stats-pays">
+        <option value="AFG">AFG</option>
+        <option value="AGO">AGO</option>
+        <option value="ALB">ALB</option>
+        <option value="ARE">ARE</option>
+        <option value="ARG">ARG</option>
+        <option value="ARM">ARM</option>
+        <option value="AUS">AUS</option>
+        <option value="AUT">AUT</option>
+        <option value="AZE">AZE</option>
+        <option value="BDI">BDI</option>
+        <option value="BEL">BEL</option>
+        <option value="BEN">BEN</option>
+        <option value="BFA">BFA</option>
+        <option value="BGD">BGD</option>
+        <option value="BGR">BGR</option>
+        <option value="BHR">BHR</option>
+        <option value="BHS">BHS</option>
+        <option value="BIH">BIH</option>
+        <option value="BLM">BLM</option>
+        <option value="BLR">BLR</option>
+        <option value="BLZ">BLZ</option>
+        <option value="BOL">BOL</option>
+        <option value="BRA">BRA</option>
+        <option value="BRN">BRN</option>
+        <option value="BTN">BTN</option>
+        <option value="BWA">BWA</option>
+        <option value="CAF">CAF</option>
+        <option value="CAN">CAN</option>
+        <option value="CCK">CCK</option>
+        <option value="CHE">CHE</option>
+        <option value="CHL">CHL</option>
+        <option value="CHN">CHN</option>
+        <option value="CIV">CIV</option>
+        <option value="CMR">CMR</option>
+        <option value="COD">COD</option>
+        <option value="COG">COG</option>
+        <option value="COK">COK</option>
+        <option value="COL">COL</option>
+        <option value="COM">COM</option>
+        <option value="CPV">CPV</option>
+        <option value="CRI">CRI</option>
+        <option value="CUB">CUB</option>
+        <option value="CYM">CYM</option>
+        <option value="CYP">CYP</option>
+        <option value="CZE">CZE</option>
+        <option value="DEU">DEU</option>
+        <option value="DJI">DJI</option>
+        <option value="DMA">DMA</option>
+        <option value="DNK">DNK</option>
+        <option value="DOM">DOM</option>
+        <option value="DZA">DZA</option>
+        <option value="ECU">ECU</option>
+        <option value="EGY">EGY</option>
+        <option value="ERI">ERI</option>
+        <option value="ESH">ESH</option>
+        <option value="ESP">ESP</option>
+        <option value="EST">EST</option>
+        <option value="ETH">ETH</option>
+        <option value="FIN">FIN</option>
+        <option value="FJI">FJI</option>
+        <option value="FLK">FLK</option>
+        <option value="FRA">FRA</option>
+        <option value="FSM">FSM</option>
+        <option value="GAB">GAB</option>
+        <option value="GBR">GBR</option>
+        <option value="GEO">GEO</option>
+        <option value="GGY">GGY</option>
+        <option value="GHA">GHA</option>
+        <option value="GIN">GIN</option>
+        <option value="GLP">GLP</option>
+        <option value="GMB">GMB</option>
+        <option value="GNB">GNB</option>
+        <option value="GNQ">GNQ</option>
+        <option value="GRC">GRC</option>
+        <option value="GRD">GRD</option>
+        <option value="GRL">GRL</option>
+        <option value="GTM">GTM</option>
+        <option value="GUF">GUF</option>
+        <option value="GUY">GUY</option>
+        <option value="HKG">HKG</option>
+        <option value="HND">HND</option>
+        <option value="HRV">HRV</option>
+        <option value="HTI">HTI</option>
+        <option value="HUN">HUN</option>
+        <option value="IDN">IDN</option>
+        <option value="IND">IND</option>
+        <option value="IRL">IRL</option>
+        <option value="IRN">IRN</option>
+        <option value="IRQ">IRQ</option>
+        <option value="ISL">ISL</option>
+        <option value="ISR">ISR</option>
+        <option value="ITA">ITA</option>
+        <option value="JAM">JAM</option>
+        <option value="JOR">JOR</option>
+        <option value="JPN">JPN</option>
+        <option value="KAZ">KAZ</option>
+        <option value="KEN">KEN</option>
+        <option value="KGZ">KGZ</option>
+        <option value="KHM">KHM</option>
+        <option value="KIR">KIR</option>
+        <option value="KNA">KNA</option>
+        <option value="KOR">KOR</option>
+        <option value="KSV">KSV</option>
+        <option value="KWT">KWT</option>
+        <option value="LAO">LAO</option>
+        <option value="LBN">LBN</option>
+        <option value="LBR">LBR</option>
+        <option value="LBY">LBY</option>
+        <option value="LKA">LKA</option>
+        <option value="LSO">LSO</option>
+        <option value="LTU">LTU</option>
+        <option value="LUX">LUX</option>
+        <option value="LVA">LVA</option>
+        <option value="MAC">MAC</option>
+        <option value="MAF">MAF</option>
+        <option value="MAR">MAR</option>
+        <option value="MCO">MCO</option>
+        <option value="MDA">MDA</option>
+        <option value="MDG">MDG</option>
+        <option value="MDV">MDV</option>
+        <option value="MEX">MEX</option>
+        <option value="MHL">MHL</option>
+        <option value="MKD">MKD</option>
+        <option value="MLI">MLI</option>
+        <option value="MLT">MLT</option>
+        <option value="MMR">MMR</option>
+        <option value="MNE">MNE</option>
+        <option value="MNG">MNG</option>
+        <option value="MNP">MNP</option>
+        <option value="MOZ">MOZ</option>
+        <option value="MRT">MRT</option>
+        <option value="MTQ">MTQ</option>
+        <option value="MUS">MUS</option>
+        <option value="MWI">MWI</option>
+        <option value="MYS">MYS</option>
+        <option value="MYT">MYT</option>
+        <option value="NAM">NAM</option>
+        <option value="NCL">NCL</option>
+        <option value="NER">NER</option>
+        <option value="NFK">NFK</option>
+        <option value="NGA">NGA</option>
+        <option value="NIC">NIC</option>
+        <option value="NLD">NLD</option>
+        <option value="NOR">NOR</option>
+        <option value="NPL">NPL</option>
+        <option value="NRU">NRU</option>
+        <option value="NZL">NZL</option>
+        <option value="OMN">OMN</option>
+        <option value="PAK">PAK</option>
+        <option value="PAN">PAN</option>
+        <option value="PCN">PCN</option>
+        <option value="PER">PER</option>
+        <option value="PHL">PHL</option>
+        <option value="PLW">PLW</option>
+        <option value="PNG">PNG</option>
+        <option value="POL">POL</option>
+        <option value="PRI">PRI</option>
+        <option value="PRK">PRK</option>
+        <option value="PRT">PRT</option>
+        <option value="PRY">PRY</option>
+        <option value="PSE">PSE</option>
+        <option value="PYF">PYF</option>
+        <option value="QAT">QAT</option>
+        <option value="REU">REU</option>
+        <option value="ROU">ROU</option>
+        <option value="RUS">RUS</option>
+        <option value="RWA">RWA</option>
+        <option value="SAU">SAU</option>
+        <option value="SDN">SDN</option>
+        <option value="SEN">SEN</option>
+        <option value="SGP">SGP</option>
+        <option value="SHN">SHN</option>
+        <option value="SJM">SJM</option>
+        <option value="SLB">SLB</option>
+        <option value="SLE">SLE</option>
+        <option value="SLV">SLV</option>
+        <option value="SOM">SOM</option>
+        <option value="SPM">SPM</option>
+        <option value="SRB">SRB</option>
+        <option value="SSD">SSD</option>
+        <option value="SUR">SUR</option>
+        <option value="SVK">SVK</option>
+        <option value="SVN">SVN</option>
+        <option value="SWE">SWE</option>
+        <option value="SWZ">SWZ</option>
+        <option value="SYC">SYC</option>
+        <option value="SYR">SYR</option>
+        <option value="TCA">TCA</option>
+        <option value="TCD">TCD</option>
+        <option value="TGO">TGO</option>
+        <option value="THA">THA</option>
+        <option value="TJK">TJK</option>
+        <option value="TKM">TKM</option>
+        <option value="TLS">TLS</option>
+        <option value="TON">TON</option>
+        <option value="TUN">TUN</option>
+        <option value="TUR">TUR</option>
+        <option value="TUV">TUV</option>
+        <option value="TWN">TWN</option>
+        <option value="TZA">TZA</option>
+        <option value="UGA">UGA</option>
+        <option value="UKR">UKR</option>
+        <option value="UMI">UMI</option>
+        <option value="URY">URY</option>
+        <option value="USA">USA</option>
+        <option value="UZB">UZB</option>
+        <option value="VAT">VAT</option>
+        <option value="VCT">VCT</option>
+        <option value="VEN">VEN</option>
+        <option value="VGB">VGB</option>
+        <option value="VIR">VIR</option>
+        <option value="VNM">VNM</option>
+        <option value="VUT">VUT</option>
+        <option value="WLF">WLF</option>
+        <option value="YEM">YEM</option>
+        <option value="ZAF">ZAF</option>
+        <option value="ZMB">ZMB</option>
+        <option value="ZWE">ZWE</option>
+    </select>
+    <br>
+    <input class="stats-control" type="checkbox" id="rstandard" name="rstandard" checked><label for="rstandard">R Standard</label>
+    <input class="stats-control" type="checkbox" id="rfast" name="rfast" checked><label for="rfast">R Fast</label>
+    <br>
+    <input class="stats-control" type="radio" value="mortagg" name="stathisto" checked><label for="mortagg">Morts pour 1M h</label>
+    <input class="stats-control" type="radio" value="confirmeagg" name="stathisto"><label for="confirmeagg">Confirmés pour 10k h</label>
+    <input class="stats-control" type="radio" value="desactivatehisto" name="stathisto"><label for="desactivatehisto">Désactiver</label>
+    <br>
+    <select id="stats-compared">
+        <option value="none"></option>
+        <option value="AFG">AFG</option>
+        <option value="AFG">AFG</option>
+        <option value="AGO">AGO</option>
+        <option value="ALB">ALB</option>
+        <option value="ARE">ARE</option>
+        <option value="ARG">ARG</option>
+        <option value="ARM">ARM</option>
+        <option value="AUS">AUS</option>
+        <option value="AUT">AUT</option>
+        <option value="AZE">AZE</option>
+        <option value="BDI">BDI</option>
+        <option value="BEL">BEL</option>
+        <option value="BEN">BEN</option>
+        <option value="BFA">BFA</option>
+        <option value="BGD">BGD</option>
+        <option value="BGR">BGR</option>
+        <option value="BHR">BHR</option>
+        <option value="BHS">BHS</option>
+        <option value="BIH">BIH</option>
+        <option value="BLM">BLM</option>
+        <option value="BLR">BLR</option>
+        <option value="BLZ">BLZ</option>
+        <option value="BOL">BOL</option>
+        <option value="BRA">BRA</option>
+        <option value="BRN">BRN</option>
+        <option value="BTN">BTN</option>
+        <option value="BWA">BWA</option>
+        <option value="CAF">CAF</option>
+        <option value="CAN">CAN</option>
+        <option value="CCK">CCK</option>
+        <option value="CHE">CHE</option>
+        <option value="CHL">CHL</option>
+        <option value="CHN">CHN</option>
+        <option value="CIV">CIV</option>
+        <option value="CMR">CMR</option>
+        <option value="COD">COD</option>
+        <option value="COG">COG</option>
+        <option value="COK">COK</option>
+        <option value="COL">COL</option>
+        <option value="COM">COM</option>
+        <option value="CPV">CPV</option>
+        <option value="CRI">CRI</option>
+        <option value="CUB">CUB</option>
+        <option value="CYM">CYM</option>
+        <option value="CYP">CYP</option>
+        <option value="CZE">CZE</option>
+        <option value="DEU">DEU</option>
+        <option value="DJI">DJI</option>
+        <option value="DMA">DMA</option>
+        <option value="DNK">DNK</option>
+        <option value="DOM">DOM</option>
+        <option value="DZA">DZA</option>
+        <option value="ECU">ECU</option>
+        <option value="EGY">EGY</option>
+        <option value="ERI">ERI</option>
+        <option value="ESH">ESH</option>
+        <option value="ESP">ESP</option>
+        <option value="EST">EST</option>
+        <option value="ETH">ETH</option>
+        <option value="FIN">FIN</option>
+        <option value="FJI">FJI</option>
+        <option value="FLK">FLK</option>
+        <option value="FRA">FRA</option>
+        <option value="FSM">FSM</option>
+        <option value="GAB">GAB</option>
+        <option value="GBR">GBR</option>
+        <option value="GEO">GEO</option>
+        <option value="GGY">GGY</option>
+        <option value="GHA">GHA</option>
+        <option value="GIN">GIN</option>
+        <option value="GLP">GLP</option>
+        <option value="GMB">GMB</option>
+        <option value="GNB">GNB</option>
+        <option value="GNQ">GNQ</option>
+        <option value="GRC">GRC</option>
+        <option value="GRD">GRD</option>
+        <option value="GRL">GRL</option>
+        <option value="GTM">GTM</option>
+        <option value="GUF">GUF</option>
+        <option value="GUY">GUY</option>
+        <option value="HKG">HKG</option>
+        <option value="HND">HND</option>
+        <option value="HRV">HRV</option>
+        <option value="HTI">HTI</option>
+        <option value="HUN">HUN</option>
+        <option value="IDN">IDN</option>
+        <option value="IND">IND</option>
+        <option value="IRL">IRL</option>
+        <option value="IRN">IRN</option>
+        <option value="IRQ">IRQ</option>
+        <option value="ISL">ISL</option>
+        <option value="ISR">ISR</option>
+        <option value="ITA">ITA</option>
+        <option value="JAM">JAM</option>
+        <option value="JOR">JOR</option>
+        <option value="JPN">JPN</option>
+        <option value="KAZ">KAZ</option>
+        <option value="KEN">KEN</option>
+        <option value="KGZ">KGZ</option>
+        <option value="KHM">KHM</option>
+        <option value="KIR">KIR</option>
+        <option value="KNA">KNA</option>
+        <option value="KOR">KOR</option>
+        <option value="KSV">KSV</option>
+        <option value="KWT">KWT</option>
+        <option value="LAO">LAO</option>
+        <option value="LBN">LBN</option>
+        <option value="LBR">LBR</option>
+        <option value="LBY">LBY</option>
+        <option value="LKA">LKA</option>
+        <option value="LSO">LSO</option>
+        <option value="LTU">LTU</option>
+        <option value="LUX">LUX</option>
+        <option value="LVA">LVA</option>
+        <option value="MAC">MAC</option>
+        <option value="MAF">MAF</option>
+        <option value="MAR">MAR</option>
+        <option value="MCO">MCO</option>
+        <option value="MDA">MDA</option>
+        <option value="MDG">MDG</option>
+        <option value="MDV">MDV</option>
+        <option value="MEX">MEX</option>
+        <option value="MHL">MHL</option>
+        <option value="MKD">MKD</option>
+        <option value="MLI">MLI</option>
+        <option value="MLT">MLT</option>
+        <option value="MMR">MMR</option>
+        <option value="MNE">MNE</option>
+        <option value="MNG">MNG</option>
+        <option value="MNP">MNP</option>
+        <option value="MOZ">MOZ</option>
+        <option value="MRT">MRT</option>
+        <option value="MTQ">MTQ</option>
+        <option value="MUS">MUS</option>
+        <option value="MWI">MWI</option>
+        <option value="MYS">MYS</option>
+        <option value="MYT">MYT</option>
+        <option value="NAM">NAM</option>
+        <option value="NCL">NCL</option>
+        <option value="NER">NER</option>
+        <option value="NFK">NFK</option>
+        <option value="NGA">NGA</option>
+        <option value="NIC">NIC</option>
+        <option value="NLD">NLD</option>
+        <option value="NOR">NOR</option>
+        <option value="NPL">NPL</option>
+        <option value="NRU">NRU</option>
+        <option value="NZL">NZL</option>
+        <option value="OMN">OMN</option>
+        <option value="PAK">PAK</option>
+        <option value="PAN">PAN</option>
+        <option value="PCN">PCN</option>
+        <option value="PER">PER</option>
+        <option value="PHL">PHL</option>
+        <option value="PLW">PLW</option>
+        <option value="PNG">PNG</option>
+        <option value="POL">POL</option>
+        <option value="PRI">PRI</option>
+        <option value="PRK">PRK</option>
+        <option value="PRT">PRT</option>
+        <option value="PRY">PRY</option>
+        <option value="PSE">PSE</option>
+        <option value="PYF">PYF</option>
+        <option value="QAT">QAT</option>
+        <option value="REU">REU</option>
+        <option value="ROU">ROU</option>
+        <option value="RUS">RUS</option>
+        <option value="RWA">RWA</option>
+        <option value="SAU">SAU</option>
+        <option value="SDN">SDN</option>
+        <option value="SEN">SEN</option>
+        <option value="SGP">SGP</option>
+        <option value="SHN">SHN</option>
+        <option value="SJM">SJM</option>
+        <option value="SLB">SLB</option>
+        <option value="SLE">SLE</option>
+        <option value="SLV">SLV</option>
+        <option value="SOM">SOM</option>
+        <option value="SPM">SPM</option>
+        <option value="SRB">SRB</option>
+        <option value="SSD">SSD</option>
+        <option value="SUR">SUR</option>
+        <option value="SVK">SVK</option>
+        <option value="SVN">SVN</option>
+        <option value="SWE">SWE</option>
+        <option value="SWZ">SWZ</option>
+        <option value="SYC">SYC</option>
+        <option value="SYR">SYR</option>
+        <option value="TCA">TCA</option>
+        <option value="TCD">TCD</option>
+        <option value="TGO">TGO</option>
+        <option value="THA">THA</option>
+        <option value="TJK">TJK</option>
+        <option value="TKM">TKM</option>
+        <option value="TLS">TLS</option>
+        <option value="TON">TON</option>
+        <option value="TUN">TUN</option>
+        <option value="TUR">TUR</option>
+        <option value="TUV">TUV</option>
+        <option value="TWN">TWN</option>
+        <option value="TZA">TZA</option>
+        <option value="UGA">UGA</option>
+        <option value="UKR">UKR</option>
+        <option value="UMI">UMI</option>
+        <option value="URY">URY</option>
+        <option value="USA">USA</option>
+        <option value="UZB">UZB</option>
+        <option value="VAT">VAT</option>
+        <option value="VCT">VCT</option>
+        <option value="VEN">VEN</option>
+        <option value="VGB">VGB</option>
+        <option value="VIR">VIR</option>
+        <option value="VNM">VNM</option>
+        <option value="VUT">VUT</option>
+        <option value="WLF">WLF</option>
+        <option value="YEM">YEM</option>
+        <option value="ZAF">ZAF</option>
+        <option value="ZMB">ZMB</option>
+        <option value="ZWE">ZWE</option>
+    </select>
     <div id="plotStat"></div>
 </div>
 <!-- Panneau de commandes -->
@@ -3106,7 +3555,7 @@ Covid-19</text>
     <a href="#doc">&#x2753</a>
 
     <br>
-    <!-- Listes d'optiopns -->
+    <!-- Listes d'options -->
     <label for="pas">Pas</label>
     <select id="pas">
         <option value="1" selected="true">Jour</option>
@@ -3152,6 +3601,8 @@ Covid-19</text>
     var colors = {};//Tableau des couleurs utilisés par la légende
     var selectedCountry = "";//Pays selectionné
     var lockedCountry="";//Pays vérouillé
+    var dataStats=false;//Objet de statistiques pour les graphiques
+    var daysLabelStats=[];//Tableau des titres des jours pour le graphique
 
     $(function() {
         //Chargement des données
@@ -3169,57 +3620,60 @@ Covid-19</text>
                 data = $.csv.toArrays(data);
                 data.shift();
                 data.shift();
-                data.forEach(element => dataMorts[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));
+                data.forEach(element => dataMorts[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));//ajout au tableau de données Morts
                 $.get("data/methode-confirmesaccrjourpop", function (data) {//On charge AggConfirmés
                     data = $.csv.toArrays(data);
                     data.shift();
                     data.shift();
-                    data.forEach(element => dataConfirmed[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));
+                    data.forEach(element => dataConfirmed[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));//ajout au tableau de données Confirmés
                     $.get("data/RFast", function (data) {//On charge RFast
                         data = $.csv.toArrays(data);
                         data.shift();
                         data.shift();
-                        data.forEach(element => dataFast[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));
+                        data.forEach(element => dataFast[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));//ajout au tableau de données R Fast
                         $.get("data/NCas", function (data) {//On charge Confirmés
                             data = $.csv.toArrays(data);
                             data.shift();
                             data.shift();
-                            data.forEach(element => dataNew[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));
+                            data.forEach(element => dataNew[element.shift()] = element.map(function(v) {return parseFloat(v, 10);}));//ajout au tableau de données Nb Cas
 
                             //Création du range de dates et ajout à la page HTML
-
                             $("#slider").append('<input type="range" id="dateRange" name="dateRange" step="1" min="0" max="'+daysPast+'" value="'+daysPast+'" style="width:70%;">  <label id="selectedDate" for="dateRange"></label>');
-                            initiateSvg();
-                            changeSliderDateLabel(returnDateFormatted(daysPast));
-                            majData($("#dateRange").val());
-                            majCouleurs($("#dateRange").val());
+                            initiateSvg();//On fait les quelques modifications désirées sur le SVG
+                            changeSliderDateLabel(returnDateFormatted(daysPast));//On met à jour le label du slider de date
+                            majData($("#dateRange").val());//On met à jour les données
+                            majCouleurs($("#dateRange").val());//On met à jour les colorations des pays
+                            initiateStatsLabels();
                         });                
                     });
                 });
             });
         });
-
-
     });
 
-
+    //Evenement clique bouton retour au début
     $("#first").click( function(e) {
-        $("#dateRange").val(1);
+        $("#dateRange").val(1);//On amène le slider de dates à la première date
+        //On fait la mise à jour de la carte
         var selectedDate = $("#dateRange").val();
         changeSliderDateLabel(returnDateFormatted(selectedDate));
         majData(selectedDate);
         majCouleurs(selectedDate);
     });
 
+    //Evenement clique bouton -1 "pas"
     $("#downDate").click( function(e) {
-        $("#dateRange").val($("#dateRange").val() - $("#pas").val());
+        $("#dateRange").val($("#dateRange").val() - $("#pas").val());//On fait baisser la date d'un pas
+        //On fait la mise à jour de la carte
         var selectedDate = $("#dateRange").val();
         changeSliderDateLabel(returnDateFormatted(selectedDate));
         majData(selectedDate);
         majCouleurs(selectedDate);
     });
 
+    //Evenement clique pause
     $("#pause").click( function(e) {
+        //On désactive tous les composants utilisateurs
         $("#first").prop( "disabled", false );
         $("#downDate").prop( "disabled", false );
         $("#pause").prop( "disabled", true );
@@ -3231,7 +3685,9 @@ Covid-19</text>
         clearInterval(tim);
     });
 
+    //Evenement clique lecture
     $("#play").click( function(e) {
+        //On réactive tous les composants utilisateurs
         $("#first").prop( "disabled", true );
         $("#downDate").prop( "disabled", true );
         $("#pause").prop( "disabled", false );
@@ -3241,63 +3697,94 @@ Covid-19</text>
         $("#pas").prop( "disabled", true );
         $("#vitesse").prop( "disabled", true );
 
+        //On définit la fonction qui sera répétée pour l'animation
         tim = setInterval(function(e) {
             $("#dateRange").val(parseInt($("#dateRange").val()) + parseInt($("#pas").val()));
             var selectedDate = $("#dateRange").val();
             changeSliderDateLabel(returnDateFormatted(selectedDate));
             majData(selectedDate);
             majCouleurs(selectedDate);
-        },$("#vitesse").val());
+        },$("#vitesse").val());//Ici on indique l'intervalle à laquelle la fonction doit se répéter
     });
 
+    //Evenement clique +1 "pas"
     $("#upDate").click( function(e) {
-        $("#dateRange").val(parseInt($("#dateRange").val()) + parseInt($("#pas").val()));
+        $("#dateRange").val(parseInt($("#dateRange").val()) + parseInt($("#pas").val()));//On incrémente la date d'un pas
+        //On fait la mise à jour de la carte
         var selectedDate = $("#dateRange").val();
         changeSliderDateLabel(returnDateFormatted(selectedDate));
         majData(selectedDate);
         majCouleurs(selectedDate);
     });
 
+    //Evenement clique dernier
     $("#last").click( function(e) {
         $("#dateRange").val(daysPast);
+        //On fait la mise à jour de la carte
         var selectedDate = $("#dateRange").val();
         changeSliderDateLabel(returnDateFormatted(selectedDate));
         majData(selectedDate);
         majCouleurs(selectedDate);
     });
 
+    //Evenement changement coloration
     $("#coloration").change( function(e) {
+        //On fait la mise à jour de la carte
         var selectedDate = $("#dateRange").val();
         initiateColors(false);
         majData(selectedDate);
         majCouleurs(selectedDate);
     });
 
+    //Evenement changement max de la légende
     $("#customMax").change( function(e) {
+        //On fait la mise à jour de la carte
         var selectedDate = $("#dateRange").val();
         initiateColors(true);
         majData(selectedDate);
         majCouleurs(selectedDate);
     });
 
+    //Evenement changement de date via le slider
     $("#slider").change( function(e) {
+        //On fait la mise à jour de la carte
         var selectedDate = $("#dateRange").val();
         changeSliderDateLabel(returnDateFormatted(selectedDate));
         majData(selectedDate);
         majCouleurs(selectedDate);
     });
 
+    //Evenement changement de pays dans le tooltip de stats
+    $("#stats-pays").change( function(e) {
+        updateStats();
+    });
+
+    $("#stats-compared").change( function(e) {
+        updateStats();
+    });
+
+    //Evenement changement de configuration du module de stats
+    $(".stats-control").change( function(e) {
+        console.log("BIBI");
+        updateStats();
+    });
+
+    //Mise à jour des textes relatifs aux dates
     function changeSliderDateLabel(val){
         $("#selectedDate").text(val);
         $("#textDate").text(val);
     }
 
+    //Permet de vérouiller un pays pour consulter ses données, la fonction est lancée au clic sur un pays
     function lockCountry(countryCode){
+
+        //Si on a deja un pays verouillé, on repasse ses frontières en noir
         if (lockedCountry != "") {
             $('path[id^='+lockedCountry+'-]').attr("stroke","rgb(0,0,0)");
             $('path[id^='+lockedCountry+'-]').attr("stroke-width","0.1"); 
         }
         
+        //Si on a un nouveau code pays a vérouiller et qu'il est différent de l'ancien pays vérouillé, on met à jour le pays vérouillé et on change la couleur de ses frontières
         if (countryCode != "" && countryCode != lockedCountry) {
             lockedCountry = countryCode;
             $('path[id^='+countryCode+'-]').attr("stroke","rgb(25,184,254)");
@@ -3307,48 +3794,187 @@ Covid-19</text>
         }
         majFixed();
     };
+
+    //Fonction d'affichage des stats
+    function initiateStatsLabels(){
+        for (let index = 0; index <= daysPast; index++) {
+            daysLabelStats.push(returnDateFormatted(index));
+        }
+        console.log(daysLabelStats);
+    };
     
     //Fonction d'affichage des stats
     function displayStats(){
-        console.log("CC");
+        if (!dataStats) {
+            initStats();
+        }
+        updateStats();
+    };
+
+    function initStats(){
+        var statPays = $("#stats-pays").val();
         var trace1 = {
-            y: dataFast["FRA"],
-            x: Array(dataFast["FRA"].length).keys(),
-            type: 'scatter'
+                y: [],
+                x: daysLabelStats,
+                type: 'scatter'
         };
+        var trace1compare = {
+                y: [],
+                x: daysLabelStats,
+                type: 'scatter'
+        };
+
         var trace2 = {
-            y: dataFull["FRA"],
-            x: Array(dataFull["FRA"].length).keys(),
+            y: [],
+            x: daysLabelStats,
             type: 'scatter'
         };
-        var data = [trace1,trace2];
-        console.log(trace1);
-        Plotly.newPlot('plotStat', data);
+        var trace2compare = {
+                y: [],
+                x: daysLabelStats,
+                type: 'scatter'
+        };
+
+        var trace3 = {
+            y: [],
+            x: daysLabelStats,
+            type: 'bar',
+            yaxis: 'y2',
+            opacity: 0.5
+        };
+        var trace3compare = {
+            y: [],
+            x: daysLabelStats,
+            type: 'bar',
+            yaxis: 'y2',
+            opacity: 0.5
+        };
+
+        var layout={
+            barmode: 'group',
+            yaxis: {
+                rangemode: 'nonnegative',
+                autorange: true
+            },
+            yaxis2: {
+                rangemode: 'nonnegative',
+                title: 'yaxis2 title',
+                titlefont: {color: 'rgb(148, 103, 189)'},
+                tickfont: {color: 'rgb(148, 103, 189)'},
+                overlaying: 'y',
+                side: 'right',
+                autorange: true
+            }
+        }
+
+        dataStats = [trace3,trace3compare,trace1,trace1compare,trace2,trace2compare];
+        Plotly.newPlot('plotStat', dataStats,layout);  
+    }
+
+    function updateStats() {
+        var statPays = $("#stats-pays").val();
+        var statCompared = $("#stats-compared").val();
+        if ($("#rfast").prop("checked")) {
+            dataStats[2]["y"] = dataFast[statPays];
+            dataStats[2]["name"] = "R Fast " + statPays;
+            if (statCompared !="none") {
+                dataStats[3]["y"] = dataFast[statCompared];
+                dataStats[3]["name"] = "R Fast " + statCompared;  
+            }else{
+                dataStats[3]["y"] = [];
+                dataStats[3]["name"] = "";                
+            }
+        }else{
+            dataStats[2]["y"] = [];
+            dataStats[2]["name"] = "";
+            dataStats[3]["y"] = [];
+            dataStats[3]["name"] = "";
+        }
+
+        if ($("#rstandard").prop("checked")) {
+            dataStats[4]["y"] = dataFull[statPays];
+            dataStats[4]["name"] = "R Standard " + statPays;
+            if (statCompared !="none") {
+                dataStats[5]["y"] = dataFull[statCompared];
+                dataStats[5]["name"] = "R Standard " + statCompared;  
+            }else{
+                dataStats[5]["y"] = [];
+                dataStats[5]["name"] = "";                
+            }
+        }else{
+            dataStats[4]["y"] = [];
+            dataStats[4]["name"] = "";
+            dataStats[5]["y"] = [];
+            dataStats[5]["name"] = "";
+        }
         
-    };
 
-    
+        switch ($("input[name=stathisto]:checked").val()) {
+            case "mortagg":
+                dataStats[0]["y"] = dataMorts[statPays];
+                dataStats[0]["name"] = "Morts pour 1M h " + statPays;
+                if (statCompared !="none") {
+                    dataStats[1]["y"] = dataMorts[statCompared];
+                    dataStats[1]["name"] = "Morts pour 1M h " + statCompared;  
+                }else{
+                    dataStats[1]["y"] = [];
+                    dataStats[1]["name"] = "";                
+                }
+                break;
+            
+            case "confirmeagg":
+                dataStats[0]["y"] = dataConfirmed[statPays];
+                dataStats[0]["name"] = "Confirmés pour 10k h " + statPays;
+                if (statCompared !="none") {
+                    dataStats[1]["y"] = dataConfirmed[statCompared];
+                    dataStats[1]["name"] = "Confirmés pour 10k h " +  statCompared;  
+                }else{
+                    dataStats[1]["y"] = [];
+                    dataStats[1]["name"] = "";                
+                }
+                break;
+            
+            case "desactivatehisto":
+                dataStats[0]["y"] = [];
+                dataStats[0]["name"] = "";
+                dataStats[1]["y"] = [];
+                dataStats[1]["name"] = "";                
+                break;
+            
+            default:
+                break;
+        }
+
+        Plotly.redraw('plotStat');
+    }
+
+    //Permet de mettre à jour le pays survolé par la souris, la fonction est lancée au survol d'un pays
     function showTT(tooltip){
-        selectedCountry=tooltip;
-        majFixed();    
-        // document.getElementById(tooltip).setAttribute('visibility','visible');
+        selectedCountry=tooltip;//Maj du pays selectionné
+        majFixed();//Maj des infos dans le tooltip fixe
+        // document.getElementById(tooltip).setAttribute('visibility','visible'); //Avant, on affichait le tooltip du pays
     };
 
+    //Permet de mettre à jour le pays survolé par la souris, la fonction est lancée lorqu'on sort la souris du territoire d'un pays
     function hideTT(tooltip){
-        selectedCountry="";
-        majFixed();
-        // document.getElementById(tooltip).setAttribute('visibility','hidden');
+        selectedCountry="";//Suppression du pays selectionné
+        majFixed();//Maj des infos dans le tooltip fixe
+        // document.getElementById(tooltip).setAttribute('visibility','hidden');//Avant, on cachait le tooltip du pays
     };
 
+    //Fonction de mise à jour du tooltip d'information fixe 
     function majFixed(){
+        //Si on a un pays vérouillé, on utilise son tooltip
         if (lockedCountry!="") {
             tooltip=lockedCountry+"-TT";
+        //Sinon, si on a un pays survolé, on utilise son tooltip
         }else if(selectedCountry!=""){
             tooltip=selectedCountry;
         }else{
             tooltip="";
         }
 
+        //Si on a pas de pays survolé ou vérouillé, on remet à zero les valeurs du tooltip
         if (tooltip == "") {
             $("#Pays-fixed").text(""); 
             $("#Habs-fixed").text("");
@@ -3356,7 +3982,7 @@ Covid-19</text>
             $("#Ncas-fixed").text("");    
             $("#Morts-fixed").text("");     
             $("#Confirmed-fixed").text("");            
-
+        //Si on a un de pays survolé ou vérouillé, on maj les valeurs du tooltip avec celle du pays en question
         }else{         
             $("#Pays-fixed").text($("#"+tooltip).find("text:nth-child(1)").text().split(":")[0]); 
             $("#Habs-fixed").text($("#"+tooltip).find("text:nth-child(1)").text().split(":")[1]);
@@ -3366,18 +3992,16 @@ Covid-19</text>
             $("#Confirmed-fixed").text($("#"+tooltip).find("text:nth-child(5)").text());
         }
     };
+
+    //Retourne la date dans un format spécifique
     function returnDateFormatted(offset) {
         offset = parseInt(offset); 
         var today = new Date(firstDay);
-        // console.log(today);
         today.setDate(today.getDate() + offset);
-        // console.log(today);
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0');
         var yyyy = today.getFullYear();
-
         today = dd + '/' + mm + '/' + yyyy;
-        // console.log(today);
         return today;
     }
     
@@ -3432,7 +4056,7 @@ Covid-19</text>
 
     
     function initiateSvg(){
-        //On ajoute de nouvelles lignes aux tooltips de tous les départements
+        //On ajoute de nouvelles lignes aux tooltips de tous les pays
         $("g[id$=-TT]").each(function( index ) {
             var txtElem = document.createElementNS("http://www.w3.org/2000/svg", "text");
 	        txtElem.setAttributeNS(null,"x",$(this).find("text:nth-child(2)").prop("x").animVal[0].valueAsString);
@@ -3440,12 +4064,14 @@ Covid-19</text>
             txtElem.setAttributeNS(null,"style","font-size:4px; font-family:Helvetica");
             txtElem.setAttributeNS(null,"text","Nouveaux cas");
             document.getElementById(this.id).appendChild(txtElem);
+
             var txtElem = document.createElementNS("http://www.w3.org/2000/svg", "text");
 	        txtElem.setAttributeNS(null,"x",$(this).find("text:nth-child(2)").prop("x").animVal[0].valueAsString);
 	        txtElem.setAttributeNS(null,"y",parseFloat($(this).find("text:nth-child(2)").prop("y").animVal[0].valueAsString) + 8);
             txtElem.setAttributeNS(null,"style","font-size:4px; font-family:Helvetica");
             txtElem.setAttributeNS(null,"text","Nouveaux décès / million");
             document.getElementById(this.id).appendChild(txtElem);
+
             var txtElem = document.createElementNS("http://www.w3.org/2000/svg", "text");
 	        txtElem.setAttributeNS(null,"x",$(this).find("text:nth-child(2)").prop("x").animVal[0].valueAsString);
 	        txtElem.setAttributeNS(null,"y",parseFloat($(this).find("text:nth-child(2)").prop("y").animVal[0].valueAsString) + 12);
@@ -3455,40 +4081,53 @@ Covid-19</text>
         });        
     }
 
+    //Mise à jour des données
     function majData(offset){
-        // offset = parseInt(offset) - 1;
-        // console.log(offset);
+        //On traite les tootlitps un par un
         $("g[id$=-TT]").each(function( index ) {
+            //Si on trouve le pays en question dans les données RStandard et que la coloriation est définie sur standard
             if (this.id.substring(0,3) in dataFull && $("#coloration").val()=='Standard') {
-                if (dataFull[this.id.substring(0,3)]==-1){
+                //Si les données du jours sont vides on indique leur absence
+                if (dataFull[this.id.substring(0,3)][offset]==-1){
                     $(this).find("text:nth-child(2)").text("RSlow: Pas de données");
+                //Si les données du jours sont présentes on fait la mise à jour
                 }else{
                     $(this).find("text:nth-child(2)").text("RSlow: " + dataFull[this.id.substring(0,3)][offset]);                           
                 }
+            //Si on trouve le pays en question dans les données RFast
             }else if (this.id.substring(0,3) in dataFast) {
-                if (dataFast[this.id.substring(0,3)]==-1){
+                //Si les données du jours sont vides on indique leur absence
+                if (dataFast[this.id.substring(0,3)][offset]==-1){
                     $(this).find("text:nth-child(2)").text("RFast: Pas de données");
+                //Si les données du jours sont présentes on fait la mise à jour
                 }else{
                     $(this).find("text:nth-child(2)").text("RFast: " + dataFast[this.id.substring(0,3)][offset]);                           
                 }
+            //Sinon on indique que l'on a aucune donnée
             }else{
                 $(this).find("text:nth-child(2)").text("RFast: Pas de données");
             }
 
+            //Si on trouve le pays en question dans les données dataNew on fait la mise à jour
             if (this.id.substring(0,3) in dataNew) {
                 $(this).find("text:nth-child(3)").text("Nouveaux cas: " + dataNew[this.id.substring(0,3)][offset]);    
+            //Si les données du jours sont vides on indique leur absence
             }else{
                 $(this).find("text:nth-child(3)").text("Nouveaux cas: Pas de données");
             }
 
+            //Si on trouve le pays en question dans les données dataMorts on fait la mise à jour
             if (this.id.substring(0,3) in dataMorts) {
                 $(this).find("text:nth-child(5)").text("Nouveaux décès / million: " + dataMorts[this.id.substring(0,3)][offset]);    
+            //Si les données du jours sont vides on indique leur absence
             }else{
                 $(this).find("text:nth-child(5)").text("Nouveaux décès / million: Pas de données");
             }
-                    
+                  
+            //Si on trouve le pays en question dans les données dataConfirmed on fait la mise à jour
             if (this.id.substring(0,3) in dataConfirmed) {
                 $(this).find("text:nth-child(4)").text("Nouveaux cas / 10000 : " + dataConfirmed[this.id.substring(0,3)][offset]);       
+            //Si les données du jours sont vides on indique leur absence
             }else{
                 $(this).find("text:nth-child(4)").text("Nouveaux cas / 10000: Pas de données");
             }
@@ -3499,61 +4138,73 @@ Covid-19</text>
         majFixed();
     };
     
+    //Mise à jour des couleurs de la carte
     function majCouleurs(offset){
-        // offset = parseInt(offset) - 1;
+        //Pour chaque tooltip
         $("g[id$=-TT]").each(function( index ) {
+            //Selon la coloration choisie par l'utilisateur, 
             switch ($("#coloration").val()) {
                 case 'Standard':
                     if (this.id.substring(0,3) in dataFull) {
+                        //on récupère la valeur du jour pour le pays
                         var valeurDuJour = dataFull[this.id.substring(0,3)][offset];
                     }else{
+                        //on récupère la valeur du jour pour le pays
                         var valeurDuJour = "NA";
                     }
                     break;
                 case 'Fast':
                     if (this.id.substring(0,3) in dataFast) {
+                        //on récupère la valeur du jour pour le pays
                         var valeurDuJour = dataFast[this.id.substring(0,3)][offset];
                     }else{
+                        //on récupère la valeur du jour pour le pays
                         var valeurDuJour = "NA";
                     }                    
                     break;
                 case 'Confirmed':
                     if (this.id.substring(0,3) in dataConfirmed) {
+                        //on récupère la valeur du jour pour le pays
                         var valeurDuJour = dataConfirmed[this.id.substring(0,3)][offset];
                     }else{
+                        //on récupère la valeur du jour pour le pays
                         var valeurDuJour = "NA";
                     }                    
                     break;
                 case 'Death':
                     if (this.id.substring(0,3) in dataMorts) {
+                        //on récupère la valeur du jour pour le pays
                         var valeurDuJour = dataMorts[this.id.substring(0,3)][offset];
                     }else{
+                        //on récupère la valeur du jour pour le pays
                         var valeurDuJour = "NA";
                     }                    
                     break;
             }
+            //On effectue ensuite les traitements en fonction de valeurDuJour
             if (valeurDuJour != "NA") {
                 if (valeurDuJour >= 0) {
-                    (valeurDuJour>dataMax?valeurDuJour=dataMax-(dataMax/(nbCaissons*2)):valeurDuJour);
+                    (valeurDuJour>dataMax?valeurDuJour=dataMax-(dataMax/(nbCaissons*2)):valeurDuJour);//Si la valeur du jour est supérieure au max de la légende, on ramène la valeur du jour pour qu'elle corresponde à notre caisson le plus élevé
                     var couleurDuJour = processColor(valeurDuJour);
                     var chaineCouleur = couleurDuJour;
+                    //On remplit le pays avec la couleur
                     $('path[id^='+this.id.substring(0,3)+'-]').attr('fill',chaineCouleur );    
-                }else{
-                    if ($("#coloration").val() == "Standard" || $("#coloration").val() == "Fast" || typeof valeurDuJour === 'undefined' ) {
+                }else{//Si la valeur == 0 
+                    if ($("#coloration").val() == "Standard" || $("#coloration").val() == "Fast" || typeof valeurDuJour === 'undefined' ) { //Si on est en coloration standard ou que la valeurDuJour n'est pas définie
                         var chaineCouleur = 'rgb(211,211,211)';
+                        //On colore le pays en gris
                         $('path[id^='+this.id.substring(0,3)+'-]').attr('fill',chaineCouleur );
-                    }else{
+                    }else{//Si la valeur est anormale
+                        //On colore le pays en gris
                         var chaineCouleur = 'rgb(142,68,173)';
                         $('path[id^='+this.id.substring(0,3)+'-]').attr('fill',chaineCouleur );
-                        // $('path[id^='+this.id.substring(0,3)+'-]').css({ fill: chaineCouleur }); 
                     }
                     
                 }
-            }else{
-                // console.log("Nope:" + this.id.substring(0,3));
+            }else{//Si valeurDuJour == "NA"
                 var chaineCouleur = 'rgb(211,211,211)';
+                //On colore le pays en gris
                 $('path[id^='+this.id.substring(0,3)+'-]').attr('fill',chaineCouleur );
-                // $('path[id^='+this.id.substring(0,3)+'-]').css({ fill: chaineCouleur });
             }
             
         });
@@ -3561,24 +4212,7 @@ Covid-19</text>
 
     function processColor(valeurDuJour){
         var couleurJour =  parseInt((valeurDuJour / dataMax)*nbCaissons) + 1;
-        return(colors[couleurJour]); 
-        // var lambda = (valeurDuJour-dataMin)/(dataMax-dataMin);
-        // // console.log(lambda);
-        // var couleurInterm = [];
-        // var pythaLocal = 0;
-
-        // for (let i = 0; i < couleurDepart.length; i++) {
-        //     couleurInterm[i] = (lambda * (couleurFin[i]) + (1 - lambda) * couleurDepart[i]);
-        //     pythaLocal += couleurInterm[i] * couleurInterm[i]; 
-        // }
-
-        // var pythaInterpole = (lambda * pythaFin) + (1 - lambda) * pythaDep;
-        // var coeffCouleur = Math.sqrt(pythaInterpole / pythaLocal)
-        
-        // for (let i = 0; i < couleurDepart.length; i++) {
-        //     couleurInterm[i] = (lambda * (couleurFin[i] * coeffCouleur) + (1 - lambda) * couleurDepart[i]);
-        // }
-        // return(couleurInterm);    
+        return(colors[couleurJour]);    
     }
 
 

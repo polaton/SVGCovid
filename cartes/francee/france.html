@@ -670,7 +670,7 @@ $("#downDate").click( function(e) {
 
 //Evenement clique pause
 $("#pause").click( function(e) {
-    //On réactive tous les composants utilisateurs
+    //On désactive tous les composants utilisateurs
     $("#first").prop( "disabled", false );
     $("#downDate").prop( "disabled", false );
     $("#pause").prop( "disabled", true );
@@ -684,7 +684,7 @@ $("#pause").click( function(e) {
 
 //Evenement clique lecture
 $("#play").click( function(e) {
-    //On désactive tous les composants utilisateurs
+    //On réactive tous les composants utilisateurs
     $("#first").prop( "disabled", true );
     $("#downDate").prop( "disabled", true );
     $("#pause").prop( "disabled", false );
@@ -726,6 +726,7 @@ $("#last").click( function(e) {
 
 //Evenement changement coloration
 $("#coloration").change( function(e) {
+    //On fait la mise à jour de la carte
     var selectedDate = $("#dateRange").val();
     initiateColors(false);
     majData(selectedDate);
@@ -734,6 +735,7 @@ $("#coloration").change( function(e) {
 
 //Evenement changement max de la légende
 $("#customMax").change( function(e) {
+    //On fait la mise à jour de la carte
     var selectedDate = $("#dateRange").val();
     initiateColors(true);
     majData(selectedDate);
@@ -742,6 +744,7 @@ $("#customMax").change( function(e) {
 
 //Evenement changement de date via le slider
 $("#slider").change( function(e) {
+    //On fait la mise à jour de la carte
     var selectedDate = $("#dateRange").val();
     changeSliderDateLabel(returnDateFormatted(selectedDate));
     majData(selectedDate);
@@ -839,7 +842,6 @@ function initiateSvg(){
 
 //Mise à jour des données
 function majData(offset){
-
     //On traite les tootlitps un par un
     $("g[id$=-TT]").each(function( index ) {
         //Si on trouve une clé correpondant au numéro du département associé au tooltip ( this.id.substring(1,3) ) dans les données R
@@ -894,7 +896,7 @@ function majCouleurs(offset){
         //On effectue ensuite les traitements en fonction de valeurDuJour
         if (valeurDuJour != "NA") {
             if (valeurDuJour >= 0) {
-                (valeurDuJour>dataMax?valeurDuJour=dataMax-(dataMax/(nbCaissons*2)):valeurDuJour);//Si la valeur du jour est supérieur au max de la légende, on ramène la valeur du jour pour qu'elle corresponde à notre caisson le plus élevé
+                (valeurDuJour>dataMax?valeurDuJour=dataMax-(dataMax/(nbCaissons*2)):valeurDuJour);//Si la valeur du jour est supérieure au max de la légende, on ramène la valeur du jour pour qu'elle corresponde à notre caisson le plus élevé
                 var chaineCouleur = processColor(valeurDuJour);
                 //On remplit le département avec la couleur
                 $('path[id=D'+this.id.substring(1,3)+']').attr('fill',chaineCouleur );    
