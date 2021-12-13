@@ -3538,6 +3538,11 @@ Covid-19</text>
         <option value="ZWE">ZWE</option>
     </select>
     <div id="plotStat"></div>
+    <br><br>
+    <div id="plotPhaseSpace"></div>
+    <br><br>
+    <div id="plotPhaseSpace3D"></div>
+
 </div>
 <!-- Panneau de commandes -->
 <div id="controls" style="position: fixed;right:20%;bottom: 5%;background-color:rgb(207, 233, 250);">
@@ -3602,6 +3607,8 @@ Covid-19</text>
     var selectedCountry = "";//Pays selectionné
     var lockedCountry="";//Pays vérouillé
     var dataStats=false;//Objet de statistiques pour les graphiques
+    var dataStatsPhase=false;//Objet de statistiques pour les graphiques
+    var dataStatsPhase3D=false;//Objet de statistiques pour les graphiques
     var daysLabelStats=[];//Tableau des titres des jours pour le graphique
 
     $(function() {
@@ -3805,7 +3812,7 @@ Covid-19</text>
     
     //Fonction d'affichage des stats
     function displayStats(){
-        if (!dataStats) {
+        if (!dataStats || !dataStatsPhase || !dataStatsPhase3D) {
             initStats();
         }
         updateStats();
@@ -3868,7 +3875,51 @@ Covid-19</text>
         }
 
         dataStats = [trace3,trace3compare,trace1,trace1compare,trace2,trace2compare];
-        Plotly.newPlot('plotStat', dataStats,layout);  
+        Plotly.newPlot('plotStat', dataStats,layout);
+        
+
+        var tracePhase1 = {
+                y: [],
+                x: [],
+                mode: "markers+lines",
+                name: "1st Trace",
+                type: "scatter",
+        };
+        var tracePhase1compare = {
+                y: [],
+                x: [],
+                mode: "markers+lines",
+                name: "1st Trace",
+                type: "scatter",
+        };
+        var layoutPhase={
+            yaxis: {
+                rangemode: 'nonnegative',
+                autorange: true
+            },
+            xaxis: {
+                rangemode: 'nonnegative',
+                autorange: true
+            }
+        }
+
+        dataStatsPhase = [tracePhase1,tracePhase1compare];
+        Plotly.newPlot('plotPhaseSpace', dataStatsPhase);
+
+        var tracePhase3D = {
+            x: [], 
+            y: [], 
+            z: [],
+            mode: 'lines+markers',
+            marker: {
+                size: 2,
+                line: {color: 'rgba(217, 217, 217, 0.14)',width: 0.5},
+                opacity: 0.8
+            },
+            type: 'scatter3d'
+        };
+        dataStatsPhase3D = [tracePhase3D];
+        Plotly.newPlot('plotPhaseSpace3D', dataStatsPhase3D);
     }
 
     function updateStats() {
@@ -3946,6 +3997,26 @@ Covid-19</text>
         }
 
         Plotly.redraw('plotStat');
+
+        if (statCompared !="none") {
+            dataStatsPhase[0]["x"]=dataConfirmed[statPays];
+            dataStatsPhase[0]["y"]=dataFast[statPays];
+            dataStatsPhase[1]["x"]=dataConfirmed[statCompared];
+            dataStatsPhase[1]["y"]=dataFast[statCompared];
+        }else{
+            dataStatsPhase[0]["x"]=dataConfirmed[statPays];
+            dataStatsPhase[0]["y"]=dataFast[statPays];
+            dataStatsPhase[1]["x"]=[];
+            dataStatsPhase[1]["y"]=[];
+        }
+        Plotly.redraw('plotPhaseSpace');
+        
+        dataStatsPhase3D[0]["x"]=dataConfirmed[statPays];
+        dataStatsPhase3D[0]["y"]=dataFast[statPays];
+        dataStatsPhase3D[0]["z"]=dataMorts[statPays];
+        
+        Plotly.redraw('plotPhaseSpace3D');
+
     }
 
     //Permet de mettre à jour le pays survolé par la souris, la fonction est lancée au survol d'un pays
