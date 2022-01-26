@@ -1,51 +1,13 @@
-1. Monde et France
-X Changer le titre "Covid temporel" 
-- Proposer 2 lignes pour les dates (fr/en)
-- faire versions fr et en
-X doubler la longueur du "potentiomètre des dates"
-- mettre un hyperlien qui passe de Fr à En,
-X mettre un hyperlien vers la doc
+Graphiques:
+°prendre toute la place
+°Ouvrir stats sur le pays selectionné
 
-2. Monde: ref:
-http://barthes.enssib.fr/coronavirus/cartes/Rmonde/EGmonde.html
-X appliquer la grille de couleurs de la France (caissons) => Deja ok?!
-- Ajouter légende populations
-- Attention, la position des boutons actifs et des options dépend de la
-largeur de la fenêtre
-Si elle respecte la taille originale (200 X 400, soit 1/2), ça va. Sinon
-ça 'tombe'
-X éclaircir le bleu des mers
-X changer le titre (R et morts): ajouts
-
-X remplacer "Aberrant" par "Valeurs aberrantes \n (ex.: morts négatifs)".
-En anglais: Aberrant values \n (eg.: negitive dead)
-X- Remplacer: "Confirmed par 10k hab" par "Number of confirmed cases for
-10 000 people". (légende et menu)
-X- Remplacer "Morts par 1M hab" par "Number of deaths per million
-inhabitants"
-XFr: Nombre de morts pour 1 million d'hab.
-
-X- Infos:
-Nom pays: XXX hab.
-Rfast: Y; Rslow: Z;
-New infections of the day: X
-New infections / 10000: Y
-New deaths / million: D
-Total deaths: Z
-Si possible garder le même corps que celui *sur* le pays.
+Graphiques améliorations:
+°Premier graphique: si confirmés sélectionné, afficher les données debruitées sous forme de courbe en plus des histos / donner possibilité utiliser données non débruitées
+XEchelle de droite => traits pointillés
+°Décaler légende de droite
+°Mettre un max pour le R dans le panel de graphique (0 <=> 2.5 / 3)
 
 
-3. France: ref:
-http://barthes.enssib.fr/coronavirus/cartes/RFrance/France.html
-- mettre le max à 2 et se limiter à 9 caissons, comme pour le monde
-- éventuellement donner la possibilité de choisir son seuil (comme pour
-le monde)
-- Infos (on peut y aller: on a plus de place que pour les pays)
-DXX: nom du dpt
-R: YYY (est-ce qu'on distingue R et Rfast?)
-Confirmés du jour: C
-Confirmés du jour / 10 000 hab: D
-Morts du jour: M
-Morts du jour / 1M hab: D
-Total morts / 1M hab: M
-- Attention à la Corse et aux Pyrénées orientales
+Phase Space:
+°Supprimer la valeur -1

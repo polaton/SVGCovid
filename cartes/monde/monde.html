@@ -3089,456 +3089,22 @@ Covid-19</text>
             <!-- Popup des statistiques -->
             <!-- <div id="popupStats" style="position: fixed;right:40%;bottom: 40%;background-color:rgb(207, 233, 250);"> -->
             <div id="popupStats" class="modal">
-                <select id="stats-pays">
-        <option value="AFG">AFG</option>
-        <option value="AGO">AGO</option>
-        <option value="ALB">ALB</option>
-        <option value="ARE">ARE</option>
-        <option value="ARG">ARG</option>
-        <option value="ARM">ARM</option>
-        <option value="AUS">AUS</option>
-        <option value="AUT">AUT</option>
-        <option value="AZE">AZE</option>
-        <option value="BDI">BDI</option>
-        <option value="BEL">BEL</option>
-        <option value="BEN">BEN</option>
-        <option value="BFA">BFA</option>
-        <option value="BGD">BGD</option>
-        <option value="BGR">BGR</option>
-        <option value="BHR">BHR</option>
-        <option value="BHS">BHS</option>
-        <option value="BIH">BIH</option>
-        <option value="BLM">BLM</option>
-        <option value="BLR">BLR</option>
-        <option value="BLZ">BLZ</option>
-        <option value="BOL">BOL</option>
-        <option value="BRA">BRA</option>
-        <option value="BRN">BRN</option>
-        <option value="BTN">BTN</option>
-        <option value="BWA">BWA</option>
-        <option value="CAF">CAF</option>
-        <option value="CAN">CAN</option>
-        <option value="CCK">CCK</option>
-        <option value="CHE">CHE</option>
-        <option value="CHL">CHL</option>
-        <option value="CHN">CHN</option>
-        <option value="CIV">CIV</option>
-        <option value="CMR">CMR</option>
-        <option value="COD">COD</option>
-        <option value="COG">COG</option>
-        <option value="COK">COK</option>
-        <option value="COL">COL</option>
-        <option value="COM">COM</option>
-        <option value="CPV">CPV</option>
-        <option value="CRI">CRI</option>
-        <option value="CUB">CUB</option>
-        <option value="CYM">CYM</option>
-        <option value="CYP">CYP</option>
-        <option value="CZE">CZE</option>
-        <option value="DEU">DEU</option>
-        <option value="DJI">DJI</option>
-        <option value="DMA">DMA</option>
-        <option value="DNK">DNK</option>
-        <option value="DOM">DOM</option>
-        <option value="DZA">DZA</option>
-        <option value="ECU">ECU</option>
-        <option value="EGY">EGY</option>
-        <option value="ERI">ERI</option>
-        <option value="ESH">ESH</option>
-        <option value="ESP">ESP</option>
-        <option value="EST">EST</option>
-        <option value="ETH">ETH</option>
-        <option value="FIN">FIN</option>
-        <option value="FJI">FJI</option>
-        <option value="FLK">FLK</option>
-        <option value="FRA">FRA</option>
-        <option value="FSM">FSM</option>
-        <option value="GAB">GAB</option>
-        <option value="GBR">GBR</option>
-        <option value="GEO">GEO</option>
-        <option value="GGY">GGY</option>
-        <option value="GHA">GHA</option>
-        <option value="GIN">GIN</option>
-        <option value="GLP">GLP</option>
-        <option value="GMB">GMB</option>
-        <option value="GNB">GNB</option>
-        <option value="GNQ">GNQ</option>
-        <option value="GRC">GRC</option>
-        <option value="GRD">GRD</option>
-        <option value="GRL">GRL</option>
-        <option value="GTM">GTM</option>
-        <option value="GUF">GUF</option>
-        <option value="GUY">GUY</option>
-        <option value="HKG">HKG</option>
-        <option value="HND">HND</option>
-        <option value="HRV">HRV</option>
-        <option value="HTI">HTI</option>
-        <option value="HUN">HUN</option>
-        <option value="IDN">IDN</option>
-        <option value="IND">IND</option>
-        <option value="IRL">IRL</option>
-        <option value="IRN">IRN</option>
-        <option value="IRQ">IRQ</option>
-        <option value="ISL">ISL</option>
-        <option value="ISR">ISR</option>
-        <option value="ITA">ITA</option>
-        <option value="JAM">JAM</option>
-        <option value="JOR">JOR</option>
-        <option value="JPN">JPN</option>
-        <option value="KAZ">KAZ</option>
-        <option value="KEN">KEN</option>
-        <option value="KGZ">KGZ</option>
-        <option value="KHM">KHM</option>
-        <option value="KIR">KIR</option>
-        <option value="KNA">KNA</option>
-        <option value="KOR">KOR</option>
-        <option value="KSV">KSV</option>
-        <option value="KWT">KWT</option>
-        <option value="LAO">LAO</option>
-        <option value="LBN">LBN</option>
-        <option value="LBR">LBR</option>
-        <option value="LBY">LBY</option>
-        <option value="LKA">LKA</option>
-        <option value="LSO">LSO</option>
-        <option value="LTU">LTU</option>
-        <option value="LUX">LUX</option>
-        <option value="LVA">LVA</option>
-        <option value="MAC">MAC</option>
-        <option value="MAF">MAF</option>
-        <option value="MAR">MAR</option>
-        <option value="MCO">MCO</option>
-        <option value="MDA">MDA</option>
-        <option value="MDG">MDG</option>
-        <option value="MDV">MDV</option>
-        <option value="MEX">MEX</option>
-        <option value="MHL">MHL</option>
-        <option value="MKD">MKD</option>
-        <option value="MLI">MLI</option>
-        <option value="MLT">MLT</option>
-        <option value="MMR">MMR</option>
-        <option value="MNE">MNE</option>
-        <option value="MNG">MNG</option>
-        <option value="MNP">MNP</option>
-        <option value="MOZ">MOZ</option>
-        <option value="MRT">MRT</option>
-        <option value="MTQ">MTQ</option>
-        <option value="MUS">MUS</option>
-        <option value="MWI">MWI</option>
-        <option value="MYS">MYS</option>
-        <option value="MYT">MYT</option>
-        <option value="NAM">NAM</option>
-        <option value="NCL">NCL</option>
-        <option value="NER">NER</option>
-        <option value="NFK">NFK</option>
-        <option value="NGA">NGA</option>
-        <option value="NIC">NIC</option>
-        <option value="NLD">NLD</option>
-        <option value="NOR">NOR</option>
-        <option value="NPL">NPL</option>
-        <option value="NRU">NRU</option>
-        <option value="NZL">NZL</option>
-        <option value="OMN">OMN</option>
-        <option value="PAK">PAK</option>
-        <option value="PAN">PAN</option>
-        <option value="PCN">PCN</option>
-        <option value="PER">PER</option>
-        <option value="PHL">PHL</option>
-        <option value="PLW">PLW</option>
-        <option value="PNG">PNG</option>
-        <option value="POL">POL</option>
-        <option value="PRI">PRI</option>
-        <option value="PRK">PRK</option>
-        <option value="PRT">PRT</option>
-        <option value="PRY">PRY</option>
-        <option value="PSE">PSE</option>
-        <option value="PYF">PYF</option>
-        <option value="QAT">QAT</option>
-        <option value="REU">REU</option>
-        <option value="ROU">ROU</option>
-        <option value="RUS">RUS</option>
-        <option value="RWA">RWA</option>
-        <option value="SAU">SAU</option>
-        <option value="SDN">SDN</option>
-        <option value="SEN">SEN</option>
-        <option value="SGP">SGP</option>
-        <option value="SHN">SHN</option>
-        <option value="SJM">SJM</option>
-        <option value="SLB">SLB</option>
-        <option value="SLE">SLE</option>
-        <option value="SLV">SLV</option>
-        <option value="SOM">SOM</option>
-        <option value="SPM">SPM</option>
-        <option value="SRB">SRB</option>
-        <option value="SSD">SSD</option>
-        <option value="SUR">SUR</option>
-        <option value="SVK">SVK</option>
-        <option value="SVN">SVN</option>
-        <option value="SWE">SWE</option>
-        <option value="SWZ">SWZ</option>
-        <option value="SYC">SYC</option>
-        <option value="SYR">SYR</option>
-        <option value="TCA">TCA</option>
-        <option value="TCD">TCD</option>
-        <option value="TGO">TGO</option>
-        <option value="THA">THA</option>
-        <option value="TJK">TJK</option>
-        <option value="TKM">TKM</option>
-        <option value="TLS">TLS</option>
-        <option value="TON">TON</option>
-        <option value="TUN">TUN</option>
-        <option value="TUR">TUR</option>
-        <option value="TUV">TUV</option>
-        <option value="TWN">TWN</option>
-        <option value="TZA">TZA</option>
-        <option value="UGA">UGA</option>
-        <option value="UKR">UKR</option>
-        <option value="UMI">UMI</option>
-        <option value="URY">URY</option>
-        <option value="USA">USA</option>
-        <option value="UZB">UZB</option>
-        <option value="VAT">VAT</option>
-        <option value="VCT">VCT</option>
-        <option value="VEN">VEN</option>
-        <option value="VGB">VGB</option>
-        <option value="VIR">VIR</option>
-        <option value="VNM">VNM</option>
-        <option value="VUT">VUT</option>
-        <option value="WLF">WLF</option>
-        <option value="YEM">YEM</option>
-        <option value="ZAF">ZAF</option>
-        <option value="ZMB">ZMB</option>
-        <option value="ZWE">ZWE</option>
-    </select>
+                <span id="select-pays-1">
+
+                </span>
+                
                 <br>
                 <input class="stats-control" type="checkbox" id="rstandard" name="rstandard" checked><label for="rstandard">R Standard</label>
                 <input class="stats-control" type="checkbox" id="rfast" name="rfast" checked><label for="rfast">R Fast</label>
                 <br>
                 <input class="stats-control" type="radio" value="mortagg" name="stathisto" checked><label for="mortagg">Morts pour 1M h</label>
                 <input class="stats-control" type="radio" value="confirmeagg" name="stathisto"><label for="confirmeagg">Confirmés pour 10k h</label>
+                <input class="stats-control" type="radio" value="confirmeaggdenoised" name="stathisto"><label for="confirmeaggdenoised">Confirmés pour 10k h dénoisé</label>
                 <input class="stats-control" type="radio" value="desactivatehisto" name="stathisto"><label for="desactivatehisto">Désactiver</label>
                 <br>
-                <select id="stats-compared">
-        <option value="none"></option>
-        <option value="AFG">AFG</option>
-        <option value="AFG">AFG</option>
-        <option value="AGO">AGO</option>
-        <option value="ALB">ALB</option>
-        <option value="ARE">ARE</option>
-        <option value="ARG">ARG</option>
-        <option value="ARM">ARM</option>
-        <option value="AUS">AUS</option>
-        <option value="AUT">AUT</option>
-        <option value="AZE">AZE</option>
-        <option value="BDI">BDI</option>
-        <option value="BEL">BEL</option>
-        <option value="BEN">BEN</option>
-        <option value="BFA">BFA</option>
-        <option value="BGD">BGD</option>
-        <option value="BGR">BGR</option>
-        <option value="BHR">BHR</option>
-        <option value="BHS">BHS</option>
-        <option value="BIH">BIH</option>
-        <option value="BLM">BLM</option>
-        <option value="BLR">BLR</option>
-        <option value="BLZ">BLZ</option>
-        <option value="BOL">BOL</option>
-        <option value="BRA">BRA</option>
-        <option value="BRN">BRN</option>
-        <option value="BTN">BTN</option>
-        <option value="BWA">BWA</option>
-        <option value="CAF">CAF</option>
-        <option value="CAN">CAN</option>
-        <option value="CCK">CCK</option>
-        <option value="CHE">CHE</option>
-        <option value="CHL">CHL</option>
-        <option value="CHN">CHN</option>
-        <option value="CIV">CIV</option>
-        <option value="CMR">CMR</option>
-        <option value="COD">COD</option>
-        <option value="COG">COG</option>
-        <option value="COK">COK</option>
-        <option value="COL">COL</option>
-        <option value="COM">COM</option>
-        <option value="CPV">CPV</option>
-        <option value="CRI">CRI</option>
-        <option value="CUB">CUB</option>
-        <option value="CYM">CYM</option>
-        <option value="CYP">CYP</option>
-        <option value="CZE">CZE</option>
-        <option value="DEU">DEU</option>
-        <option value="DJI">DJI</option>
-        <option value="DMA">DMA</option>
-        <option value="DNK">DNK</option>
-        <option value="DOM">DOM</option>
-        <option value="DZA">DZA</option>
-        <option value="ECU">ECU</option>
-        <option value="EGY">EGY</option>
-        <option value="ERI">ERI</option>
-        <option value="ESH">ESH</option>
-        <option value="ESP">ESP</option>
-        <option value="EST">EST</option>
-        <option value="ETH">ETH</option>
-        <option value="FIN">FIN</option>
-        <option value="FJI">FJI</option>
-        <option value="FLK">FLK</option>
-        <option value="FRA">FRA</option>
-        <option value="FSM">FSM</option>
-        <option value="GAB">GAB</option>
-        <option value="GBR">GBR</option>
-        <option value="GEO">GEO</option>
-        <option value="GGY">GGY</option>
-        <option value="GHA">GHA</option>
-        <option value="GIN">GIN</option>
-        <option value="GLP">GLP</option>
-        <option value="GMB">GMB</option>
-        <option value="GNB">GNB</option>
-        <option value="GNQ">GNQ</option>
-        <option value="GRC">GRC</option>
-        <option value="GRD">GRD</option>
-        <option value="GRL">GRL</option>
-        <option value="GTM">GTM</option>
-        <option value="GUF">GUF</option>
-        <option value="GUY">GUY</option>
-        <option value="HKG">HKG</option>
-        <option value="HND">HND</option>
-        <option value="HRV">HRV</option>
-        <option value="HTI">HTI</option>
-        <option value="HUN">HUN</option>
-        <option value="IDN">IDN</option>
-        <option value="IND">IND</option>
-        <option value="IRL">IRL</option>
-        <option value="IRN">IRN</option>
-        <option value="IRQ">IRQ</option>
-        <option value="ISL">ISL</option>
-        <option value="ISR">ISR</option>
-        <option value="ITA">ITA</option>
-        <option value="JAM">JAM</option>
-        <option value="JOR">JOR</option>
-        <option value="JPN">JPN</option>
-        <option value="KAZ">KAZ</option>
-        <option value="KEN">KEN</option>
-        <option value="KGZ">KGZ</option>
-        <option value="KHM">KHM</option>
-        <option value="KIR">KIR</option>
-        <option value="KNA">KNA</option>
-        <option value="KOR">KOR</option>
-        <option value="KSV">KSV</option>
-        <option value="KWT">KWT</option>
-        <option value="LAO">LAO</option>
-        <option value="LBN">LBN</option>
-        <option value="LBR">LBR</option>
-        <option value="LBY">LBY</option>
-        <option value="LKA">LKA</option>
-        <option value="LSO">LSO</option>
-        <option value="LTU">LTU</option>
-        <option value="LUX">LUX</option>
-        <option value="LVA">LVA</option>
-        <option value="MAC">MAC</option>
-        <option value="MAF">MAF</option>
-        <option value="MAR">MAR</option>
-        <option value="MCO">MCO</option>
-        <option value="MDA">MDA</option>
-        <option value="MDG">MDG</option>
-        <option value="MDV">MDV</option>
-        <option value="MEX">MEX</option>
-        <option value="MHL">MHL</option>
-        <option value="MKD">MKD</option>
-        <option value="MLI">MLI</option>
-        <option value="MLT">MLT</option>
-        <option value="MMR">MMR</option>
-        <option value="MNE">MNE</option>
-        <option value="MNG">MNG</option>
-        <option value="MNP">MNP</option>
-        <option value="MOZ">MOZ</option>
-        <option value="MRT">MRT</option>
-        <option value="MTQ">MTQ</option>
-        <option value="MUS">MUS</option>
-        <option value="MWI">MWI</option>
-        <option value="MYS">MYS</option>
-        <option value="MYT">MYT</option>
-        <option value="NAM">NAM</option>
-        <option value="NCL">NCL</option>
-        <option value="NER">NER</option>
-        <option value="NFK">NFK</option>
-        <option value="NGA">NGA</option>
-        <option value="NIC">NIC</option>
-        <option value="NLD">NLD</option>
-        <option value="NOR">NOR</option>
-        <option value="NPL">NPL</option>
-        <option value="NRU">NRU</option>
-        <option value="NZL">NZL</option>
-        <option value="OMN">OMN</option>
-        <option value="PAK">PAK</option>
-        <option value="PAN">PAN</option>
-        <option value="PCN">PCN</option>
-        <option value="PER">PER</option>
-        <option value="PHL">PHL</option>
-        <option value="PLW">PLW</option>
-        <option value="PNG">PNG</option>
-        <option value="POL">POL</option>
-        <option value="PRI">PRI</option>
-        <option value="PRK">PRK</option>
-        <option value="PRT">PRT</option>
-        <option value="PRY">PRY</option>
-        <option value="PSE">PSE</option>
-        <option value="PYF">PYF</option>
-        <option value="QAT">QAT</option>
-        <option value="REU">REU</option>
-        <option value="ROU">ROU</option>
-        <option value="RUS">RUS</option>
-        <option value="RWA">RWA</option>
-        <option value="SAU">SAU</option>
-        <option value="SDN">SDN</option>
-        <option value="SEN">SEN</option>
-        <option value="SGP">SGP</option>
-        <option value="SHN">SHN</option>
-        <option value="SJM">SJM</option>
-        <option value="SLB">SLB</option>
-        <option value="SLE">SLE</option>
-        <option value="SLV">SLV</option>
-        <option value="SOM">SOM</option>
-        <option value="SPM">SPM</option>
-        <option value="SRB">SRB</option>
-        <option value="SSD">SSD</option>
-        <option value="SUR">SUR</option>
-        <option value="SVK">SVK</option>
-        <option value="SVN">SVN</option>
-        <option value="SWE">SWE</option>
-        <option value="SWZ">SWZ</option>
-        <option value="SYC">SYC</option>
-        <option value="SYR">SYR</option>
-        <option value="TCA">TCA</option>
-        <option value="TCD">TCD</option>
-        <option value="TGO">TGO</option>
-        <option value="THA">THA</option>
-        <option value="TJK">TJK</option>
-        <option value="TKM">TKM</option>
-        <option value="TLS">TLS</option>
-        <option value="TON">TON</option>
-        <option value="TUN">TUN</option>
-        <option value="TUR">TUR</option>
-        <option value="TUV">TUV</option>
-        <option value="TWN">TWN</option>
-        <option value="TZA">TZA</option>
-        <option value="UGA">UGA</option>
-        <option value="UKR">UKR</option>
-        <option value="UMI">UMI</option>
-        <option value="URY">URY</option>
-        <option value="USA">USA</option>
-        <option value="UZB">UZB</option>
-        <option value="VAT">VAT</option>
-        <option value="VCT">VCT</option>
-        <option value="VEN">VEN</option>
-        <option value="VGB">VGB</option>
-        <option value="VIR">VIR</option>
-        <option value="VNM">VNM</option>
-        <option value="VUT">VUT</option>
-        <option value="WLF">WLF</option>
-        <option value="YEM">YEM</option>
-        <option value="ZAF">ZAF</option>
-        <option value="ZMB">ZMB</option>
-        <option value="ZWE">ZWE</option>
-    </select>
+                <span id="select-pays-2">
+                    stats-compared
+                </span>
                 <div id="plotStat"></div>
                 <br><br>
                 <div id="plotPhaseSpace"></div>
@@ -3598,6 +3164,7 @@ Covid-19</text>
                 var dataNew = {}; //Tableau des données NCas
                 var dataMorts = {}; //Tableau des données AggMorts
                 var dataConfirmed = {}; //Tableau des données AggConfirmed
+                var dataCasDenoised = {}; //Tableau des données Ncasdenoised
                 var firstDay = "02/02/2020"; //Premier jour des données
                 var daysPast; //Nombres de jours depuis le début des données
                 var nbCaissons = $(".legBox").length; //Nombre de caissons pour la légende
@@ -3611,6 +3178,9 @@ Covid-19</text>
                 var dataStatsPhase = false; //Objet de statistiques pour les graphiques
                 var dataStatsPhase3D = false; //Objet de statistiques pour les graphiques
                 var daysLabelStats = []; //Tableau des titres des jours pour le graphique
+                var corresPays = {};
+                var availableCountries=["AFG","AGO","ALB","ARE","ARG","ARM","AUS","AUT","AZE","BDI","BEL","BEN","BFA","BGD","BGR","BHR","BHS","BIH","BLM","BLR","BLZ","BOL","BRA","BRN","BTN","BWA","CAF","CAN","CCK","CHE","CHL","CHN","CIV","CMR","COD","COG","COK","COL","COM","CPV","CRI","CUB","CYM","CYP","CZE","DEU","DJI","DMA","DNK","DOM","DZA","ECU","EGY","ERI","ESH","ESP","EST","ETH","FIN","FJI","FLK","FRA","FSM","GAB","GBR","GEO","GGY","GHA","GIN","GLP","GMB","GNB","GNQ","GRC","GRD","GRL","GTM","GUF","GUY","HKG","HND","HRV","HTI","HUN","IDN","IND","IRL","IRN","IRQ","ISL","ISR","ITA","JAM","JOR","JPN","KAZ","KEN","KGZ","KHM","KIR","KNA","KOR","KSV","KWT","LAO","LBN","LBR","LBY","LKA","LSO","LTU","LUX","LVA","MAC","MAF","MAR","MCO","MDA","MDG","MDV","MEX","MHL","MKD","MLI","MLT","MMR","MNE","MNG","MNP","MOZ","MRT","MTQ","MUS","MWI","MYS","MYT","NAM","NCL","NER","NFK","NGA","NIC","NLD","NOR","NPL","NRU","NZL","OMN","PAK","PAN","PCN","PER","PHL","PLW","PNG","POL","PRI","PRK","PRT","PRY","PSE","PYF","QAT","REU","ROU","RUS","RWA","SAU","SDN","SEN","SGP","SHN","SJM","SLB","SLE","SLV","SOM","SPM","SRB","SSD","SUR","SVK","SVN","SWE","SWZ","SYC","SYR","TCA","TCD","TGO","THA","TJK","TKM","TLS","TON","TUN","TUR","TUV","TWN","TZA","UGA","UKR","UMI","URY","USA","UZB","VAT","VCT","VEN","VGB","VIR","VNM","VUT","WLF","YEM","ZAF","ZMB","ZWE"];
+                var selectPays="";
 
                 $(function() {
                     //Chargement des données
@@ -3647,21 +3217,30 @@ Covid-19</text>
                                     data.forEach(element => dataFast[element.shift()] = element.map(function(v) {
                                         return parseFloat(v, 10);
                                     })); //ajout au tableau de données R Fast
-                                    $.get("data/NCas", function(data) { //On charge Confirmés
+                                    $.get("data/Ncasdenoised", function(data) { //On charge Ncasdenoised
                                         data = $.csv.toArrays(data);
                                         data.shift();
                                         data.shift();
-                                        data.forEach(element => dataNew[element.shift()] = element.map(function(v) {
+                                        data.forEach(element => dataCasDenoised[element.shift()] = element.map(function(v) {
                                             return parseFloat(v, 10);
-                                        })); //ajout au tableau de données Nb Cas
+                                        })); //ajout au tableau de données R Fast
+                                        $.get("data/NCas", function(data) { //On charge Confirmés
+                                            data = $.csv.toArrays(data);
+                                            data.shift();
+                                            data.shift();
+                                            data.forEach(element => dataNew[element.shift()] = element.map(function(v) {
+                                                return parseFloat(v, 10);
+                                            })); //ajout au tableau de données Nb Cas
 
-                                        //Création du range de dates et ajout à la page HTML
-                                        $("#slider").append('<input type="range" id="dateRange" name="dateRange" step="1" min="0" max="' + daysPast + '" value="' + daysPast + '" style="width:70%;">  <label id="selectedDate" for="dateRange"></label>');
-                                        initiateSvg(); //On fait les quelques modifications désirées sur le SVG
-                                        changeSliderDateLabel(returnDateFormatted(daysPast)); //On met à jour le label du slider de date
-                                        majData($("#dateRange").val()); //On met à jour les données
-                                        majCouleurs($("#dateRange").val()); //On met à jour les colorations des pays
-                                        initiateStatsLabels();
+                                            //Création du range de dates et ajout à la page HTML
+                                            $("#slider").append('<input type="range" id="dateRange" name="dateRange" step="1" min="0" max="' + daysPast + '" value="' + daysPast + '" style="width:70%;">  <label id="selectedDate" for="dateRange"></label>');
+                                            initiateSvg(); //On fait les quelques modifications désirées sur le SVG
+                                            changeSliderDateLabel(returnDateFormatted(daysPast)); //On met à jour le label du slider de date
+                                            majData($("#dateRange").val()); //On met à jour les données
+                                            majCouleurs($("#dateRange").val()); //On met à jour les colorations des pays
+                                            initiateStatsLabels();
+                                            loadCountries();
+                                        });
                                     });
                                 });
                             });
@@ -3773,13 +3352,7 @@ Covid-19</text>
                 });
 
                 //Evenement changement de pays dans le tooltip de stats
-                $("#stats-pays").change(function(e) {
-                    updateStats();
-                });
 
-                $("#stats-compared").change(function(e) {
-                    updateStats();
-                });
 
                 //Evenement changement de configuration du module de stats
                 $(".stats-control").change(function(e) {
@@ -3818,7 +3391,6 @@ Covid-19</text>
                     for (let index = 0; index <= daysPast; index++) {
                         daysLabelStats.push(returnDateFormatted(index));
                     }
-                    console.log(daysLabelStats);
                 };
 
                 //Fonction d'affichage des stats
@@ -3830,6 +3402,17 @@ Covid-19</text>
                 };
 
                 function initStats() {
+                    $("#select-pays-1").append(generateSelectCountry("stats-pays",false));
+                    $("#select-pays-2").append(generateSelectCountry("stats-compared",true));
+                    
+                    $("#stats-pays").change(function(e) {
+                        updateStats();
+                    });
+
+                    $("#stats-compared").change(function(e) {
+                        updateStats();
+                    });
+                    
                     var statPays = $("#stats-pays").val();
                     var trace1 = {
                         y: [],
@@ -3869,7 +3452,7 @@ Covid-19</text>
                     };
                     
                     var layout = {
-                        title: "Données générales sur la COVID19",
+                        title: "Evolution temporelle de la COVID 19 - Time evolution of COVID 19",
                         barmode: 'group',
                         xaxis: {
                             tickmode: "array", //  If "linear", the placement of the ticks is determined by a starting position `tick0` and a tick step `dtick`
@@ -3893,6 +3476,12 @@ Covid-19</text>
                             overlaying: 'y',
                             side: 'right',
                             autorange: true
+                        },
+                        width: 950,
+                        height: 450,
+                        legend: {
+                            x: 1.1,
+                            y: 0.5
                         }
                     }
 
@@ -3922,17 +3511,19 @@ Covid-19</text>
                         type: "scatter",
                     };
                     var layoutPhase = {
-                        title: "Espace des phases RFast / Confirmés",
+                        title: "Confirmés (x) / RFast (y)<br>New infections (x) / RFast (y) ",
                         yaxis: {
                             title:'RFast',
                             rangemode: 'nonnegative',
                             autorange: true
                         },
                         xaxis: {
-                            title:'Nombre confirmés pour 10k',
+                            title:'New infections',
                             rangemode: 'nonnegative',
                             autorange: true
-                        }
+                        },
+                        width: 950,
+                        height: 450
                     }
 
                     dataStatsPhase = [tracePhase1, tracePhase1compare];
@@ -3961,10 +3552,10 @@ Covid-19</text>
                     var statPays = $("#stats-pays").val();
                     var statCompared = $("#stats-compared").val();
                     if ($("#rfast").prop("checked")) {
-                        dataStats[2]["y"] = dataFast[statPays];
+                        dataStats[2]["y"] = cleanRSerie(dataFast[statPays]);
                         dataStats[2]["name"] = "R Fast " + statPays;
                         if (statCompared != "none") {
-                            dataStats[3]["y"] = dataFast[statCompared];
+                            dataStats[3]["y"] = cleanRSerie(dataFast[statCompared]);
                             dataStats[3]["name"] = "R Fast " + statCompared;
                         } else {
                             dataStats[3]["y"] = [];
@@ -3978,10 +3569,10 @@ Covid-19</text>
                     }
 
                     if ($("#rstandard").prop("checked")) {
-                        dataStats[4]["y"] = dataFull[statPays];
+                        dataStats[4]["y"] = cleanRSerie(dataFull[statPays]);
                         dataStats[4]["name"] = "R Standard " + statPays;
                         if (statCompared != "none") {
-                            dataStats[5]["y"] = dataFull[statCompared];
+                            dataStats[5]["y"] = cleanRSerie(dataFull[statCompared]);
                             dataStats[5]["name"] = "R Standard " + statCompared;
                         } else {
                             dataStats[5]["y"] = [];
@@ -4027,6 +3618,18 @@ Covid-19</text>
                             }
                             break;
 
+                        case "confirmeaggdenoised":
+                            dataStats[0]["y"] = dataCasDenoised[statPays];
+                            dataStats[0]["name"] = "Confirmés pour 10k h " + statPays;
+                            if (statCompared != "none") {
+                                dataStats[1]["y"] = dataCasDenoised[statCompared];
+                                dataStats[1]["name"] = "Confirmés pour 10k h " + statCompared;
+                            } else {
+                                dataStats[1]["y"] = [];
+                                dataStats[1]["name"] = "";
+                            }
+                            break;
+
                         case "desactivatehisto":
                             dataStats[0]["y"] = [];
                             dataStats[0]["name"] = "";
@@ -4040,16 +3643,17 @@ Covid-19</text>
 
                     Plotly.redraw('plotStat');
 
+                    
                     if (statCompared != "none") {
-                        dataStatsPhase[0]["x"] = dataConfirmed[statPays];
-                        dataStatsPhase[0]["y"] = dataFast[statPays];
+                        dataStatsPhase[0]["x"] = dataCasDenoised[statPays];
+                        dataStatsPhase[0]["y"] = cleanRSerie(dataFast[statPays]);
                         dataStatsPhase[0]["name"] = statPays;
-                        dataStatsPhase[1]["x"] = dataConfirmed[statCompared];
-                        dataStatsPhase[1]["y"] = dataFast[statCompared];
+                        dataStatsPhase[1]["x"] = dataCasDenoised[statCompared];
+                        dataStatsPhase[1]["y"] = cleanRSerie(dataFast[statCompared]);
                         dataStatsPhase[1]["name"] = statCompared;
                     } else {
-                        dataStatsPhase[0]["x"] = dataConfirmed[statPays];
-                        dataStatsPhase[0]["y"] = dataFast[statPays];
+                        dataStatsPhase[0]["x"] = dataCasDenoised[statPays];
+                        dataStatsPhase[0]["y"] = cleanRSerie(dataFast[statPays]);
                         dataStatsPhase[0]["name"] = statPays;
                         dataStatsPhase[1]["x"] = [];
                         dataStatsPhase[1]["y"] = [];
@@ -4057,12 +3661,25 @@ Covid-19</text>
                     }
                     Plotly.redraw('plotPhaseSpace');
 
-                    dataStatsPhase3D[0]["x"] = dataConfirmed[statPays];
-                    dataStatsPhase3D[0]["y"] = dataFast[statPays];
-                    dataStatsPhase3D[0]["z"] = dataMorts[statPays];
+                    dataStatsPhase3D[0]["x"] = dataCasDenoised[statPays];
+                    dataStatsPhase3D[0]["y"] = dataMorts[statPays];
+                    dataStatsPhase3D[0]["z"] = dataFast[statPays];
 
                     Plotly.redraw('plotPhaseSpace3D');
 
+                }
+
+                function cleanRSerie(serie){
+                    var tmpSerie = serie.slice();
+                    for (let index = 0; index < tmpSerie.length; index++) {
+                        const element = tmpSerie[index];
+                        if (element > parseFloat($("#customMax").val())) {
+                            tmpSerie[index] = parseFloat($("#customMax").val());
+                        }else if (element == -1){
+                            tmpSerie[index] = 0;
+                        }
+                    }
+                    return tmpSerie;
                 }
 
                 //Permet de mettre à jour le pays survolé par la souris, la fonction est lancée au survol d'un pays
@@ -4083,6 +3700,7 @@ Covid-19</text>
                 function majFixed() {
                     //Si on a un pays vérouillé, on utilise son tooltip
                     if (lockedCountry != "") {
+                        $('#stats-pays option[value="'+lockedCountry+'"]').prop('selected', true);
                         tooltip = lockedCountry + "-TT";
                         //Sinon, si on a un pays survolé, on utilise son tooltip
                     } else if (selectedCountry != "") {
@@ -4361,6 +3979,28 @@ Covid-19</text>
                         output.push(daysLabelStats[position])
                     }
                     return output;
+                };
+
+                function generateSelectCountry(id,none){
+                    var tmpSelectCountry = '<select id="'+id+'">';
+                    if (none) {
+                        tmpSelectCountry += '<option value="none"></option>'
+                    }
+                    availableCountries.forEach(element => {
+                        tmpSelectCountry += '<option value="'+element+'">'+corresPays[element]+'</option>';
+                    });
+                    return tmpSelectCountry;
+                }
+
+                function loadCountries(){
+                    $.get("data/nomenclatures-pays", function(data) { //On charge AggMorts
+                        data = $.csv.toArrays(data,{'separator':';'});
+                        data.shift();
+                        data.forEach(element => {
+                            corresPays[element[0]] = element[1];
+                        });
+                        console.log(corresPays);
+                    });
                 };
             </script>
         </body>

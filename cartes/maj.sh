@@ -43,3 +43,5 @@ wget http://barthes.enssib.fr/coronavirus/cartes/Rmonde/methode-confirmesaccrjou
 mv methode-confirmesaccrjourpop monde/data/
 wget http://barthes.enssib.fr/coronavirus/cartes/Rmonde/methode-mortsaccrjourpop
 mv methode-mortsaccrjourpop monde/data/
+wget http://barthes.enssib.fr/coronavirus/cartes/Rmonde/Ncasdenoised
+mv Ncasdenoised monde/data/
