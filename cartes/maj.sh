@@ -33,6 +33,9 @@ mv monde.js monde/includes/
 wget https://raw.githubusercontent.com/polaton/SVGCovid/main/cartes/monde/includes/monde.css
 mv monde.css monde/includes/
 
+
+wget https://raw.githubusercontent.com/polaton/SVGCovid/main/cartes/monde/data/nomenclatures-pays
+mv nomenclatures-pays monde/data/
 wget http://barthes.enssib.fr/coronavirus/cartes/Rmonde/NCas 
 mv NCas monde/data/
 wget http://barthes.enssib.fr/coronavirus/cartes/Rmonde/RFast
