@@ -11,3 +11,10 @@ XEchelle de droite => traits pointillés
 
 Phase Space:
 °Supprimer la valeur -1
+
+-Modal grahiques responsive
+-Menu d'intéraction responsive + déplacer + agrandir
+
+°Trier select pays par nom et pas par code
+°A la fin de l'animation, mettre en pause auto
+-Forcer couleurs des séries => Rouge 1 Bleu 2

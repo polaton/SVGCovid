@@ -3099,7 +3099,7 @@ Covid-19</text>
                 <br>
                 <input class="stats-control" type="radio" value="mortagg" name="stathisto" checked><label for="mortagg">Morts pour 1M h</label>
                 <input class="stats-control" type="radio" value="confirmeagg" name="stathisto"><label for="confirmeagg">Confirmés pour 10k h</label>
-                <input class="stats-control" type="radio" value="confirmeaggdenoised" name="stathisto"><label for="confirmeaggdenoised">Confirmés pour 10k h dénoisé</label>
+                <input class="stats-control" type="radio" value="confirmeaggdenoised" name="stathisto" checked="checked"><label for="confirmeaggdenoised">Confirmés débruités pour 10k h </label>
                 <input class="stats-control" type="radio" value="desactivatehisto" name="stathisto"><label for="desactivatehisto">Désactiver</label>
                 <br>
                 <span id="select-pays-2">
@@ -3301,6 +3301,17 @@ Covid-19</text>
                         changeSliderDateLabel(returnDateFormatted(selectedDate));
                         majData(selectedDate);
                         majCouleurs(selectedDate);
+                        if (selectedDate == daysPast){
+                            $("#first").prop("disabled", false);
+                            $("#downDate").prop("disabled", false);
+                            $("#pause").prop("disabled", true);
+                            $("#play").prop("disabled", false);
+                            $("#upDate").prop("disabled", false);
+                            $("#last").prop("disabled", false);
+                            $("#pas").prop("disabled", false);
+                            $("#vitesse").prop("disabled", false);
+                            clearInterval(tim);
+                        }
                     }, $("#vitesse").val()); //Ici on indique l'intervalle à laquelle la fonction doit se répéter
                 });
 
@@ -3403,7 +3414,9 @@ Covid-19</text>
 
                 function initStats() {
                     $("#select-pays-1").append(generateSelectCountry("stats-pays",false));
+                    orderSelectCountry("stats-pays");
                     $("#select-pays-2").append(generateSelectCountry("stats-compared",true));
+                    orderSelectCountry("stats-compared");
                     
                     $("#stats-pays").change(function(e) {
                         updateStats();
@@ -3482,7 +3495,8 @@ Covid-19</text>
                         legend: {
                             x: 1.1,
                             y: 0.5
-                        }
+                        },
+                        colorway : ['#4D8FAC', '#C93756', '#22A7F0', '#F9690E', '#003171', '#CF000F']
                     }
 
                     dataStats = [trace3, trace3compare, trace1, trace1compare, trace2, trace2compare];
@@ -3645,14 +3659,14 @@ Covid-19</text>
 
                     
                     if (statCompared != "none") {
-                        dataStatsPhase[0]["x"] = dataCasDenoised[statPays];
+                        dataStatsPhase[0]["x"] = dataConfirmed[statPays];
                         dataStatsPhase[0]["y"] = cleanRSerie(dataFast[statPays]);
                         dataStatsPhase[0]["name"] = statPays;
-                        dataStatsPhase[1]["x"] = dataCasDenoised[statCompared];
+                        dataStatsPhase[1]["x"] = dataConfirmed[statCompared];
                         dataStatsPhase[1]["y"] = cleanRSerie(dataFast[statCompared]);
                         dataStatsPhase[1]["name"] = statCompared;
                     } else {
-                        dataStatsPhase[0]["x"] = dataCasDenoised[statPays];
+                        dataStatsPhase[0]["x"] = dataConfirmed[statPays];
                         dataStatsPhase[0]["y"] = cleanRSerie(dataFast[statPays]);
                         dataStatsPhase[0]["name"] = statPays;
                         dataStatsPhase[1]["x"] = [];
@@ -3990,6 +4004,16 @@ Covid-19</text>
                         tmpSelectCountry += '<option value="'+element+'">'+corresPays[element]+'</option>';
                     });
                     return tmpSelectCountry;
+                }
+
+                function orderSelectCountry(id){
+                    var options = $('select#'+id+' option');
+                    var arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
+                    arr.sort(function(o1, o2) { return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0; });
+                    options.each(function(i, o) {
+                        o.value = arr[i].v;
+                        $(o).text(arr[i].t);
+                    });
                 }
 
                 function loadCountries(){
