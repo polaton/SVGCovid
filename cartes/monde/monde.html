@@ -3103,8 +3103,8 @@ Covid-19</text>
                 <input class="stats-control" type="radio" value="desactivatehisto" name="stathisto"><label for="desactivatehisto">Désactiver</label>
                 <br>
                 <span id="select-pays-2">
-                    stats-compared
-                </span>
+                    
+                </span><button id="invert-stats-country" type="button">Inverser</button><button id="remove-stats-country" type="button">Supprimer</button>
                 <div id="plotStat"></div>
                 <br><br>
                 <div id="plotPhaseSpace"></div>
@@ -3153,7 +3153,7 @@ Covid-19</text>
                 <label for="customMax">Maximum</label>
                 <input type="number" id="customMax" name="customMax" min="0.5" max="50" step="0.5">
             </div>
-
+            <div class="loading-overlay"><!-- Place at bottom of page --></div>
 
 
 
@@ -3184,6 +3184,7 @@ Covid-19</text>
 
                 $(function() {
                     //Chargement des données
+                    $("body").addClass("loading");
                     $.get("data/RStandard", function(data) { //On charge RStandard
                         //transformation en tableau, 
                         data = $.csv.toArrays(data); //transformation en tableau
@@ -3240,6 +3241,7 @@ Covid-19</text>
                                             majCouleurs($("#dateRange").val()); //On met à jour les colorations des pays
                                             initiateStatsLabels();
                                             loadCountries();
+                                            $("body").removeClass("loading");
                                         });
                                     });
                                 });
@@ -3256,6 +3258,19 @@ Covid-19</text>
                     changeSliderDateLabel(returnDateFormatted(selectedDate));
                     majData(selectedDate);
                     majCouleurs(selectedDate);
+                });
+
+                $("#remove-stats-country").click(function(e) {
+                    $('#stats-compared option[value="none"]').prop('selected', true);
+                    updateStats();
+                });
+
+                $("#invert-stats-country").click(function(e) {
+                    var tmpPays = $("#stats-pays").val();
+                    var tmpCompared = $("#stats-compared").val();
+                    $('#stats-pays option[value="'+tmpCompared+'"]').prop('selected', true);
+                    $('#stats-compared option[value="'+tmpPays+'"]').prop('selected', true);
+                    updateStats();
                 });
 
                 //Evenement clique bouton -1 "pas"
@@ -3406,18 +3421,28 @@ Covid-19</text>
 
                 //Fonction d'affichage des stats
                 function displayStats() {
+                    $("body").addClass("loading");
                     if (!dataStats || !dataStatsPhase || !dataStatsPhase3D) {
                         initStats();
                     }
                     updateStats();
+                    $("body").removeClass("loading");
                 };
 
                 function initStats() {
+                    
                     $("#select-pays-1").append(generateSelectCountry("stats-pays",false));
                     orderSelectCountry("stats-pays");
+                    $("#select-pays-1").prepend("<div class='box blue'></div>");
+
                     $("#select-pays-2").append(generateSelectCountry("stats-compared",true));
                     orderSelectCountry("stats-compared");
-                    
+                    $("#select-pays-2").prepend("<div class='box red'></div>");
+
+                    if (lockedCountry != "") {
+                        $('#stats-pays option[value="'+lockedCountry+'"]').prop('selected', true);
+                    }
+
                     $("#stats-pays").change(function(e) {
                         updateStats();
                     });
@@ -3425,7 +3450,9 @@ Covid-19</text>
                     $("#stats-compared").change(function(e) {
                         updateStats();
                     });
-                    
+
+
+
                     var statPays = $("#stats-pays").val();
                     var trace1 = {
                         y: [],
@@ -3473,8 +3500,9 @@ Covid-19</text>
                             ticktext: extractDaysLabel(range(0,daysPast,35)) // milliseconds
                         },
                         yaxis: {
+                            range:[0,parseFloat($("#customMax").val()) + 0.25],
                             rangemode: 'nonnegative',
-                            autorange: true,
+                            // autorange: true,
                             title:'R'
                         },
                         yaxis2: {
@@ -3527,9 +3555,10 @@ Covid-19</text>
                     var layoutPhase = {
                         title: "Confirmés (x) / RFast (y)<br>New infections (x) / RFast (y) ",
                         yaxis: {
+                            range:[0,parseFloat($("#customMax").val()) + 0.25],
                             title:'RFast',
                             rangemode: 'nonnegative',
-                            autorange: true
+                            // autorange: true
                         },
                         xaxis: {
                             title:'New infections',
@@ -3543,23 +3572,23 @@ Covid-19</text>
                     dataStatsPhase = [tracePhase1, tracePhase1compare];
                     Plotly.newPlot('plotPhaseSpace', dataStatsPhase,layoutPhase);
 
-                    var tracePhase3D = {
-                        x: [],
-                        y: [],
-                        z: [],
-                        mode: 'lines+markers',
-                        marker: {
-                            size: 2,
-                            line: {
-                                color: 'rgba(217, 217, 217, 0.14)',
-                                width: 0.5
-                            },
-                            opacity: 0.8
-                        },
-                        type: 'scatter3d'
-                    };
-                    dataStatsPhase3D = [tracePhase3D];
-                    Plotly.newPlot('plotPhaseSpace3D', dataStatsPhase3D);
+                    // var tracePhase3D = {
+                    //     x: [],
+                    //     y: [],
+                    //     z: [],
+                    //     mode: 'lines+markers',
+                    //     marker: {
+                    //         size: 2,
+                    //         line: {
+                    //             color: 'rgba(217, 217, 217, 0.14)',
+                    //             width: 0.5
+                    //         },
+                    //         opacity: 0.8
+                    //     },
+                    //     type: 'scatter3d'
+                    // };
+                    // dataStatsPhase3D = [tracePhase3D];
+                    // Plotly.newPlot('plotPhaseSpace3D', dataStatsPhase3D);
                 }
 
                 function updateStats() {
@@ -3659,14 +3688,14 @@ Covid-19</text>
 
                     
                     if (statCompared != "none") {
-                        dataStatsPhase[0]["x"] = dataConfirmed[statPays];
+                        dataStatsPhase[0]["x"] = dataCasDenoised[statPays];
                         dataStatsPhase[0]["y"] = cleanRSerie(dataFast[statPays]);
                         dataStatsPhase[0]["name"] = statPays;
-                        dataStatsPhase[1]["x"] = dataConfirmed[statCompared];
+                        dataStatsPhase[1]["x"] = dataCasDenoised[statCompared];
                         dataStatsPhase[1]["y"] = cleanRSerie(dataFast[statCompared]);
                         dataStatsPhase[1]["name"] = statCompared;
                     } else {
-                        dataStatsPhase[0]["x"] = dataConfirmed[statPays];
+                        dataStatsPhase[0]["x"] = dataCasDenoised[statPays];
                         dataStatsPhase[0]["y"] = cleanRSerie(dataFast[statPays]);
                         dataStatsPhase[0]["name"] = statPays;
                         dataStatsPhase[1]["x"] = [];
@@ -3675,12 +3704,11 @@ Covid-19</text>
                     }
                     Plotly.redraw('plotPhaseSpace');
 
-                    dataStatsPhase3D[0]["x"] = dataCasDenoised[statPays];
-                    dataStatsPhase3D[0]["y"] = dataMorts[statPays];
-                    dataStatsPhase3D[0]["z"] = dataFast[statPays];
+                    // dataStatsPhase3D[0]["x"] = dataCasDenoised[statPays];
+                    // dataStatsPhase3D[0]["y"] = dataMorts[statPays];
+                    // dataStatsPhase3D[0]["z"] = dataFast[statPays];
 
-                    Plotly.redraw('plotPhaseSpace3D');
-
+                    // Plotly.redraw('plotPhaseSpace3D');
                 }
 
                 function cleanRSerie(serie){

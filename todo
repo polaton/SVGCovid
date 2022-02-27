@@ -14,7 +14,17 @@ Phase Space:
 
 -Modal grahiques responsive
 -Menu d'intéraction responsive + déplacer + agrandir
+°1 Rappel couleur select pays
+°1 Loader 
+-1 Maj mes données
+°1 Inverser selection pays + Supprimler selection pays comparé
+°1 Utiliser les données débruitées
+-1 Titre graphique dynamique HTML
+-2 Modifier les graphiques pour que le max soit toujours égal à la valeur max
+-2 "Afficher trajectoire de la pandémie" pour déplier l'espace des phases
+
 
 °Trier select pays par nom et pas par code
 °A la fin de l'animation, mettre en pause auto
--Forcer couleurs des séries => Rouge 1 Bleu 2
+°Forcer couleurs des séries => Rouge 1 Bleu 2
+
