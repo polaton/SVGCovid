@@ -3218,7 +3218,7 @@ Covid-19</text>
                                     data.forEach(element => dataFast[element.shift()] = element.map(function(v) {
                                         return parseFloat(v, 10);
                                     })); //ajout au tableau de données R Fast
-                                    $.get("data/Ncasdenoised", function(data) { //On charge Ncasdenoised
+                                    $.get("data/methode-confirmes-debruites-accrjourpop", function(data) { //On charge Ncasdenoised
                                         data = $.csv.toArrays(data);
                                         data.shift();
                                         data.shift();
@@ -3629,13 +3629,13 @@ Covid-19</text>
                         dataStats[5]["name"] = "";
                     }
 
-                    if (!$("#rfast").prop("checked") && !$("#rstandard").prop("checked")) {
-                        dataStats[0]["opacity"] = 1;
-                        dataStats[1]["opacity"] = 1;
-                    }else{
-                        dataStats[0]["opacity"] = 0.5;
-                        dataStats[1]["opacity"] = 0.5;
-                    }
+                    // if (!$("#rfast").prop("checked") && !$("#rstandard").prop("checked")) {
+                    //     dataStats[0]["opacity"] = 1;
+                    //     dataStats[1]["opacity"] = 1;
+                    // }else{
+                    //     dataStats[0]["opacity"] = 0.5;
+                    //     dataStats[1]["opacity"] = 0.5;
+                    // }
 
                     switch ($("input[name=stathisto]:checked").val()) {
                         case "mortagg":
