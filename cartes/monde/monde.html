@@ -3422,7 +3422,8 @@ Covid-19</text>
                 //Fonction d'affichage des stats
                 function displayStats() {
                     $("body").addClass("loading");
-                    if (!dataStats || !dataStatsPhase || !dataStatsPhase3D) {
+                    // if (!dataStats || !dataStatsPhase || !dataStatsPhase3D) {
+                    if (!dataStats || !dataStatsPhase) {
                         initStats();
                     }
                     updateStats();
