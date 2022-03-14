@@ -3105,11 +3105,17 @@ Covid-19</text>
                 <span id="select-pays-2">
                     
                 </span><button id="invert-stats-country" type="button">Inverser</button><button id="remove-stats-country" type="button">Supprimer</button>
+                <h3 id="title-graph-1"></h3>
                 <div id="plotStat"></div>
                 <br><br>
-                <div id="plotPhaseSpace"></div>
+                
+                <button id="display-phase">Afficher la trajectoire de la pandémie</button>
+                <span id="pandemic-dynamic">
+                    <h3 id="title-graph-2"></h3>
+                    <div id="plotPhaseSpace"></div>
+                </span>
                 <br><br>
-                <div id="plotPhaseSpace3D"></div>
+                <!-- <div id="plotPhaseSpace3D"></div> -->
             </div>
             <!-- Panneau de commandes -->
             <div id="controls" style="position: fixed;right:20%;bottom: 5%;background-color:rgb(207, 233, 250);">
@@ -3259,7 +3265,9 @@ Covid-19</text>
                     majData(selectedDate);
                     majCouleurs(selectedDate);
                 });
-
+                $("#display-phase").click(function(e) {
+                    $("#pandemic-dynamic").toggle();
+                });
                 $("#remove-stats-country").click(function(e) {
                     $('#stats-compared option[value="none"]').prop('selected', true);
                     updateStats();
@@ -3493,7 +3501,6 @@ Covid-19</text>
                     };
                     
                     var layout = {
-                        title: "Evolution temporelle de la COVID 19 - Time evolution of COVID 19",
                         barmode: 'group',
                         xaxis: {
                             tickmode: "array", //  If "linear", the placement of the ticks is determined by a starting position `tick0` and a tick step `dtick`
@@ -3559,8 +3566,35 @@ Covid-19</text>
                             size: 4
                         },
                     };
+                    var tracePhaseEnd1 = {
+                        y: [],
+                        x: [],
+                        hovertemplate: '<b>%{text}</b><br>'+
+                            '<i>RFast</i>: %{y:.2f}<br>' +
+                            '<i>Nombre confirmés</i>: %{x:.2f}<br>',
+                        text: daysLabelStats,
+                        mode: "markers+lines",
+                        name: "Pays selectionné",
+                        type: "scatter",
+                        marker: {
+                            size: 4
+                        },
+                    };
+                    var tracePhaseEnd1compare = {
+                        y: [],
+                        x: [],
+                        hovertemplate: '<b>%{text}</b><br>'+
+                            '<i>RFast</i>: %{y:.2f}<br>' +
+                            '<i>Nombre confirmés</i>: %{x:.2f}<br>',
+                        text: daysLabelStats,
+                        mode: "markers+lines",
+                        name: "Pays comparé",
+                        type: "scatter",
+                        marker: {
+                            size: 4
+                        },
+                    };
                     var layoutPhase = {
-                        title: "Confirmés (x) / RFast (y)<br>New infections (x) / RFast (y) ",
                         yaxis: {
                             range:[0,parseFloat($("#customMax").val()) + 0.25],
                             title:'RFast',
@@ -3601,10 +3635,11 @@ Covid-19</text>
                                   dash: 'dashdot'
                                 }
                             }
-                        ]
+                        ],
+                        colorway : ["#75B8C8","#EB706E","#06657D","#BF211E"]
                     }
 
-                    dataStatsPhase = [tracePhase1, tracePhase1compare];
+                    dataStatsPhase = [tracePhase1, tracePhase1compare,tracePhaseEnd1, tracePhaseEnd1compare];
                     Plotly.newPlot('plotPhaseSpace', dataStatsPhase,layoutPhase);
 
                     // var tracePhase3D = {
@@ -3629,12 +3664,15 @@ Covid-19</text>
                 function updateStats() {
                     var statPays = $("#stats-pays").val();
                     var statCompared = $("#stats-compared").val();
+                    var titleTmp1 = "Evolution temporelle de la COVID 19 - Time evolution of COVID 19<br>";
+                    var titleTmp2 = "Trajectoire de la pandémie - Pandemic trajectory<br>";
                     if ($("#rfast").prop("checked")) {
+                        titleTmp1 += "| RFast ";
                         dataStats[2]["y"] = cleanRSerie(dataFast[statPays]);
-                        dataStats[2]["name"] = "R Fast " + statPays;
+                        dataStats[2]["name"] = "R Fast " + $("#stats-pays option:selected").text();
                         if (statCompared != "none") {
                             dataStats[3]["y"] = cleanRSerie(dataFast[statCompared]);
-                            dataStats[3]["name"] = "R Fast " + statCompared;
+                            dataStats[3]["name"] = "R Fast " + $("#stats-compared option:selected").text();
                         } else {
                             dataStats[3]["y"] = [];
                             dataStats[3]["name"] = "";
@@ -3647,11 +3685,12 @@ Covid-19</text>
                     }
 
                     if ($("#rstandard").prop("checked")) {
+                        titleTmp1 += "| RStandard ";
                         dataStats[4]["y"] = cleanRSerie(dataFull[statPays]);
-                        dataStats[4]["name"] = "R Standard " + statPays;
+                        dataStats[4]["name"] = "R Standard " + $("#stats-pays option:selected").text();
                         if (statCompared != "none") {
                             dataStats[5]["y"] = cleanRSerie(dataFull[statCompared]);
-                            dataStats[5]["name"] = "R Standard " + statCompared;
+                            dataStats[5]["name"] = "R Standard " + $("#stats-compared option:selected").text();
                         } else {
                             dataStats[5]["y"] = [];
                             dataStats[5]["name"] = "";
@@ -3673,11 +3712,12 @@ Covid-19</text>
 
                     switch ($("input[name=stathisto]:checked").val()) {
                         case "mortagg":
+                            titleTmp1 += "| Nombre de morts par million d'habitants ";
                             dataStats[0]["y"] = dataMorts[statPays];
-                            dataStats[0]["name"] = "Morts pour 1M h " + statPays;
+                            dataStats[0]["name"] = "Morts pour 1M h " + $("#stats-pays option:selected").text();
                             if (statCompared != "none") {
                                 dataStats[1]["y"] = dataMorts[statCompared];
-                                dataStats[1]["name"] = "Morts pour 1M h " + statCompared;
+                                dataStats[1]["name"] = "Morts pour 1M h " + $("#stats-compared option:selected").text();
                             } else {
                                 dataStats[1]["y"] = [];
                                 dataStats[1]["name"] = "";
@@ -3685,11 +3725,12 @@ Covid-19</text>
                             break;
 
                         case "confirmeagg":
+                        titleTmp1 += "| Nombre de cas par 10k habitants ";
                             dataStats[0]["y"] = dataConfirmed[statPays];
-                            dataStats[0]["name"] = "Confirmés pour 10k h " + statPays;
+                            dataStats[0]["name"] = "Confirmés pour 10k h " + $("#stats-pays option:selected").text();
                             if (statCompared != "none") {
                                 dataStats[1]["y"] = dataConfirmed[statCompared];
-                                dataStats[1]["name"] = "Confirmés pour 10k h " + statCompared;
+                                dataStats[1]["name"] = "Confirmés pour 10k h " + $("#stats-compared option:selected").text();
                             } else {
                                 dataStats[1]["y"] = [];
                                 dataStats[1]["name"] = "";
@@ -3697,11 +3738,12 @@ Covid-19</text>
                             break;
 
                         case "confirmeaggdenoised":
+                            titleTmp1 += "| Nombre de cas débruités par 10k habitants";
                             dataStats[0]["y"] = dataCasDenoised[statPays];
-                            dataStats[0]["name"] = "Confirmés pour 10k h " + statPays;
+                            dataStats[0]["name"] = "Confirmés pour 10k h " + $("#stats-pays option:selected").text();
                             if (statCompared != "none") {
                                 dataStats[1]["y"] = dataCasDenoised[statCompared];
-                                dataStats[1]["name"] = "Confirmés pour 10k h " + statCompared;
+                                dataStats[1]["name"] = "Confirmés pour 10k h " + $("#stats-compared option:selected").text();
                             } else {
                                 dataStats[1]["y"] = [];
                                 dataStats[1]["name"] = "";
@@ -3718,30 +3760,165 @@ Covid-19</text>
                         default:
                             break;
                     }
-
+                    titleTmp1+="<br>"+$("#stats-pays option:selected").text()+(statCompared!="none"?" vs " + $("#stats-compared option:selected").text():"")
+                    $("#title-graph-1").empty().append(titleTmp1);
                     Plotly.redraw('plotStat');
 
-                    console.log("CC");
+                    dataStatsPhase[0]["hovertemplate"]='<b>%{text}</b><br>';
+                    dataStatsPhase[1]["hovertemplate"]='<b>%{text}</b><br>';
+                    dataStatsPhase[2]["hovertemplate"]='<b>%{text}</b><br>';
+                    dataStatsPhase[3]["hovertemplate"]='<b>%{text}</b><br>';
+                            // '<i>RFast</i>: %{y:.2f}<br>' +
+                            // '<i>Nombre confirmés</i>: %{x:.2f}<br>',
                     if (statCompared != "none") {
-                        dataStatsPhase[0]["x"] = dataCasDenoised[statPays];
-                        console.log(Math.max(dataCasDenoised[statPays]));
-                        dataStatsPhase[0]["y"] = cleanRSerie(dataFast[statPays]);
-                        dataStatsPhase[0]["name"] = statPays;
-                        dataStatsPhase[1]["x"] = dataCasDenoised[statCompared];
-                        dataStatsPhase[1]["y"] = cleanRSerie(dataFast[statCompared]);
-                        dataStatsPhase[1]["name"] = statCompared;
-                    } else {
-                        dataStatsPhase[0]["x"] = dataCasDenoised[statPays];
-                        console.log(dataCasDenoised[statPays]);
-                        console.log(Math.max.apply(Math,dataCasDenoised[statPays]));
-                        dataStatsPhase[0]["y"] = cleanRSerie(dataFast[statPays]);
-                        dataStatsPhase[0]["name"] = statPays;
-                        dataStatsPhase[1]["x"] = [];
-                        dataStatsPhase[1]["y"] = [];
-                        dataStatsPhase[1]["name"] = "";
-                    }
+                        switch ($("input[name=stathisto]:checked").val()) {
+                        case "mortagg":
+                            dataStatsPhase[0]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
+                            dataStatsPhase[1]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
+                            dataStatsPhase[2]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
+                            dataStatsPhase[3]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
+                            titleTmp2+="Morts par million d'habitants vs ";
+                            dataStatsPhase[0]["x"] = dataMorts[statPays].slice(0,-9);
+                            dataStatsPhase[1]["x"] = dataMorts[statCompared].slice(0,-9);
+                            dataStatsPhase[2]["x"] = dataMorts[statPays].slice(-10);
+                            dataStatsPhase[3]["x"] = dataMorts[statCompared].slice(-10);
+                            break;
 
+                        case "confirmeagg":
+                            dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            dataStatsPhase[1]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            dataStatsPhase[3]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            titleTmp2+="Cas pour 10000 habitants vs ";
+                            dataStatsPhase[0]["x"] = dataConfirmed[statPays].slice(0,-9);
+                            dataStatsPhase[1]["x"] = dataConfirmed[statCompared].slice(0,-9);
+                            dataStatsPhase[2]["x"] = dataConfirmed[statPays].slice(-10);
+                            dataStatsPhase[3]["x"] = dataConfirmed[statCompared].slice(-10);
+                            break;
+
+                        case "confirmeaggdenoised":
+                            dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            dataStatsPhase[1]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            dataStatsPhase[3]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
+                            dataStatsPhase[1]["x"] = dataCasDenoised[statCompared].slice(0,-9);
+                            dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
+                            dataStatsPhase[3]["x"] = dataCasDenoised[statCompared].slice(-10);
+                            break;
+
+                        case "desactivatehisto":
+                            dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            dataStatsPhase[1]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            dataStatsPhase[3]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
+                            dataStatsPhase[1]["x"] = dataCasDenoised[statCompared].slice(0,-9);
+                            dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
+                            dataStatsPhase[3]["x"] = dataCasDenoised[statCompared].slice(-10);
+                            break;
+
+                        default:
+                            break;
+                        }
+                        if ($("#rstandard").prop("checked")) {
+                            dataStatsPhase[0]["hovertemplate"]+='<i>R Standard</i>: %{y:.2f}<br>';
+                            dataStatsPhase[1]["hovertemplate"]+='<i>R Standard</i>: %{y:.2f}<br>';
+                            dataStatsPhase[2]["hovertemplate"]+='<i>R Standard</i>: %{y:.2f}<br>';
+                            dataStatsPhase[3]["hovertemplate"]+='<i>R Standard</i>: %{y:.2f}<br>';
+                            titleTmp2+=" R Standard";
+                            dataStatsPhase[0]["y"] = cleanRSerie(dataFull[statPays]).slice(0,-9);
+                            dataStatsPhase[1]["y"] = cleanRSerie(dataFull[statCompared]).slice(0,-9);
+                            dataStatsPhase[2]["y"] = cleanRSerie(dataFull[statPays]).slice(-10);
+                            dataStatsPhase[3]["y"] = cleanRSerie(dataFull[statCompared]).slice(-10);
+
+                        }else{
+                            dataStatsPhase[0]["hovertemplate"]+='<i>R Fast</i>: %{y:.2f}<br>';
+                            dataStatsPhase[1]["hovertemplate"]+='<i>R Fast</i>: %{y:.2f}<br>';
+                            dataStatsPhase[2]["hovertemplate"]+='<i>R Fast</i>: %{y:.2f}<br>';
+                            dataStatsPhase[3]["hovertemplate"]+='<i>R Fast</i>: %{y:.2f}<br>';
+                            titleTmp2+=" R Fast";
+                            dataStatsPhase[0]["y"] = cleanRSerie(dataFast[statPays]).slice(0,-9);
+                            dataStatsPhase[1]["y"] = cleanRSerie(dataFast[statCompared]).slice(0,-9);
+                            dataStatsPhase[2]["y"] = cleanRSerie(dataFast[statPays]).slice(-10);
+                            dataStatsPhase[3]["y"] = cleanRSerie(dataFast[statCompared]).slice(-10);
+                        }
+
+                        dataStatsPhase[0]["name"] = $("#stats-pays option:selected").text();
+                        dataStatsPhase[1]["name"] = $("#stats-compared option:selected").text();
+                        dataStatsPhase[2]["name"] = $("#stats-pays option:selected").text() + " (récent)";
+                        dataStatsPhase[3]["name"] = $("#stats-compared option:selected").text(); + " (récent)";
+                    } else {
+                        switch ($("input[name=stathisto]:checked").val()) {
+                        case "mortagg":
+                            dataStatsPhase[0]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
+                            dataStatsPhase[2]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
+                            titleTmp2+="Morts par million d'habitants vs ";
+                            dataStatsPhase[0]["x"] = dataMorts[statPays].slice(0,-9);
+                            dataStatsPhase[1]["x"] = [];
+                            dataStatsPhase[2]["x"] = dataMorts[statPays].slice(-10);
+                            dataStatsPhase[3]["x"] = [];
+                            break;
+
+                        case "confirmeagg":
+                            dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            titleTmp2+="Cas pour 10000 habitants vs ";
+                            dataStatsPhase[0]["x"] = dataConfirmed[statPays].slice(0,-9);
+                            dataStatsPhase[1]["x"] = [];
+                            dataStatsPhase[2]["x"] = dataConfirmed[statPays].slice(-10);
+                            dataStatsPhase[3]["x"] = [];
+                            break;
+
+                        case "confirmeaggdenoised":
+                            dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            titleTmp2+="Cas débruités pour 10000 habitants vs ";
+                            dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
+                            dataStatsPhase[1]["x"] = [];
+                            dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
+                            dataStatsPhase[3]["x"] = [];
+                            break;
+
+                        case "desactivatehisto":
+                            dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            titleTmp2+="Cas débruités pour 10000 habitants vs ";
+                            dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
+                            dataStatsPhase[1]["x"] = [];
+                            dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
+                            dataStatsPhase[3]["x"] = [];
+                            break;
+
+                        default:
+                            break;
+                        }
+                        if ($("#rstandard").prop("checked")) {
+                            dataStatsPhase[0]["hovertemplate"]+='<i>R Standard</i>: %{y:.2f}<br>';
+                            dataStatsPhase[2]["hovertemplate"]+='<i>R Standard</i>: %{y:.2f}<br>';
+                            titleTmp2+=" R Standard";
+                            dataStatsPhase[0]["y"] = cleanRSerie(dataFull[statPays]).slice(0,-9);
+                            dataStatsPhase[1]["y"] = [];
+                            dataStatsPhase[2]["y"] = cleanRSerie(dataFull[statPays]).slice(-10);
+                            dataStatsPhase[3]["y"] = [];
+                        }else{
+                            dataStatsPhase[0]["hovertemplate"]+='<i>R Fast</i>: %{y:.2f}<br>';
+                            dataStatsPhase[2]["hovertemplate"]+='<i>R Fast</i>: %{y:.2f}<br>';
+                            titleTmp2+=" R Fast";
+                            dataStatsPhase[0]["y"] = cleanRSerie(dataFast[statPays]).slice(0,-9);
+                            dataStatsPhase[1]["y"] = [];
+                            dataStatsPhase[2]["y"] = cleanRSerie(dataFast[statPays]).slice(-10);
+                            dataStatsPhase[3]["y"] = [];
+                        }
+                        dataStatsPhase[0]["name"] = $("#stats-pays option:selected").text();
+                        dataStatsPhase[1]["name"] = "";
+                        dataStatsPhase[2]["name"] = $("#stats-pays option:selected").text() + " (récent)";
+                        dataStatsPhase[3]["name"] = "";
+                    }
+                    titleTmp2+="<br>"+$("#stats-pays option:selected").text()+(statCompared!="none"?" vs " + $("#stats-compared option:selected").text():"")
+                    $("#title-graph-2").empty().append(titleTmp2);
                     Plotly.redraw('plotPhaseSpace');
+                    
                     // dataStatsPhase3D[0]["x"] = dataCasDenoised[statPays];
                     // dataStatsPhase3D[0]["y"] = dataMorts[statPays];
                     // dataStatsPhase3D[0]["z"] = dataFast[statPays];
