@@ -3573,7 +3573,35 @@ Covid-19</text>
                             autorange: true
                         },
                         width: 950,
-                        height: 450
+                        height: 450,
+                        shapes: [
+                            {
+                                xref:"paper", 
+                                yref:"paper",
+                                type: 'line',
+                                x0: 0,
+                                y0: 0.5,
+                                x1: 1,
+                                y1: 0.5,
+                                line: {
+                                  color: 'green',
+                                  width: 3,
+                                  dash: 'dashdot'
+                                }
+                            },
+                            {
+                                type: 'line',
+                                x0: 1,
+                                y0: 0,
+                                x1: 1,
+                                y1: 2,
+                                line: {
+                                  color: 'green',
+                                  width: 3,
+                                  dash: 'dashdot'
+                                }
+                            }
+                        ]
                     }
 
                     dataStatsPhase = [tracePhase1, tracePhase1compare];
@@ -3693,9 +3721,10 @@ Covid-19</text>
 
                     Plotly.redraw('plotStat');
 
-                    
+                    console.log("CC");
                     if (statCompared != "none") {
                         dataStatsPhase[0]["x"] = dataCasDenoised[statPays];
+                        console.log(Math.max(dataCasDenoised[statPays]));
                         dataStatsPhase[0]["y"] = cleanRSerie(dataFast[statPays]);
                         dataStatsPhase[0]["name"] = statPays;
                         dataStatsPhase[1]["x"] = dataCasDenoised[statCompared];
@@ -3703,14 +3732,16 @@ Covid-19</text>
                         dataStatsPhase[1]["name"] = statCompared;
                     } else {
                         dataStatsPhase[0]["x"] = dataCasDenoised[statPays];
+                        console.log(dataCasDenoised[statPays]);
+                        console.log(Math.max.apply(Math,dataCasDenoised[statPays]));
                         dataStatsPhase[0]["y"] = cleanRSerie(dataFast[statPays]);
                         dataStatsPhase[0]["name"] = statPays;
                         dataStatsPhase[1]["x"] = [];
                         dataStatsPhase[1]["y"] = [];
                         dataStatsPhase[1]["name"] = "";
                     }
-                    Plotly.redraw('plotPhaseSpace');
 
+                    Plotly.redraw('plotPhaseSpace');
                     // dataStatsPhase3D[0]["x"] = dataCasDenoised[statPays];
                     // dataStatsPhase3D[0]["y"] = dataMorts[statPays];
                     // dataStatsPhase3D[0]["z"] = dataFast[statPays];
