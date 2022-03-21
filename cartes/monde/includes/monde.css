@@ -52,3 +52,12 @@ body.loading .loading-overlay {
 .blue {
     background-color: blue;
 }
+
+#pandemic-dynamic {
+    display: none;
+    text-align: center;
+}
+
+#title-graph-1,#title-graph-2{
+    color: #1c323f; font-family: 'Helvetica Neue', sans-serif; font-size: 20px; font-weight: 100; line-height: 26px; letter-spacing: 1px;text-align: center;
+}
