@@ -3508,7 +3508,7 @@ Covid-19</text>
                             ticktext: extractDaysLabel(range(0,daysPast,35)) // milliseconds
                         },
                         yaxis: {
-                            range:[0,parseFloat($("#customMax").val()) + 0.25],
+                            range:[0,(parseFloat($("#customMax").val()) + 0.25)*1.5],
                             rangemode: 'nonnegative',
                             // autorange: true,
                             title:'R'
@@ -3528,9 +3528,18 @@ Covid-19</text>
                         },
                         width: 950,
                         height: 450,
+                        // legend: {
+                        //     x: 1.1,
+                        //     y: 0.5
+                        // },
                         legend: {
-                            x: 1.1,
-                            y: 0.5
+                            x: 0,
+                            y: 1.2,
+                            xanchor:'left',
+                            yanchor:'top'
+                        },
+                        pad: {
+                            t: 100
                         },
                         colorway : ['#4D8FAC', '#C93756', '#22A7F0', '#F9690E', '#003171', '#CF000F']
                     }
@@ -3544,7 +3553,7 @@ Covid-19</text>
                         hovertemplate: '<b>%{text}</b><br>'+
                             '<i>RFast</i>: %{y:.2f}<br>' +
                             '<i>Nombre confirmés</i>: %{x:.2f}<br>',
-                        text: daysLabelStats,
+                        text: daysLabelStats.slice(0,-9),
                         mode: "markers+lines",
                         name: "Pays selectionné",
                         type: "scatter",
@@ -3552,13 +3561,14 @@ Covid-19</text>
                             size: 4
                         },
                     };
+
                     var tracePhase1compare = {
                         y: [],
                         x: [],
                         hovertemplate: '<b>%{text}</b><br>'+
                             '<i>RFast</i>: %{y:.2f}<br>' +
                             '<i>Nombre confirmés</i>: %{x:.2f}<br>',
-                        text: daysLabelStats,
+                        text: daysLabelStats.slice(0,-9),
                         mode: "markers+lines",
                         name: "Pays comparé",
                         type: "scatter",
@@ -3572,10 +3582,11 @@ Covid-19</text>
                         hovertemplate: '<b>%{text}</b><br>'+
                             '<i>RFast</i>: %{y:.2f}<br>' +
                             '<i>Nombre confirmés</i>: %{x:.2f}<br>',
-                        text: daysLabelStats,
+                        text: daysLabelStats.slice(-10),
                         mode: "markers+lines",
                         name: "Pays selectionné",
                         type: "scatter",
+                        showlegend: false,
                         marker: {
                             size: 4
                         },
@@ -3586,17 +3597,18 @@ Covid-19</text>
                         hovertemplate: '<b>%{text}</b><br>'+
                             '<i>RFast</i>: %{y:.2f}<br>' +
                             '<i>Nombre confirmés</i>: %{x:.2f}<br>',
-                        text: daysLabelStats,
+                        text: daysLabelStats.slice(-10),
                         mode: "markers+lines",
                         name: "Pays comparé",
                         type: "scatter",
+                        showlegend: false,
                         marker: {
                             size: 4
                         },
                     };
                     var layoutPhase = {
                         yaxis: {
-                            range:[0,parseFloat($("#customMax").val()) + 0.25],
+                            range:[0,parseFloat($("#customMax").val())],
                             title:'RFast',
                             rangemode: 'nonnegative',
                             // autorange: true
@@ -3636,6 +3648,12 @@ Covid-19</text>
                                 }
                             }
                         ],
+                        legend: {
+                            x: 0,
+                            y: 1.2,
+                            xanchor:'left',
+                            yanchor:'top'
+                        },
                         colorway : ["#75B8C8","#EB706E","#06657D","#BF211E"]
                     }
 
@@ -3801,6 +3819,7 @@ Covid-19</text>
                             dataStatsPhase[1]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
                             dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
                             dataStatsPhase[3]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            titleTmp2+="Cas débruités pour 10000 habitants vs ";
                             dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
                             dataStatsPhase[1]["x"] = dataCasDenoised[statCompared].slice(0,-9);
                             dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
@@ -3812,6 +3831,7 @@ Covid-19</text>
                             dataStatsPhase[1]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
                             dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
                             dataStatsPhase[3]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                            titleTmp2+="Cas débruités pour 10000 habitants vs ";
                             dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
                             dataStatsPhase[1]["x"] = dataCasDenoised[statCompared].slice(0,-9);
                             dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
