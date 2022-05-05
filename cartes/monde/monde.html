@@ -17,12 +17,16 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link href="includes/monde.css" rel="stylesheet" />
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
     <head>
 
         <body>
-
+<div class="row">
+<div id="cadre-carte" class="col-11">
             <!--  Déclaration du SVG ==> EXTERNALISER ???-->
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox=" 10 13 420 202" width="100%" height="90%" style="background-color:rgb(207, 233, 250)">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox=" 10 13 420 202" width="100%" height="100%" style="background-color:rgb(207, 233, 250)">
 <!-- Faire au besoin des carrés pour 
 COM Comoros
 CPV Cape Verde
@@ -69,8 +73,8 @@ Covid-19</text>
 
 <g id ="caissons">
     <rect class='legBoxAberrant' x="32" y="206" width="8" height="6" stroke-width="0" stroke="rgb(142, 68, 173)" fill="rgb(142, 68, 173)" opacity="1"/>
-    <text class='legAberrant' x="11" y="208" style="font-size:2.75px" >Valeurs aberrantes</text>
-    <text class='legAberrant' x="10" y="211" style="font-size:2.65px" >(ex.: morts négatifs)</text>
+    <text class='legAberrant' x="11" y="208" style="font-size:2.4px" >Valeurs aberrantes</text>
+    <text class='legAberrant' x="10" y="211" style="font-size:2.2px" >&nbsp;&nbsp;(ex.: morts négatifs)</text>
     <rect class='legBox' x="32" y="190" width="8" height="10" stroke-width="0" stroke="rgb(155, 203, 0)" fill="rgb(50, 200, 20)" opacity="1"/>
     <text class='legText' x="26" y="190.5" style="font-size:3px" ></text>
     <rect class='legBox' x="32" y="180" width="8" height="10" stroke-width="0" stroke="rgb(171, 208, 0)" fill="rgb(90, 220, 20)" opacity="1"/>
@@ -3085,81 +3089,124 @@ Covid-19</text>
 </g>
 <!-- ZONE2POURINSERTION -->
 </svg>
+</div>
+</div>
+<!-- Popup des statistiques -->
+<!-- <div id="popupStats" style="position: fixed;right:40%;bottom: 40%;background-color:rgb(207, 233, 250);"> -->
 
-            <!-- Popup des statistiques -->
-            <!-- <div id="popupStats" style="position: fixed;right:40%;bottom: 40%;background-color:rgb(207, 233, 250);"> -->
-            <div id="popupStats" class="modal">
-                <span id="select-pays-1">
+<!-- Panneau de commandes -->
+<!-- <div id="controls" style="position: fixed;right:20%;bottom: 5%;background-color:rgb(207, 233, 250);"> -->
+<div class="row controls-row">
+    <div class="col-2 offset-1">
+        <!-- Selecteur de dates -->
+        <div id="slider"></div>
+        <!-- Boutons d'interaction -->
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-primary btn-sm" id="first" type="button">&#x23EE</button>
+            <button class="btn btn-primary btn-sm" id="downDate" type="button">&#x23EA</button>
+            <button class="btn btn-primary btn-sm" id="pause" type="button" disabled>&#x23F8</button>
+            <button class="btn btn-primary btn-sm" id="play" type="button">&#x25B6</button>
+            <button class="btn btn-primary btn-sm" id="upDate" type="button">&#x23E9</button>
+            <button class="btn btn-primary btn-sm" id="last" type="button">&#x23ED</button>
+        </div>
+        <a href="#popupStats" onclick="displayStats()" data-bs-toggle="modal" data-bs-target="#popupStats">&#x1F4C8</a>
+        <!-- <a href="#popupStats" onclick="displayStats()" rel="modal:open">&#x1F4C8</a> -->
+        <a href="#doc">&#x2753</a>
+        <!-- Bouton d'affichage des stats -->
+    </div>
+    <div class="col-1">
+        <label for="pas">Pas</label>
+        <select id="pas" class="select-styled">
+            <option value="1" selected="true">Jour</option>
+            <option value="7">Semaine</option>
+            <option value="30">Mois</option>
+        </select>
+    </div>
+    <div class="col-1 offset-1">
+        <label for="vitesse">Vitesse</label>
+        <select id="vitesse" class="select-styled">
+            <option value="1000">Lent</option>
+            <option value="500">Moyen</option>
+            <option value="250" selected="true">Rapide</option>
+        </select>
+    </div>
 
-                </span>
-                
-                <br>
-                <input class="stats-control" type="checkbox" id="rstandard" name="rstandard" checked><label for="rstandard">R Standard</label>
-                <input class="stats-control" type="checkbox" id="rfast" name="rfast" checked><label for="rfast">R Fast</label>
-                <br>
-                <input class="stats-control" type="radio" value="mortagg" name="stathisto" checked><label for="mortagg">Morts pour 1M h</label>
-                <input class="stats-control" type="radio" value="confirmeagg" name="stathisto"><label for="confirmeagg">Confirmés pour 10k h</label>
-                <input class="stats-control" type="radio" value="confirmeaggdenoised" name="stathisto" checked="checked"><label for="confirmeaggdenoised">Confirmés débruités pour 10k h </label>
-                <input class="stats-control" type="radio" value="desactivatehisto" name="stathisto"><label for="desactivatehisto">Désactiver</label>
-                <br>
-                <span id="select-pays-2">
-                    
-                </span><button id="invert-stats-country" type="button">Inverser</button><button id="remove-stats-country" type="button">Supprimer</button>
-                <h3 id="title-graph-1"></h3>
-                <div id="plotStat"></div>
-                <br><br>
-                
-                <button id="display-phase">Afficher la trajectoire de la pandémie</button>
-                <span id="pandemic-dynamic">
+
+    <!-- Listes d'options -->
+    <div class="col-2 offset-1">
+        <label for="coloration">Coloration</label>
+        <select id="coloration" class="select-styled">
+            <option value="Standard">R: estimation moins réactive</option>
+            <option selected="true" value="Fast">R: estimation réactive</option>
+            <option value="Confirmed">Nouveaux cas pour 10k hab</option>
+            <option value="Death">Nouveaux décès pour 1M hab</option>
+        </select>
+        </div>
+        <div class="col-1">
+        <!-- Configuration de la légende -->
+        <label for="customMax">Maximum légende</label>
+        <input type="number" class="select-styled" id="customMax" name="customMax" min="0.5" max="50" step="0.5">
+    </div>
+</div>
+
+<div id="popupStats" class="modal modal-xl">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="row stats-row" >
+                <div class="col-3 pays-column">
+                    <h6>Pays principal</h6> 
+                    <span id="select-pays-1" class="select-pays"></span>
+                    <h6>Pays comparé</h6>
+                    <span id="select-pays-2" class="select-pays"></span>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button id="invert-stats-country" class="btn btn-primary btn-sm" type="button">Inverser</button>
+                        <button id="remove-stats-country" class="btn btn-danger btn-sm" type="button">Supprimer</button>
+                    </div>
+                </div>
+                <div class="col-2 offset-1 param-column">
+                    <h6>R à afficher</h6>
+                    <label for="rstandard">R Standard</label><input class="stats-control stats-box" type="checkbox" id="rstandard" name="rstandard" checked>
+                    <br>
+                    <label for="rfast">R Fast</label><input class="stats-control stats-box" type="checkbox" id="rfast" name="rfast" checked>
+                </div>
+                <div class="col-3 offset-1 param-column">
+                    <h6>Indicateur</h6>
+                    <label for="mortagg">Morts pour 1M h</label><input class="stats-control stats-box" type="radio" value="mortagg" name="stathisto" checked>
+                    <label for="confirmeagg">Confirmés pour 10k h</label><input class="stats-control stats-box" type="radio" value="confirmeagg" name="stathisto">
+                    <label for="confirmeaggdenoised">Confirmés débruités pour 10k h </label><input class="stats-control stats-box" type="radio" value="confirmeaggdenoised" name="stathisto" checked="checked">
+                    <label for="desactivatehisto">Désactiver</label><input class="stats-control stats-box" type="radio" value="desactivatehisto" name="stathisto">
+                </div>
+                <div class="col-1">
+                    <button id="display-phase" class="btn btn-primary btn-sm">Trajectoire de la pandémie</button>
+                </div>
+            </div>
+            
+            <div class="row stats-row">
+                <div class="col-12">
+                    <h3 id="title-graph-1"></h3>
+                    <div id="plotStat"></div>
+                </div>
+            </div>
+
+            
+            <div class="row stats-row" id="pandemic-dynamic">
+                <div class="col-12">
                     <h3 id="title-graph-2"></h3>
                     <div id="plotPhaseSpace"></div>
-                </span>
-                <br><br>
-                <!-- <div id="plotPhaseSpace3D"></div> -->
+                </div>
             </div>
-            <!-- Panneau de commandes -->
-            <div id="controls" style="position: fixed;right:20%;bottom: 5%;background-color:rgb(207, 233, 250);">
-                <!-- Selecteur de dates -->
-                <div id="slider"></div>
-                <!-- Boutons d'interaction -->
-                <button id="first" type="button">&#x23EE</button>
-                <button id="downDate" type="button">&#x23EA</button>
-                <button id="pause" type="button" disabled>&#x23F8</button>
-                <button id="play" type="button">&#x25B6</button>
-                <button id="upDate" type="button">&#x23E9</button>
-                <button id="last" type="button">&#x23ED</button>
-                <!-- Bouton d'affichage des stats -->
-                <a href="#popupStats" onclick="displayStats()" rel="modal:open">&#x1F4C8</a>
-                <a href="#doc">&#x2753</a>
+        </div>
+    </div>
+    <!-- <div id="plotPhaseSpace3D"></div> -->
+</div>
 
-                <br>
-                <!-- Listes d'options -->
-                <label for="pas">Pas</label>
-                <select id="pas">
-        <option value="1" selected="true">Jour</option>
-        <option value="7">Semaine</option>
-        <option value="30">Mois</option>
-    </select>
-                <label for="vitesse">Vitesse</label>
-                <select id="vitesse">
-        <option value="1000">Lent</option>
-        <option value="500">Moyen</option>
-        <option value="250" selected="true">Rapide</option>
-    </select>
-                <br>
-                <label for="coloration">Coloration</label>
-                <select id="coloration">
-        <option value="Standard">R: estimation moins réactive</option>
-        <option selected="true" value="Fast">R: estimation réactive</option>
-        <option value="Confirmed">Nouveaux cas pour 10k hab</option>
-        <option value="Death">Nouveaux décès pour 1M hab</option>
-    </select>
 
-                <!-- Configuration de la légende -->
-                <label for="customMax">Maximum</label>
-                <input type="number" id="customMax" name="customMax" min="0.5" max="50" step="0.5">
-            </div>
-            <div class="loading-overlay"><!-- Place at bottom of page --></div>
+<div class="loading-overlay">
+    <!-- Place at bottom of page -->
+</div>
 
 
 
@@ -3267,6 +3314,12 @@ Covid-19</text>
                 });
                 $("#display-phase").click(function(e) {
                     $("#pandemic-dynamic").toggle();
+                    
+                    // get the top of the section
+                    var sectionOffset = $('#pandemic-dynamic').position().top;
+                    console.log(sectionOffset);
+                    $("#popupStats").scrollTop(sectionOffset);
+                    //scroll the container
                 });
                 $("#remove-stats-country").click(function(e) {
                     $('#stats-compared option[value="none"]').prop('selected', true);
@@ -3616,7 +3669,8 @@ Covid-19</text>
                         xaxis: {
                             title:'New infections',
                             rangemode: 'nonnegative',
-                            autorange: true
+                            autorange: true,
+                            // type: 'log'
                         },
                         width: 950,
                         height: 450,
@@ -3789,58 +3843,68 @@ Covid-19</text>
                             // '<i>RFast</i>: %{y:.2f}<br>' +
                             // '<i>Nombre confirmés</i>: %{x:.2f}<br>',
                     if (statCompared != "none") {
-                        switch ($("input[name=stathisto]:checked").val()) {
-                        case "mortagg":
-                            dataStatsPhase[0]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
-                            dataStatsPhase[1]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
-                            dataStatsPhase[2]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
-                            dataStatsPhase[3]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
-                            titleTmp2+="Morts par million d'habitants vs ";
-                            dataStatsPhase[0]["x"] = dataMorts[statPays].slice(0,-9);
-                            dataStatsPhase[1]["x"] = dataMorts[statCompared].slice(0,-9);
-                            dataStatsPhase[2]["x"] = dataMorts[statPays].slice(-10);
-                            dataStatsPhase[3]["x"] = dataMorts[statCompared].slice(-10);
-                            break;
+                        // switch ($("input[name=stathisto]:checked").val()) {
+                        // case "mortagg":
+                        //     dataStatsPhase[0]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
+                        //     dataStatsPhase[1]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
+                        //     dataStatsPhase[2]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
+                        //     dataStatsPhase[3]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
+                        //     titleTmp2+="Morts par million d'habitants vs ";
+                        //     dataStatsPhase[0]["x"] = dataMorts[statPays].slice(0,-9);
+                        //     dataStatsPhase[1]["x"] = dataMorts[statCompared].slice(0,-9);
+                        //     dataStatsPhase[2]["x"] = dataMorts[statPays].slice(-10);
+                        //     dataStatsPhase[3]["x"] = dataMorts[statCompared].slice(-10);
+                        //     break;
 
-                        case "confirmeagg":
-                            dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            dataStatsPhase[1]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            dataStatsPhase[3]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            titleTmp2+="Cas pour 10000 habitants vs ";
-                            dataStatsPhase[0]["x"] = dataConfirmed[statPays].slice(0,-9);
-                            dataStatsPhase[1]["x"] = dataConfirmed[statCompared].slice(0,-9);
-                            dataStatsPhase[2]["x"] = dataConfirmed[statPays].slice(-10);
-                            dataStatsPhase[3]["x"] = dataConfirmed[statCompared].slice(-10);
-                            break;
+                        // case "confirmeagg":
+                        //     dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     dataStatsPhase[1]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     dataStatsPhase[3]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     titleTmp2+="Cas pour 10000 habitants vs ";
+                        //     dataStatsPhase[0]["x"] = dataConfirmed[statPays].slice(0,-9);
+                        //     dataStatsPhase[1]["x"] = dataConfirmed[statCompared].slice(0,-9);
+                        //     dataStatsPhase[2]["x"] = dataConfirmed[statPays].slice(-10);
+                        //     dataStatsPhase[3]["x"] = dataConfirmed[statCompared].slice(-10);
+                        //     break;
 
-                        case "confirmeaggdenoised":
-                            dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            dataStatsPhase[1]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            dataStatsPhase[3]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            titleTmp2+="Cas débruités pour 10000 habitants vs ";
-                            dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
-                            dataStatsPhase[1]["x"] = dataCasDenoised[statCompared].slice(0,-9);
-                            dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
-                            dataStatsPhase[3]["x"] = dataCasDenoised[statCompared].slice(-10);
-                            break;
+                        // case "confirmeaggdenoised":
+                        //     dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     dataStatsPhase[1]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     dataStatsPhase[3]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     titleTmp2+="Cas débruités pour 10000 habitants vs ";
+                        //     dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
+                        //     dataStatsPhase[1]["x"] = dataCasDenoised[statCompared].slice(0,-9);
+                        //     dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
+                        //     dataStatsPhase[3]["x"] = dataCasDenoised[statCompared].slice(-10);
+                        //     break;
 
-                        case "desactivatehisto":
-                            dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            dataStatsPhase[1]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            dataStatsPhase[3]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            titleTmp2+="Cas débruités pour 10000 habitants vs ";
-                            dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
-                            dataStatsPhase[1]["x"] = dataCasDenoised[statCompared].slice(0,-9);
-                            dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
-                            dataStatsPhase[3]["x"] = dataCasDenoised[statCompared].slice(-10);
-                            break;
+                        // case "desactivatehisto":
+                        //     dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     dataStatsPhase[1]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     dataStatsPhase[3]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     titleTmp2+="Cas débruités pour 10000 habitants vs ";
+                        //     dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
+                        //     dataStatsPhase[1]["x"] = dataCasDenoised[statCompared].slice(0,-9);
+                        //     dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
+                        //     dataStatsPhase[3]["x"] = dataCasDenoised[statCompared].slice(-10);
+                        //     break;
 
-                        default:
-                            break;
-                        }
+                        // default:
+                        //     break;
+                        // }
+                        dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        dataStatsPhase[1]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        dataStatsPhase[3]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        titleTmp2+="Cas débruités pour 10000 habitants vs ";
+                        dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
+                        dataStatsPhase[1]["x"] = dataCasDenoised[statCompared].slice(0,-9);
+                        dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
+                        dataStatsPhase[3]["x"] = dataCasDenoised[statCompared].slice(-10);
+
                         if ($("#rstandard").prop("checked")) {
                             dataStatsPhase[0]["hovertemplate"]+='<i>R Standard</i>: %{y:.2f}<br>';
                             dataStatsPhase[1]["hovertemplate"]+='<i>R Standard</i>: %{y:.2f}<br>';
@@ -3869,50 +3933,59 @@ Covid-19</text>
                         dataStatsPhase[2]["name"] = $("#stats-pays option:selected").text() + " (récent)";
                         dataStatsPhase[3]["name"] = $("#stats-compared option:selected").text(); + " (récent)";
                     } else {
-                        switch ($("input[name=stathisto]:checked").val()) {
-                        case "mortagg":
-                            dataStatsPhase[0]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
-                            dataStatsPhase[2]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
-                            titleTmp2+="Morts par million d'habitants vs ";
-                            dataStatsPhase[0]["x"] = dataMorts[statPays].slice(0,-9);
-                            dataStatsPhase[1]["x"] = [];
-                            dataStatsPhase[2]["x"] = dataMorts[statPays].slice(-10);
-                            dataStatsPhase[3]["x"] = [];
-                            break;
+                        // switch ($("input[name=stathisto]:checked").val()) {
+                        // case "mortagg":
+                        //     dataStatsPhase[0]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
+                        //     dataStatsPhase[2]["hovertemplate"]+='<i>Nombre morts /1M</i>: %{x:.2f}<br>';
+                        //     titleTmp2+="Morts par million d'habitants vs ";
+                        //     dataStatsPhase[0]["x"] = dataMorts[statPays].slice(0,-9);
+                        //     dataStatsPhase[1]["x"] = [];
+                        //     dataStatsPhase[2]["x"] = dataMorts[statPays].slice(-10);
+                        //     dataStatsPhase[3]["x"] = [];
+                        //     break;
 
-                        case "confirmeagg":
-                            dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            titleTmp2+="Cas pour 10000 habitants vs ";
-                            dataStatsPhase[0]["x"] = dataConfirmed[statPays].slice(0,-9);
-                            dataStatsPhase[1]["x"] = [];
-                            dataStatsPhase[2]["x"] = dataConfirmed[statPays].slice(-10);
-                            dataStatsPhase[3]["x"] = [];
-                            break;
+                        // case "confirmeagg":
+                        //     dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     titleTmp2+="Cas pour 10000 habitants vs ";
+                        //     dataStatsPhase[0]["x"] = dataConfirmed[statPays].slice(0,-9);
+                        //     dataStatsPhase[1]["x"] = [];
+                        //     dataStatsPhase[2]["x"] = dataConfirmed[statPays].slice(-10);
+                        //     dataStatsPhase[3]["x"] = [];
+                        //     break;
 
-                        case "confirmeaggdenoised":
-                            dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            titleTmp2+="Cas débruités pour 10000 habitants vs ";
-                            dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
-                            dataStatsPhase[1]["x"] = [];
-                            dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
-                            dataStatsPhase[3]["x"] = [];
-                            break;
+                        // case "confirmeaggdenoised":
+                        //     dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     titleTmp2+="Cas débruités pour 10000 habitants vs ";
+                        //     dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
+                        //     dataStatsPhase[1]["x"] = [];
+                        //     dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
+                        //     dataStatsPhase[3]["x"] = [];
+                        //     break;
 
-                        case "desactivatehisto":
-                            dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                            titleTmp2+="Cas débruités pour 10000 habitants vs ";
-                            dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
-                            dataStatsPhase[1]["x"] = [];
-                            dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
-                            dataStatsPhase[3]["x"] = [];
-                            break;
+                        // case "desactivatehisto":
+                        //     dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        //     titleTmp2+="Cas débruités pour 10000 habitants vs ";
+                        //     dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
+                        //     dataStatsPhase[1]["x"] = [];
+                        //     dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
+                        //     dataStatsPhase[3]["x"] = [];
+                        //     break;
 
-                        default:
-                            break;
-                        }
+                        // default:
+                        //     break;
+                        // }
+
+                        dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
+                        titleTmp2+="Cas débruités pour 10000 habitants vs ";
+                        dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
+                        dataStatsPhase[1]["x"] = [];
+                        dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
+                        dataStatsPhase[3]["x"] = [];
+
                         if ($("#rstandard").prop("checked")) {
                             dataStatsPhase[0]["hovertemplate"]+='<i>R Standard</i>: %{y:.2f}<br>';
                             dataStatsPhase[2]["hovertemplate"]+='<i>R Standard</i>: %{y:.2f}<br>';
@@ -4259,7 +4332,7 @@ Covid-19</text>
                 };
 
                 function generateSelectCountry(id,none){
-                    var tmpSelectCountry = '<select id="'+id+'">';
+                    var tmpSelectCountry = '<select class="select-styled" id="'+id+'">';
                     if (none) {
                         tmpSelectCountry += '<option value="none"></option>'
                     }
