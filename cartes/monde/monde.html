@@ -3109,9 +3109,6 @@ Covid-19</text>
             <button class="btn btn-primary btn-sm" id="upDate" type="button">&#x23E9</button>
             <button class="btn btn-primary btn-sm" id="last" type="button">&#x23ED</button>
         </div>
-        <a href="#popupStats" onclick="displayStats()" data-bs-toggle="modal" data-bs-target="#popupStats">&#x1F4C8</a>
-        <!-- <a href="#popupStats" onclick="displayStats()" rel="modal:open">&#x1F4C8</a> -->
-        <a href="#doc">&#x2753</a>
         <!-- Bouton d'affichage des stats -->
     </div>
     <div class="col-1">
@@ -3122,7 +3119,7 @@ Covid-19</text>
             <option value="30">Mois</option>
         </select>
     </div>
-    <div class="col-1 offset-1">
+    <div class="col-1">
         <label for="vitesse">Vitesse</label>
         <select id="vitesse" class="select-styled">
             <option value="1000">Lent</option>
@@ -3133,19 +3130,27 @@ Covid-19</text>
 
 
     <!-- Listes d'options -->
-    <div class="col-2 offset-1">
-        <label for="coloration">Coloration</label>
+    <div class="col-1">
+        <label for="coloration">Indicateur</label>
         <select id="coloration" class="select-styled">
             <option value="Standard">R: estimation moins réactive</option>
             <option selected="true" value="Fast">R: estimation réactive</option>
             <option value="Confirmed">Nouveaux cas pour 10k hab</option>
             <option value="Death">Nouveaux décès pour 1M hab</option>
         </select>
-        </div>
-        <div class="col-1">
+    </div>
+    <div class="col-1">
         <!-- Configuration de la légende -->
         <label for="customMax">Maximum légende</label>
         <input type="number" class="select-styled" id="customMax" name="customMax" min="0.5" max="50" step="0.5">
+    </div>
+    <div class="col-1 offset-1">
+        <div class="btn-group">
+        <button class="btn btn-primary btn-sm" onclick="displayStats()" data-bs-toggle="modal" data-bs-target="#popupStats">&#x1F4C8 Stats</button>
+        <!-- <a href="#popupStats" onclick="displayStats()" rel="modal:open">&#x1F4C8</a> -->
+        
+        <button class="btn btn-primary btn-md">&#x2753 A propos</button>
+        </div>
     </div>
 </div>
 
