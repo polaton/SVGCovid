@@ -3133,23 +3133,23 @@ Covid-19</text>
     <div class="col-1">
         <label for="coloration">Indicateur</label>
         <select id="coloration" class="select-styled">
-            <option value="Standard">R: estimation moins réactive</option>
-            <option selected="true" value="Fast">R: estimation réactive</option>
+            <option value="Standard">R Slow: estimation moins réactive</option>
+            <option selected="true" value="Fast">R Fast: estimation réactive</option>
             <option value="Confirmed">Nouveaux cas pour 10k hab</option>
             <option value="Death">Nouveaux décès pour 1M hab</option>
         </select>
     </div>
     <div class="col-1">
         <!-- Configuration de la légende -->
-        <label for="customMax">Maximum légende</label>
+        <label for="customMax">Maximum</label>
         <input type="number" class="select-styled" id="customMax" name="customMax" min="0.5" max="50" step="0.5">
     </div>
     <div class="col-1 offset-1">
         <div class="btn-group">
-        <button class="btn btn-primary btn-sm" onclick="displayStats()" data-bs-toggle="modal" data-bs-target="#popupStats">&#x1F4C8 Stats</button>
+        <button class="btn btn-primary btn-sm" onclick="displayStats()" data-bs-toggle="modal" data-bs-target="#popupStats">&#x1F4C8 Graphiques</button>
         <!-- <a href="#popupStats" onclick="displayStats()" rel="modal:open">&#x1F4C8</a> -->
         
-        <button class="btn btn-primary btn-md">&#x2753 A propos</button>
+        <button class="btn btn-primary btn-sm">&#x2753 À propos</button>
         </div>
     </div>
 </div>
