@@ -3171,18 +3171,18 @@ Covid-19</text>
                         <button id="remove-stats-country" class="btn btn-danger btn-sm" type="button">Supprimer</button>
                     </div>
                 </div>
-                <div class="col-2 offset-1 param-column">
+                <div class="col-2 param-column">
                     <h6>R à afficher</h6>
-                    <label for="rstandard">R Standard</label><input class="stats-control stats-box" type="checkbox" id="rstandard" name="rstandard" checked>
+                    <input class="stats-control stats-box" type="checkbox" id="rstandard" name="rstandard"><label for="rstandard">R Slow</label>
                     <br>
-                    <label for="rfast">R Fast</label><input class="stats-control stats-box" type="checkbox" id="rfast" name="rfast" checked>
+                    <input class="stats-control stats-box" type="checkbox" id="rfast" name="rfast" checked><label for="rfast">R Fast</label>
                 </div>
-                <div class="col-3 offset-1 param-column">
+                <div class="col-4 param-column">
                     <h6>Indicateur</h6>
-                    <label for="mortagg">Morts pour 1M h</label><input class="stats-control stats-box" type="radio" value="mortagg" name="stathisto" checked>
-                    <label for="confirmeagg">Confirmés pour 10k h</label><input class="stats-control stats-box" type="radio" value="confirmeagg" name="stathisto">
-                    <label for="confirmeaggdenoised">Confirmés débruités pour 10k h </label><input class="stats-control stats-box" type="radio" value="confirmeaggdenoised" name="stathisto" checked="checked">
-                    <label for="desactivatehisto">Désactiver</label><input class="stats-control stats-box" type="radio" value="desactivatehisto" name="stathisto">
+                    <input class="stats-control stats-box" type="radio" value="mortagg" name="stathisto" checked><label for="mortagg">Morts pour 1M h</label><br>
+                    <input class="stats-control stats-box" type="radio" value="confirmeagg" name="stathisto"><label for="confirmeagg">Confirmés pour 10k h</label><br>
+                    <input class="stats-control stats-box" type="radio" value="confirmeaggdenoised" name="stathisto" checked="checked"><label for="confirmeaggdenoised">Confirmés débruités pour 10k h </label><br>
+                    <input class="stats-control stats-box" type="radio" value="desactivatehisto" name="stathisto"><label for="desactivatehisto">Désactiver</label>
                 </div>
                 <div class="col-1">
                     <button id="display-phase" class="btn btn-primary btn-sm">Trajectoire de la pandémie</button>
@@ -3762,12 +3762,12 @@ Covid-19</text>
                     }
 
                     if ($("#rstandard").prop("checked")) {
-                        titleTmp1 += "| RStandard ";
+                        titleTmp1 += "| R Slow ";
                         dataStats[4]["y"] = cleanRSerie(dataFull[statPays]);
-                        dataStats[4]["name"] = "R Standard " + $("#stats-pays option:selected").text();
+                        dataStats[4]["name"] = "R Slow " + $("#stats-pays option:selected").text();
                         if (statCompared != "none") {
                             dataStats[5]["y"] = cleanRSerie(dataFull[statCompared]);
-                            dataStats[5]["name"] = "R Standard " + $("#stats-compared option:selected").text();
+                            dataStats[5]["name"] = "R Slow " + $("#stats-compared option:selected").text();
                         } else {
                             dataStats[5]["y"] = [];
                             dataStats[5]["name"] = "";
@@ -3904,18 +3904,18 @@ Covid-19</text>
                         dataStatsPhase[1]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
                         dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
                         dataStatsPhase[3]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                        titleTmp2+="Cas débruités pour 10000 habitants vs ";
+                        titleTmp2+="Cas débruités pour 10000 habitants & ";
                         dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
                         dataStatsPhase[1]["x"] = dataCasDenoised[statCompared].slice(0,-9);
                         dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
                         dataStatsPhase[3]["x"] = dataCasDenoised[statCompared].slice(-10);
 
                         if ($("#rstandard").prop("checked")) {
-                            dataStatsPhase[0]["hovertemplate"]+='<i>R Standard</i>: %{y:.2f}<br>';
-                            dataStatsPhase[1]["hovertemplate"]+='<i>R Standard</i>: %{y:.2f}<br>';
-                            dataStatsPhase[2]["hovertemplate"]+='<i>R Standard</i>: %{y:.2f}<br>';
-                            dataStatsPhase[3]["hovertemplate"]+='<i>R Standard</i>: %{y:.2f}<br>';
-                            titleTmp2+=" R Standard";
+                            dataStatsPhase[0]["hovertemplate"]+='<i>R Slow</i>: %{y:.2f}<br>';
+                            dataStatsPhase[1]["hovertemplate"]+='<i>R Slow</i>: %{y:.2f}<br>';
+                            dataStatsPhase[2]["hovertemplate"]+='<i>R Slow</i>: %{y:.2f}<br>';
+                            dataStatsPhase[3]["hovertemplate"]+='<i>R Slow</i>: %{y:.2f}<br>';
+                            titleTmp2+=" R Slow";
                             dataStatsPhase[0]["y"] = cleanRSerie(dataFull[statPays]).slice(0,-9);
                             dataStatsPhase[1]["y"] = cleanRSerie(dataFull[statCompared]).slice(0,-9);
                             dataStatsPhase[2]["y"] = cleanRSerie(dataFull[statPays]).slice(-10);
@@ -3985,16 +3985,16 @@ Covid-19</text>
 
                         dataStatsPhase[0]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
                         dataStatsPhase[2]["hovertemplate"]+='<i>Nombre confirmés /10k </i>: %{x:.2f}<br>';
-                        titleTmp2+="Cas débruités pour 10000 habitants vs ";
+                        titleTmp2+="Cas débruités pour 10000 habitants & ";
                         dataStatsPhase[0]["x"] = dataCasDenoised[statPays].slice(0,-9);
                         dataStatsPhase[1]["x"] = [];
                         dataStatsPhase[2]["x"] = dataCasDenoised[statPays].slice(-10);
                         dataStatsPhase[3]["x"] = [];
 
                         if ($("#rstandard").prop("checked")) {
-                            dataStatsPhase[0]["hovertemplate"]+='<i>R Standard</i>: %{y:.2f}<br>';
-                            dataStatsPhase[2]["hovertemplate"]+='<i>R Standard</i>: %{y:.2f}<br>';
-                            titleTmp2+=" R Standard";
+                            dataStatsPhase[0]["hovertemplate"]+='<i>R Slow</i>: %{y:.2f}<br>';
+                            dataStatsPhase[2]["hovertemplate"]+='<i>R Slow</i>: %{y:.2f}<br>';
+                            titleTmp2+=" R Slow";
                             dataStatsPhase[0]["y"] = cleanRSerie(dataFull[statPays]).slice(0,-9);
                             dataStatsPhase[1]["y"] = [];
                             dataStatsPhase[2]["y"] = cleanRSerie(dataFull[statPays]).slice(-10);

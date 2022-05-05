@@ -16,12 +16,22 @@ body{
     background: white; */
     margin-left: 20%;
     margin-right: auto;
+    margin-top: 15px;
     max-height: 95%;
     max-width: 60%;
-    min-width:1000px;
+    min-width: 1000px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 #popupStats .modal-content {
     border: 0px;
+}
+#popupStats .modal-header {
+    padding-top: 0px;
+}
+
+#popupStats .modal-dialog {
+    margin-top: 10px;
 }
 .modal-dialog{
     max-width: 100% !important;
@@ -32,9 +42,15 @@ body{
 }
 
 .stats-box{
-    margin-left: 15px;
+    margin-right: 10px;
 }
 
+.param-column{
+    margin-right: 10px;
+}
+#display-phase{
+    margin-top: 20px;
+}
 .param-column label{
     font-size: 14px;
 }
@@ -63,7 +79,7 @@ body{
 
 .select-styled{
     height: 30px;
-    width: 160px;
+    width: 90%;
     margin-right: 15px;
     color: #495057;
     background-color: #fff;
