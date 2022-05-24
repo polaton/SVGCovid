@@ -116,6 +116,10 @@ body.loading .loading-overlay {
     margin-bottom: 7px;
 }
 
+.controls-row .btn-group{
+    margin-top: 15px;
+}
+
 .controls-row .col-1{
     margin-right: 15px !important;
 }

@@ -1,7 +1,6 @@
 Graphiques:
 °prendre toute la place
 °Ouvrir stats sur le pays selectionné
-
 Graphiques améliorations:
 °Premier graphique: si confirmés sélectionné, afficher les données debruitées sous forme de courbe en plus des histos / donner possibilité utiliser données non débruitées
 XEchelle de droite => traits pointillés
@@ -10,31 +9,34 @@ XEchelle de droite => traits pointillés
 °Trier select pays par nom et pas par code
 °A la fin de l'animation, mettre en pause auto
 °Forcer couleurs des séries => Rouge 1 Bleu 2
-
 Phase Space:
 °Supprimer la valeur -1
-
-
 °1 Rappel couleur select pays
 °1 Loader 
 °1 Maj mes données
 °1 Inverser selection pays + Supprimler selection pays comparé
 °1 Utiliser les données débruitées
 °2 Modifier les graphiques pour que le max soit toujours égal à la valeur max
-
--° Titre graphique dynamique HTML
--° "Afficher trajectoire de la pandémie" pour déplier l'espace des phases
+° Titre graphique dynamique HTML
+° "Afficher trajectoire de la pandémie" pour déplier l'espace des phases
 °trait à R = 1 et trait à cas = 1
 °dégradé de couleur (~) couleur qui change à la fin
 °nom des pays dans la légende
--° hover template
-
--Modal grahiques responsive
--Menu d'intéraction responsive + déplacer + agrandir
-
--Axe X espace des phases en log 10 => appliquer log a toutes les valeurs?
--Carto=> cas données débruitées (case pour activer ou global?)
+° hover template
+°Axe X espace des phases en log 10 => appliquer log a toutes les valeurs mais garder les ticks des valeurs santdard
 °Espace des phasese confirmés débruités: pas de titre au changement
 °Déplacer la légende (idéalement coin haut gauche)
 °Enlever récent espace des phases
 °PB de dates dans le hovertooltip de l'espace des phases
+°Modal grahiques responsive
+°Menu d'intéraction responsive + déplacer + agrandir
+
+
+
+°Bouton pour déplier la trajectoire (checkbox)
+°Francais/Anglais
+°Correction responsive
+
+-Carto=> case pour utiliser les données débruitées (attendre les morts débruités)
+-Ajouter données morts débruitées
+-Lien arriver à un certain moment ?

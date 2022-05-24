@@ -1,0 +1,72 @@
+{
+    "map":{
+        "selecteurs":{
+            "pas":{
+                "titre":"Pas",
+                "jour":"Jour",
+                "semaine":"Semaine",
+                "mois":"Mois"
+            },
+            "vitesse":{
+                "titre":"Vitesse",
+                "lent":"Lent",
+                "moyen":"Moyen",
+                "rapide":"Rapide"
+            },
+            "indicateur":{
+                "titre":"Indicateur",
+                "rstandard":"R Slow: estimation moins réactive",
+                "rfast":"R Fast: estimation réactive",
+                "confirmes":"Nouveaux cas pour 10k hab",
+                "morts":"Nouveaux décès pour 1M hab"
+            },
+            "maximum":{
+                "titre":"Maximum"
+            }
+        },
+        "boutons":{
+            "graphiques":"Graphiques",
+            "information":"À propos"
+        }
+    },
+    "stats":{
+        "select1":"Pays principal",
+        "select2":"Pays comparé",
+        "boutons":{
+            "inverser":"Inverser",
+            "supprimer":"À propos"
+        },
+        "controles":{
+            "r":{
+                "titre":"R à afficher",
+                "rstandard":"R Slow",
+                "rfast":"R Fast"
+            },
+            "indicateur":{
+                "titre":"Indicateur",
+                "confirmes":"Confirmés pour 10k h",
+                "morts":"Morts pour 1M h",
+                "confirmesdeb":"Confirmés débruités pour 10k h",
+                "mortsdeb":"Morts débruités pour 1M h",
+                "desactiver":"Désactiver"
+            },
+            "trajectoire":"Trajectoire"
+        },
+        "graphiquestats":{
+            "nbpersonne":"Nombre de personnes",
+            "rfast":"RFast",
+            "rstandard":"R Slow",
+            "confirmes":"Nombre confirmés",
+            "ninfections":"Nouvelles infections",
+            "title1-1":"Evolution temporelle de la COVID 19",
+            "title2-1":"Trajectoire de la pandémie",
+            "mortslong":"Nombre de morts par million d'habitants ",
+            "mortcourt":"Morts pour 1M h ",
+            "caslong":"Nombre de cas par 10k habitants",
+            "cascourt":"Confirmés pour 10k h",
+            "casdeblong":"Nombre de cas débruités par 10k habitants",
+            "casdebtt":"Cas débruités pour 10000 habitants",
+            "confirmett":"Nombre confirmés /10k"
+        }
+    }
+}

@@ -3184,8 +3184,8 @@ Covid-19</text>
                     <input class="stats-control stats-box" type="radio" value="confirmeaggdenoised" name="stathisto" checked="checked"><label for="confirmeaggdenoised">Confirmés débruités pour 10k h </label><br>
                     <input class="stats-control stats-box" type="radio" value="desactivatehisto" name="stathisto"><label for="desactivatehisto">Désactiver</label>
                 </div>
-                <div class="col-1">
-                    <button id="display-phase" class="btn btn-primary btn-sm">Trajectoire de la pandémie</button>
+                <div class="col-2 param-column">
+                    <input class="stats-control stats-box" type="checkbox" id="display-phase" name="display-phase"><label for="display-phase">Trajectoire</label>
                 </div>
             </div>
             
@@ -3317,13 +3317,16 @@ Covid-19</text>
                     majData(selectedDate);
                     majCouleurs(selectedDate);
                 });
-                $("#display-phase").click(function(e) {
+                $("#display-phase").change(function(e) {
+                    
                     $("#pandemic-dynamic").toggle();
                     
+                    if (this.checked) {
+                        var sectionOffset = $('#pandemic-dynamic').position().top;
+                        $("#popupStats").scrollTop(sectionOffset);
+                    }
                     // get the top of the section
-                    var sectionOffset = $('#pandemic-dynamic').position().top;
-                    console.log(sectionOffset);
-                    $("#popupStats").scrollTop(sectionOffset);
+
                     //scroll the container
                 });
                 $("#remove-stats-country").click(function(e) {
@@ -3609,7 +3612,7 @@ Covid-19</text>
                         y: [],
                         x: [],
                         hovertemplate: '<b>%{text}</b><br>'+
-                            '<i>RFast</i>: %{y:.2f}<br>' +
+                            '<i>R Fast</i>: %{y:.2f}<br>' +
                             '<i>Nombre confirmés</i>: %{x:.2f}<br>',
                         text: daysLabelStats.slice(0,-9),
                         mode: "markers+lines",
@@ -3624,7 +3627,7 @@ Covid-19</text>
                         y: [],
                         x: [],
                         hovertemplate: '<b>%{text}</b><br>'+
-                            '<i>RFast</i>: %{y:.2f}<br>' +
+                            '<i>R Fast</i>: %{y:.2f}<br>' +
                             '<i>Nombre confirmés</i>: %{x:.2f}<br>',
                         text: daysLabelStats.slice(0,-9),
                         mode: "markers+lines",
@@ -3672,7 +3675,7 @@ Covid-19</text>
                             // autorange: true
                         },
                         xaxis: {
-                            title:'New infections',
+                            title:'Nouvelles infections',
                             rangemode: 'nonnegative',
                             autorange: true,
                             // type: 'log'
@@ -3741,8 +3744,8 @@ Covid-19</text>
                 function updateStats() {
                     var statPays = $("#stats-pays").val();
                     var statCompared = $("#stats-compared").val();
-                    var titleTmp1 = "Evolution temporelle de la COVID 19 - Time evolution of COVID 19<br>";
-                    var titleTmp2 = "Trajectoire de la pandémie - Pandemic trajectory<br>";
+                    var titleTmp1 = "Evolution temporelle de la COVID 19 <br>";
+                    var titleTmp2 = "Trajectoire de la pandémie<br>";
                     if ($("#rfast").prop("checked")) {
                         titleTmp1 += "| RFast ";
                         dataStats[2]["y"] = cleanRSerie(dataFast[statPays]);
