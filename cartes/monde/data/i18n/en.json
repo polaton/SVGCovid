@@ -1,0 +1,72 @@
+{
+    "map":{
+        "selecteurs":{
+            "pas":{
+                "titre":"Step",
+                "jour":"Day",
+                "semaine":"Week",
+                "mois":"Month"
+            },
+            "vitesse":{
+                "titre":"Speed",
+                "lent":"Slow",
+                "moyen":"Medium",
+                "rapide":"Fast"
+            },
+            "indicateur":{
+                "titre":"Data",
+                "rstandard":"R Slow: less reactive estiaton",
+                "rfast":"R Fast: reactive estimation",
+                "confirmes":"New cases for 10k inhab",
+                "morts":"New deaths for 1M inhab"
+            },
+            "maximum":{
+                "titre":"Maximum"
+            }
+        },
+        "boutons":{
+            "graphiques":"Plots",
+            "information":"About"
+        }
+    },
+    "stats":{
+        "select1":"Main country",
+        "select2":"Compared country",
+        "boutons":{
+            "inverser":"Invert",
+            "supprimer":"Delete"
+        },
+        "controles":{
+            "r":{
+                "titre":"R to plot",
+                "rstandard":"R Slow",
+                "rfast":"R Fast"
+            },
+            "indicateur":{
+                "titre":"Data",
+                "confirmes":"Cases for 10k inhab",
+                "morts":"Deaths for 1M inhab",
+                "confirmesdeb":"Denoised cases for 10k inhab",
+                "mortsdeb":"Denoised deaths for 1M inhab",
+                "desactiver":"Disable"
+            },
+            "trajectoire":"Trajectory"
+        },
+        "graphiquestats":{
+            "nbpersonne":"Number of person",
+            "rfast":"R Fast",
+            "rstandard":"R Slow",
+            "confirmes":"Confirmed number",
+            "ninfections":"New infections",
+            "title1-1":"Temporal evolution of COVID-19",
+            "title2-1":"Pandemic trajectory",
+            "mortslong":"Number of deaths for 1 million inhabitants",
+            "mortcourt":"Deaths for 1M inhab ",
+            "caslong":"Cases for 10k inhabitants",
+            "cascourt":"Confirmed for 10k inhab",
+            "casdeblong":"Nombre de cas débruités par 10k habitants",
+            "casdebtt":"Denoised cases for 10000 inhabitants",
+            "confirmett":"Confirmed cases /10k"
+        }
+    }
+}
