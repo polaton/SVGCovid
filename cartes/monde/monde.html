@@ -26,7 +26,7 @@
 <div class="row">
 <div id="cadre-carte" class="col-11">
             <!--  Déclaration du SVG ==> EXTERNALISER ???-->
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox=" 10 13 420 202" width="100%" height="100%" style="background-color:rgb(207, 233, 250)">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox=" 10 13 420 202" width="100%" height="100%" style="background-color:rgb(207, 233, 250)">
 <!-- Faire au besoin des carrés pour 
 COM Comoros
 CPV Cape Verde
@@ -47,8 +47,7 @@ ATTENTION aux îles françaises: Martinique -> MTQ et n'a donc pas les données 
 <rect x="15" y="10" width="390" height="210" />
 </g> -->
 <!-- TITRE -->
-<g xmlns="http://www.w3.org/2000/svg" id="titre"> <text x="315" y="20" style="font-size:6px; font-family:Helvetica" opacity="1" id="txt-titre"> Atlas des données de la
-Covid-19</text>
+<g xmlns="http://www.w3.org/2000/svg" id="titre"> <text x="315" y="20" style="font-size:6px; font-family:Helvetica" opacity="1" id="txt-titre"> Atlas des données de la Covid-19</text>
     <text x="315" y="26" id="txt-titre2" style="font-size:4.5px; font-family:Helvetica" opacity="1"> </text>
     <!-- <a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="infoscartes.html"> <text x="270" y="160" style="font-size:4px; font-family:Helvetica" fill="orange">
     Sources : click here</text></a> -->
@@ -66,7 +65,7 @@ Covid-19</text>
     <text xmlns="http://www.w3.org/2000/svg" x="152" y="204" style="font-size:3px; font-family:Helvetica" opacity="1">
     Cartographie: Éric Guichard (Triangle + IXXI), juil-oct. 2020,</text>
     <text xmlns="http://www.w3.org/2000/svg" x="152" y="208.5" style="font-size:3px; font-family:Helvetica" opacity="1"> Antoine Chemardin (INRIA Nancy),
-    oct. 2020-mars 2021.</text>
+    oct. 2020-mai 2022.</text>
 </g>
 <!-- LEGENDE -->
 
@@ -3130,7 +3129,7 @@ Covid-19</text>
 
 
     <!-- Listes d'options -->
-    <div class="col-1">
+    <div class="col-2">
         <label for="coloration">Indicateur</label>
         <select id="coloration" class="select-styled">
             <option value="Standard">R Slow: estimation moins réactive</option>
@@ -3138,6 +3137,7 @@ Covid-19</text>
             <option value="Confirmed">Nouveaux cas pour 10k hab</option>
             <option value="Death">Nouveaux décès pour 1M hab</option>
         </select>
+        <input class="" type="checkbox" id="denoised-data" name="denoised-data"><label for="denoised-data">&nbsp;Données débruitées</label>
     </div>
     <div class="col-1">
         <!-- Configuration de la légende -->
@@ -3155,7 +3155,7 @@ Covid-19</text>
 </div>
 
 <div id="popupStats" class="modal modal-xl">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered" id="modal-stats">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -3223,6 +3223,7 @@ Covid-19</text>
                 var dataMorts = {}; //Tableau des données AggMorts
                 var dataConfirmed = {}; //Tableau des données AggConfirmed
                 var dataCasDenoised = {}; //Tableau des données Ncasdenoised
+                var dataMortsDenoised = {}; //Tableau des données Ncasdenoised
                 var firstDay = "02/02/2020"; //Premier jour des données
                 var daysPast; //Nombres de jours depuis le début des données
                 var nbCaissons = $(".legBox").length; //Nombre de caissons pour la légende
@@ -3242,6 +3243,9 @@ Covid-19</text>
 
                 $(function() {
                     //Chargement des données
+                    $("#denoised-data").prop( "checked", false );
+                    $("#display-phase").prop( "checked", false );
+                    $("#pandemic-dynamic").hide();
                     $("body").addClass("loading");
                     $.get("data/RStandard", function(data) { //On charge RStandard
                         //transformation en tableau, 
@@ -3254,52 +3258,59 @@ Covid-19</text>
                         })); //ajout au tableau de données R
 
                         initiateColors(false);
-
-                        $.get("data/methode-mortsaccrjourpop", function(data) { //On charge AggMorts
+                        $.get("data/methode-Morts-debruites-accrjourpop", function(data) { //On charge AggMortsDenoised
                             data = $.csv.toArrays(data);
                             data.shift();
                             data.shift();
-                            data.forEach(element => dataMorts[element.shift()] = element.map(function(v) {
+                            data.forEach(element => dataMortsDenoised[element.shift()] = element.map(function(v) {
                                 return parseFloat(v, 10);
-                            })); //ajout au tableau de données Morts
-                            $.get("data/methode-confirmesaccrjourpop", function(data) { //On charge AggConfirmés
+                            })); //ajout au tableau de données MortsDenoised
+                            $.get("data/methode-mortsaccrjourpop", function(data) { //On charge AggMorts
                                 data = $.csv.toArrays(data);
                                 data.shift();
                                 data.shift();
-                                data.forEach(element => dataConfirmed[element.shift()] = element.map(function(v) {
+                                data.forEach(element => dataMorts[element.shift()] = element.map(function(v) {
                                     return parseFloat(v, 10);
-                                })); //ajout au tableau de données Confirmés
-                                $.get("data/RFast", function(data) { //On charge RFast
+                                })); //ajout au tableau de données Morts
+                                $.get("data/methode-confirmesaccrjourpop", function(data) { //On charge AggConfirmés
                                     data = $.csv.toArrays(data);
                                     data.shift();
                                     data.shift();
-                                    data.forEach(element => dataFast[element.shift()] = element.map(function(v) {
+                                    data.forEach(element => dataConfirmed[element.shift()] = element.map(function(v) {
                                         return parseFloat(v, 10);
-                                    })); //ajout au tableau de données R Fast
-                                    $.get("data/methode-confirmes-debruites-accrjourpop", function(data) { //On charge Ncasdenoised
+                                    })); //ajout au tableau de données Confirmés
+                                    $.get("data/RFast", function(data) { //On charge RFast
                                         data = $.csv.toArrays(data);
                                         data.shift();
                                         data.shift();
-                                        data.forEach(element => dataCasDenoised[element.shift()] = element.map(function(v) {
+                                        data.forEach(element => dataFast[element.shift()] = element.map(function(v) {
                                             return parseFloat(v, 10);
                                         })); //ajout au tableau de données R Fast
-                                        $.get("data/NCas", function(data) { //On charge Confirmés
+                                        $.get("data/methode-confirmes-debruites-accrjourpop", function(data) { //On charge Ncasdenoised
                                             data = $.csv.toArrays(data);
                                             data.shift();
                                             data.shift();
-                                            data.forEach(element => dataNew[element.shift()] = element.map(function(v) {
+                                            data.forEach(element => dataCasDenoised[element.shift()] = element.map(function(v) {
                                                 return parseFloat(v, 10);
-                                            })); //ajout au tableau de données Nb Cas
+                                            })); //ajout au tableau de données R Fast
+                                            $.get("data/NCas", function(data) { //On charge Confirmés
+                                                data = $.csv.toArrays(data);
+                                                data.shift();
+                                                data.shift();
+                                                data.forEach(element => dataNew[element.shift()] = element.map(function(v) {
+                                                    return parseFloat(v, 10);
+                                                })); //ajout au tableau de données Nb Cas
 
-                                            //Création du range de dates et ajout à la page HTML
-                                            $("#slider").append('<input type="range" id="dateRange" name="dateRange" step="1" min="0" max="' + daysPast + '" value="' + daysPast + '" style="width:70%;">  <label id="selectedDate" for="dateRange"></label>');
-                                            initiateSvg(); //On fait les quelques modifications désirées sur le SVG
-                                            changeSliderDateLabel(returnDateFormatted(daysPast)); //On met à jour le label du slider de date
-                                            majData($("#dateRange").val()); //On met à jour les données
-                                            majCouleurs($("#dateRange").val()); //On met à jour les colorations des pays
-                                            initiateStatsLabels();
-                                            loadCountries();
-                                            $("body").removeClass("loading");
+                                                //Création du range de dates et ajout à la page HTML
+                                                $("#slider").append('<input type="range" id="dateRange" name="dateRange" step="1" min="0" max="' + daysPast + '" value="' + daysPast + '" style="width:70%;">  <label id="selectedDate" for="dateRange"></label>');
+                                                initiateSvg(); //On fait les quelques modifications désirées sur le SVG
+                                                changeSliderDateLabel(returnDateFormatted(daysPast)); //On met à jour le label du slider de date
+                                                majData($("#dateRange").val()); //On met à jour les données
+                                                majCouleurs($("#dateRange").val()); //On met à jour les colorations des pays
+                                                initiateStatsLabels();
+                                                loadCountries();
+                                                $("body").removeClass("loading");
+                                            });
                                         });
                                     });
                                 });
@@ -3317,6 +3328,15 @@ Covid-19</text>
                     majData(selectedDate);
                     majCouleurs(selectedDate);
                 });
+
+                $("#denoised-data").change(function(e) {
+                    //On fait la mise à jour de la carte
+                    var selectedDate = $("#dateRange").val();
+                    initiateColors(false);
+                    majData(selectedDate);
+                    majCouleurs(selectedDate);
+                });
+
                 $("#display-phase").change(function(e) {
                     
                     $("#pandemic-dynamic").toggle();
@@ -3329,6 +3349,7 @@ Covid-19</text>
 
                     //scroll the container
                 });
+
                 $("#remove-stats-country").click(function(e) {
                     $('#stats-compared option[value="none"]').prop('selected', true);
                     updateStats();
@@ -3503,11 +3524,11 @@ Covid-19</text>
                     
                     $("#select-pays-1").append(generateSelectCountry("stats-pays",false));
                     orderSelectCountry("stats-pays");
-                    $("#select-pays-1").prepend("<div class='box blue'></div>");
+                    $("#select-pays-1").prepend("<div class='box red'></div>");
 
                     $("#select-pays-2").append(generateSelectCountry("stats-compared",true));
                     orderSelectCountry("stats-compared");
-                    $("#select-pays-2").prepend("<div class='box red'></div>");
+                    $("#select-pays-2").prepend("<div class='box blue'></div>");
 
                     if (lockedCountry != "") {
                         $('#stats-pays option[value="'+lockedCountry+'"]').prop('selected', true);
@@ -3587,7 +3608,7 @@ Covid-19</text>
                             side: 'right',
                             autorange: true
                         },
-                        width: 950,
+                        width: $("#modal-stats").width(),
                         height: 450,
                         // legend: {
                         //     x: 1.1,
@@ -3602,7 +3623,7 @@ Covid-19</text>
                         pad: {
                             t: 100
                         },
-                        colorway : ['#4D8FAC', '#C93756', '#22A7F0', '#F9690E', '#003171', '#CF000F']
+                        colorway : ['#C93756','#4D8FAC',  '#F9690E','#22A7F0', '#CF000F', '#003171']
                     }
 
                     dataStats = [trace3, trace3compare, trace1, trace1compare, trace2, trace2compare];
@@ -3680,7 +3701,7 @@ Covid-19</text>
                             autorange: true,
                             // type: 'log'
                         },
-                        width: 950,
+                        width: $("#modal-stats").width(),
                         height: 450,
                         shapes: [
                             {
@@ -3716,7 +3737,7 @@ Covid-19</text>
                             xanchor:'left',
                             yanchor:'top'
                         },
-                        colorway : ["#75B8C8","#EB706E","#06657D","#BF211E"]
+                        colorway : ["#EB706E","#75B8C8","#BF211E","#06657D"]
                     }
 
                     dataStatsPhase = [tracePhase1, tracePhase1compare,tracePhaseEnd1, tracePhaseEnd1compare];
@@ -4267,18 +4288,22 @@ Covid-19</text>
                                 }
                                 break;
                             case 'Confirmed':
-                                if (this.id.substring(0, 3) in dataConfirmed) {
+                                if (this.id.substring(0, 3) in dataConfirmed && $("#denoised-data").prop( "checked") == false) {
                                     //on récupère la valeur du jour pour le pays
                                     var valeurDuJour = dataConfirmed[this.id.substring(0, 3)][offset];
+                                }else if (this.id.substring(0, 3) in dataCasDenoised && $("#denoised-data").prop( "checked") == true) {
+                                    var valeurDuJour = dataCasDenoised[this.id.substring(0, 3)][offset]
                                 } else {
                                     //on récupère la valeur du jour pour le pays
                                     var valeurDuJour = "NA";
                                 }
                                 break;
                             case 'Death':
-                                if (this.id.substring(0, 3) in dataMorts) {
+                                if (this.id.substring(0, 3) in dataMorts && $("#denoised-data").prop( "checked") == false) {
                                     //on récupère la valeur du jour pour le pays
                                     var valeurDuJour = dataMorts[this.id.substring(0, 3)][offset];
+                                }else if (this.id.substring(0, 3) in dataMortsDenoised && $("#denoised-data").prop( "checked") == true) {
+                                    var valeurDuJour = dataMortsDenoised[this.id.substring(0, 3)][offset]
                                 } else {
                                     //on récupère la valeur du jour pour le pays
                                     var valeurDuJour = "NA";
