@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<title>blah</title>
+<style>
+.parent {
+  position: relative;
+  top: 0;
+  left: 0;
+  max-height: 1000px;
+  max-width: 1000px;
+}
+.image1 {
+  position: relative;
+  top: 0;
+  left: 0;
+  border: 1px red solid;
+  max-height: 1000px;
+  max-width: 1000px;
+}
+.image2 {
+  position: absolute;
+  /* top: 909px; */
+  top: 63%;
+  /* left: 502px; */
+  left: 21%;
+  border: 1px green solid;
+  max-height: 30px;
+  max-width: 30px;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+    <div class="parent">
+        <img class="image1" src="https://m1.lmcdn.fr/media/18/6109c464b1a3cb0c619235f6_original/237447466/map-png-store-84.pngA" />
+        <img class="image2" max src="https://cdn-icons-png.flaticon.com/128/1673/1673394.png" />
+    </div>
+
+    <img id="barcode"/>
+    <!-- <svg class="barcode"
+    jsbarcode-format="upc"
+    jsbarcode-value="1234567899874"
+    jsbarcode-textmargin="0"
+    jsbarcode-flat="true"
+    jsbarcode-fontoptions="bold">
+    </svg> -->
+    <script>window.addEventListener("DOMContentLoaded", (event) => {
+      console.log("DOM entièrement chargé et analysé");
+      // JsBarcode("#barcode", "Hi!");
+      JsBarcode("#barcode", "1234567890128", {
+    format: "ean13",
+    height: 50,
+    flat: true
+    });
+      // JsBarcode(".barcode").init();
+    });</script>
+</body>
+</html>
+
+909 1424
+502 2331

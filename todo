@@ -37,6 +37,16 @@ Phase Space:
 °Francais/Anglais
 °Correction responsive
 
--Carto=> case pour utiliser les données débruitées (attendre les morts débruités)
--Ajouter données morts débruitées
+*s'assurer que la case trajectoire est décochée et le graphique caché
+*inverser rouge et bleu
+
+*Breakpoints modal responsive
+*Carto=> case pour utiliser les données débruitées (attendre les morts débruités)
+*Ajouter données morts débruitées
+*UI reduite
+*finir popup about
+
+-Finir francais/anglais
 -Lien arriver à un certain moment ?
+-Inventaire données + architecture dossiers sites
+-Tuto intégré

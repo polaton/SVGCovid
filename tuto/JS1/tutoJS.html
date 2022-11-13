@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Titre de la page</title>
+  <!--link  permet d'intégrer une feuille de style CSS et  scrit un fichier de code Javascript. Ces fichiers peuvent être en local, où une ressource distancte -->
+  <link rel="stylesheet" href="style.css"> 
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+    <!-- HTML est un langage déclaratif interprété par un navigateur Web. HTML est une application du XML, c'est donc un langage de balisage -->
+    <!-- En HTML, une div est l'élément de base. Une div est simplement un rectangle dans lequel on pourra placer du contenu -->
+    <div id="titre-div"> 
+        Titre
+    </div>
+    <!-- Sur la div au dessus, on a vu qu'on pouvait définir les attributs de notre balise en écrivant 'attribut="valeur"'.
+    Ici on utilise id et class qui sont des attributs qui permettent d'identifier des éléments HTML. Id correspond à un identifiant qui doit rester unique, contrairement à l'attribut class qui peut être partagé par plusieurs éléments HTML.  -->
+    <div class="une-div">
+        <!-- Quand on ouvre une div, le navigateur fera une retour automatique à la ligne. Si on souhaite, pour définir une balise de contenu qui n'entraîne pas de retour à la ligne, on peut utiliser span -->
+        <span class="un-span">1</span>
+    </div>
+    <div class="une-div">
+        <span class="un-span">2</span>
+    </div>
+    <div class="une-div">
+        <span class="un-span">3</span>
+    </div>
+    <div class="une-div">
+        <span class="un-span">4</span>
+    </div>
+    <div class="une-div">
+        <span class="un-span">5</span>
+    </div>
+
+    <div id="autre-div">
+        Autre div
+    </div>
+
+    <!-- Pour résumer, une page web en HTML se résume souvent à des rectangles (les div) qui contiennent différents éléments HTML (d'autres div, des span et d'autres balises). -->
+    <!-- Maintenant que nous avons vu la base du HTML, on peut regarder un peu plus en détail le CSS qui va donner de l'utilité à nos class et id. Ligne 7, on utilise la balise link pour intégrer à notre page le fichier style.css qui se trouve dans ce même dossier -->
+    <script>
+        $(function() {
+
+            console.log("test");
+
+        });
+
+
+    </script>
+
+</body>
+</html>
+
