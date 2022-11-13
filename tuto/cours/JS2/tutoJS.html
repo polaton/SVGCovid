@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Titre de la page</title>
+  <link rel="stylesheet" href="style.css"> 
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+    <div id="titre-div"> 
+        Titre
+    </div>
+    <div class="une-div">
+
+        <span class="un-span">1</span>
+    </div>
+    <div class="une-div">
+        <span class="un-span">2</span>
+    </div>
+    <div class="une-div">
+        <span class="un-span">3</span>
+    </div>
+    <div class="une-div">
+        <span class="un-span">4</span>
+    </div>
+    <div class="une-div">
+        <span class="un-span">5</span>
+    </div>
+
+    <div id="autre-div">
+        Autre div
+    </div>
+
+    <!-- Avant de commencer avec le Javascript (abrégé en JS), on ajoute une balise button avec un type button et une fonction dans onclick  -->
+    <button onclick="faireCeci()" type="button">
+        Cliquez-moi!
+    </button>
+
+    <!-- On ajoute aussi un input de type text (un champ texte à remplir) et un bouton qui va intéragir avec ce champ texte. Il existe un nombre important de type d'input: https://developer.mozilla.org/fr/docs/Web/HTML/Element/input pour plus d'informations  -->
+    <input type="text" id="mon-champ" value="maValeur">
+
+    <!-- A noter que cette fois on ne précise pas la fonction à éxecuter dans le onclick -->
+    <button id="mon-bouton" type="button">
+        Moi de-même!
+    </button>
+
+    <!-- Pour ajouter du JS à notre page, on peut soit faire comme Ligne 8 en intégrant un fichier externe. Soit on peut aller au plus simple en inscrivant le code JS directement dans une balise script se trouvant juste avant la balise fermant le body-->
+    <script>
+    // JS est un langage proche du Python dans son fonctionnement, mais il permet en plus de gérer les événements produits par les actions de l'utilisateur sur notre page. 
+
+    
+        // Ici on déclare la fonction qui avait été indiquée dans le onclick du bouton. Quand on cliquera sur le bouton, c'est cette fonction qui s'exécutera
+        function faireCeci(){
+            console.log("Merci"); // console.log() est l'équivalent de print() en python, il fait donc apparaître du contenu dans la console.
+            alert("Merci"); // alert() quant à lui permet de créer une alerte côté navigateur
+        }
+
+        // La déclaration suivante est spécifique au Jquery. Elle permet d'indiquer un certain nombre d'actions à effectuer une fois que la page aura été affichée par le navigateur et on l'appelle communément le 'domready'.
+        console.log("Ma page n'est pas encore chargée"); //Cette ligne apparaitra avant la ligne présente dans le domready
+        $( function() {
+            console.log("Ma page est chargée");
+            // Une fois que la page est chargée, on peut attribuer des évènements à nos éléments HTML, un peu comme ce qui avait été fait avec le onclick plus tôt
+
+            // Pour ce faire, on va utiliser JQuery , qui est une librairie permettant de simplifier les intéractions avec le HTML en JS. Pour séléctionner un élément HTML en JQuery, on passe un sélecteur similaires à ceux du CSS à la fonction $(). Ensuite, on indique quel événèment on veut lier (ici click), puis on passe en argument une fonction avec un argument e. C'est le code de cette fonction qui sera exécuté lorsque l'évènement se produira.
+            $("#mon-bouton").click(function(e) {
+                
+                // JQuery permet de manipuler très simplement les éléments HTML, par exemple, on pourra récupérer la valeur entrée par l'utilisateur dans l'input texte puis l'afficher:
+                var texteUtilisateur = $("#mon-champ").val();
+                alert(texteUtilisateur);
+                // Et si on passe un paramètre à la fonction val, on peut modifier la valeur de l'élément sélectionné:
+                $("#mon-champ").val("nouvelleValeur");
+
+                // Avec console.log(), on peut aussi regarder à quoi correspond le retour de la fonction simple de séléction JQuery
+                console.log($("#mon-champ"));
+
+                // Pour finir, on peut modifier/récupérer le texte d'un élément avec la fonction text()
+                $("#autre-div").text(texteUtilisateur);
+
+                // Et on peut aussi modifier les propriétés CSS via la fonction css(nomDeLaPropriétéCSS,nouvelleValeur)
+                $("#autre-div").css("background-color","black");
+                $("#autre-div").css("color","white");
+
+                // On peut aussi cacher ou afficher des éléments avec show() et hide()
+                $(".une-div").hide();
+                $(".une-div").show();
+                $(".une-div").hide();
+            });
+
+        })
+        console.log("Ma page n'est toujours pas chargée"); //Quand bien même la ligne de code serait après le domready dans le fichier
+    </script>
+
+</body>
+</html>
+

@@ -1,0 +1,44 @@
+/* La syntaxe du CSS est simple: on écrit un selecteur qu'on fait suivre par des accolades, puis on indique entre ces accolades les propriétés CSS que doivent prendre les éléments sélectionnés */
+/* Si on veut attribuer des propriétés de style à toutes les balises d'un type, on indique le type de balise ciblé. On peut aussi séparer deux sélecteur CSS par une virgule. Dans ce cas, les propriétés de la balise body ET de la balise html seront altérées */
+body,html{ 
+    /* Body est l'élément HTML affiché par notre navigateur et html correspond à la balise qui contient tout notre code HTML. Ici on utilise overflow-x: hidden pour cacher un potentiel défilement horizontal, et overlflow-y: scroll pour indiquer qu'on pour défiler de manière verticale sur la page. */
+    overflow-x: hidden;
+    overflow-y: scroll;
+    /* On indique ici une famille de fonte pour l'ensemble du HTML: tous les éléments l'utiliseront par défaut */
+    font-family: 'Roboto';
+}
+
+/* Si on veut attribuer des propriétés de style à une balise ayant un id spécifique, on indique l'id ciblé précédé d'un # */
+#titre-div{
+    color: blue;
+    background-color: yellow;
+    
+}
+
+
+/* Si on veut attribuer des propriétés de style à des balises ayant une class spécifique, on indique la classe ciblée précédée d'un . */
+.une-div{
+    color: white;
+    background-color: red;
+    
+}
+
+/* Pour illustrer le système de blocs HTML, on peut rajouter une couleur de fond à notre span. Par exemple passer red en green, enregistrer le fichier CSS et rafraîchir la page sur notre navigateur. On constate maintenant que là où la div va prendre toute la largeur disponible le span va s'adapter à son contenu*/
+.un-span{
+    color: white;
+    background-color: green;
+}
+
+/* Voici une div qu'on va un peu modifier pour voir ce que le CSS peut nous apporter */
+#autre-div{
+    /* Les éléments HTML ont une hauteur et une largeur. On peut l'exprimer entre autres en pixels ou en % de la taille de la balise parente.*/
+    width: 50%;
+    height: 150px;
+    
+    /* Les éléments en HTML ont aussi des mécaniques de boites: margin correspond à la distance en pixels entre cet éléments et les autres. On voit que notre div orange est décalée par rapport aux div rouges et au bord gauche de l'écran */
+    margin: 50px;
+    /* padding correspond à la marge intérieure, c'est à dire la distance en pixel entre le bord de l'élément et son contenu. La encore, on voit que notre texte est décalé sur la gauche et vers le bas  */
+    padding: 50px;
+    color: purple;
+    background-color: darkorange;
+}

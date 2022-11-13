@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 # couleurs tirant vers le vert= 'rgb(90, 220, 20)' ; 'rgb(160, 230, 25)' 
 # Seuils et couleurs modifiables
 
-ficCouleurs = open("InfosCouleurs", "w") #On va y écrire
+# ficCouleurs = open("InfosCouleurs", "w") #On va y écrire En fait inutile
 
 seuils=[25,28,31,35,40]
 couleurs=['rgb(255,255,100)' , 'rgb(255,240,60)' , 'rgb(255, 180, 30)' , 'rgb(255, 120, 30)', 'rgb(220, 60, 20)', 'rgb(120, 0, 0)']
@@ -37,7 +37,7 @@ for lignecourante in lignes:
 	#sinon...		
 	if valeur <= seuils[0]:
 		couleurcirc[ident]=couleurs[0] # gardée en mémoire
-	ficCouleurs.write (ident+"\t"+couleurcirc[ident]+"\t"+str(valeur)+"\n")
+#	ficCouleurs.write (ident+"\t"+couleurcirc[ident]+"\t"+str(valeur)+"\n")
  
 # Types des Ident: <path id="8303-CC3" ou <path id="7506-CC1" ou <path id="zoom-7506"
 
@@ -55,10 +55,6 @@ with open("Fond.html", "r",encoding='utf8') as FicFondorigine:
 		idcirc=circ["id"].split("-")[0]
 		circ["fill"]=couleurcirc[idcirc]
 	#	circ["opacity"]=.7
-  
-
-espoir=str(puree.prettify("utf-8"))
-#print (espoir)
 
 ###Travail sur caissons
 
@@ -95,7 +91,6 @@ caissonSup=caissonSup.replace("couleur",couleurs[nbcaissons])
 textecaissonSup=textecaissonSup.replace("hauteurYtexte",str(YtextSup))
 textecaissonSup=textecaissonSup.replace("valeurcaisson","≥ "+str(seuils[-1])+" %")
 touscaissons+=caissonSup+"\n"+textecaissonSup
-#print (caissonSup,textecaissonSup)
 
 caissonMq=caissonbase
 textecaissonMq=textecaissonbase
@@ -110,21 +105,17 @@ touscaissons+=caissonMq+"\n"+textecaissonMq
 
 touscaissons='<g id="caissons">'+"\n"+touscaissons+"\n"+'</g>'+"\n"
 
-# Ce que j'ai fait ici, c'est que touscaissons c'est du texte, donc j'utilise BeautifulSoup pour le parser
+# Fin caissons, enveloppés dans un calque svg
+
+# Comme touscaissons est du texte, on utilise BeautifulSoup pour le parser
 caissonsTag = BeautifulSoup(touscaissons, features="html.parser")
-# Ensuite je récupère le g avec l'id caissons (normalement c'est le seul élément dans la soup caissonsTag) et je le stocke dans touscaissonsTag
+# Ensuite on récupère le g avec l'id caissons (normalement c'est le seul élément dans la soup caissonsTag) et on le stocke dans touscaissonsTag
 touscaissonsTag = caissonsTag.find("g",{"id":"caissons"})
 
-print(touscaissonsTag)
-# Ensuite je cherche le svg dans le puree initiale, et j'y append mon touscaissonsTag qui est au bon format puisque parsé avec BS!
+#print(touscaissonsTag)
+# Ensuite on cherche le svg dans le «puree» initial, et y «append» le touscaissonsTag qui est au bon format puisque parsé avec BS
 puree.find("svg").append(touscaissonsTag)
-print (touscaissons)
 
-    
-#espoir=espoir.replace("<g id=\"zoomRP\">",str(touscaissons)+"\n"+"<g id=\"zoomRP\">")
-#espoir ne marche pas vraiment
-
-# il faut ouvrir le fichier en wb et pas w simplement! Ca indique qu'on va lui envoyer des octets! Je crois que j'ai eu le cas uniquement avec Beautiful soup
+# il faut ouvrir le fichier en wb et pas w simplement! «b» indique qu'on va lui envoyer des octets (spécifique à avec Beautiful soup)
 with open("carte2.html", "wb") as final:
 	final.write(puree.prettify("utf-8"))
-	#Ne marche pas vraiment mieux :-)
