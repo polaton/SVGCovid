@@ -1,0 +1,34 @@
+{
+    "Nom": "Monde",
+    "Series": [
+        {
+            "Nom":"R Slow: estimation moins réactive",
+            "Fichier":"RStandard",
+            "Key":"Standard",
+            "Shift": 2
+        },
+        {
+            "Nom":"R Fast: estimation réactive",
+            "Fichier":"RFast",
+            "Key":"Fast",
+            "Shift": 2
+        },
+        {
+            "Nom":"Nouveaux cas pour 10k hab",
+            "Fichier":"methode-confirmesaccrjourpop",
+            "Key":"Confirmed",
+            "Shift": 2
+        },
+        {
+            "Nom":"Nouveaux décès pour 1M hab",
+            "Fichier":"methode-mortsaccrjourpop",
+            "Key":"Death",
+            "Shift": 2
+        }
+    ],
+    "Correspondance":"nomenclatures-pays",
+    "Tooltip":{
+        "Hauteur": 4,
+        "Champs":[{"Texte":"Nouvelles infections / 10000","Serie":"Confirmed"},{"Texte":"Nouveaux décès / million","Serie":"Death"}]
+    }
+}

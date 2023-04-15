@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Evolution de métriques liées à la Covid-19 dans le monde </title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Carte animée présentant l'évolution de certains métriques liées au covid: R (Slow et Fast), nombre de nouveaux cas et nombre de morts.">
+    <meta name="keywords" content="Data,map,covid">
+    <meta name="author" content="Antoine Chemardin">
+    <meta name="author" content="Eric Guichard">
+    <meta name="author" content="Patrice Abry">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="includes/jquerycsv.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="includes/global.css" rel="stylesheet" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+<head>
+
+<body>
+    <div class="row map-row">
+        <div id="cadre-carte">
+
+        </div>
+    </div>
+
+    <div class="row controls-row">
+        <div class="col-2">
+
+
+            <!-- Boutons d'interaction -->
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button class="btn btn-primary btn-sm" id="first" type="button">&#x23EE</button>
+                <button class="btn btn-primary btn-sm" id="downDate" type="button">&#x23EA</button>
+                <button class="btn btn-primary btn-sm" id="pause" type="button" disabled>&#x23F8</button>
+                <button class="btn btn-primary btn-sm" id="play" type="button">&#x25B6</button>
+                <button class="btn btn-primary btn-sm" id="upDate" type="button">&#x23E9</button>
+                <button class="btn btn-primary btn-sm" id="last" type="button">&#x23ED</button>
+            </div>
+            <!-- Selecteur de dates -->
+            <div id="slider"></div>
+            <!-- Bouton d'affichage des stats -->
+        </div>
+        <div class="col-2">
+            <label for="pas">Pas</label>
+            <select id="pas" class="select-styled">
+                <option value="1" selected="true">Jour</option>
+                <option value="7">Semaine</option>
+                <option value="30">Mois</option>
+            </select>
+        </div>
+        <div class="col-2">
+            <label for="vitesse">Vitesse</label>
+            <select id="vitesse" class="select-styled">
+                <option value="1000">Lent</option>
+                <option value="500">Moyen</option>
+                <option value="250" selected="true">Rapide</option>
+            </select>
+        </div>
+
+
+        <!-- Listes d'options -->
+        <div class="col-2">
+            <label for="coloration">Indicateur</label>
+            <select id="coloration" class="select-styled">
+                <!-- <option value="Standard">R Slow: estimation moins réactive</option>
+                <option selected="true" value="Fast">R Fast: estimation réactive</option>
+                <option value="Confirmed">Nouveaux cas pour 10k hab</option>
+                <option value="Death">Nouveaux décès pour 1M hab</option> -->
+            </select>
+            <input  type="checkbox" id="denoised-data" name="denoised-data"><label id="small-label-control" for="denoised-data">&nbsp;Données débruitées</label>
+        </div>
+        <div class="col-2">
+            <!-- Configuration de la légende -->
+            <label for="customMax">Maximum</label>
+            <input type="number" class="select-styled" id="customMax" name="customMax" min="0.5" max="50" step="0.5">
+        </div>
+        <div class="col-2">
+            <!-- <div class="btn-group"> -->
+            <button class="btn btn-primary btn-sm btn-modal" onclick="displayStats()" data-bs-toggle="modal" data-bs-target="#popupStats">&#x1F4C8 Graphiques</button>
+            <!-- <a href="#popupStats" onclick="displayStats()" rel="modal:open">&#x1F4C8</a> -->
+            <br>
+            <button class="btn btn-primary btn-sm btn-modal" data-bs-toggle="modal" data-bs-target="#popupAbout">&#x2753 À propos</button>
+            <!-- </div> -->
+            <button class="btn btn-primary btn-sm btn-modal" onclick="loadOther()" data-bs-target="#popupAbout">&#x2753 À propos</button>
+        </div>
+    </div>
+
+    <div id="popupAbout" class="modal modal-xl" style="background-color: #ffffe0;">
+        <div class="modal-dialog modal-dialog-centered" id="modal-stats" style="background-color: #ffffe0;">
+            <div class="modal-content" style="background-color: #ffffe0;" >
+                <div class="modal-header" style="background-color: #ffffe0;">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="row stats-row" style="background-color: #ffffe0;">
+                    <h1 >Cartes Covid-19: sources, méthodes, légendes</h1>
+                    <h2 >Juin 2022</h2>
+                    <h2>1. Sources et méthodes</h2>
+                    <ul>
+                        <li> 
+                            Les données mondiales pour les morts et confirmés proviennent du <i>Center for Systems Science and Engineering</i> (CSSE) de <i>JHU</i> (<a href="https://systems.jhu.edu/">John Hopkins University</a>), plus précisément de leur entrepôt actualisé chaque nuit:
+                            <ul>
+                                <li>
+                                    <a href="https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv">time_series_covid19_deaths_global.csv</a>
+                                </li>
+                                <li>
+                                    <a href="https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv">time_series_covid19_confirmed_global.csv</a>
+                                </li>
+                            </ul>
+                            Elles sont adaptées aux cartes <i>via</i> des scripts réalisés par Patrice Abry et Éric Guichard (Matlab, Perl, etc.).
+                        </li>
+                        <li>
+                            Les données relatives à la France et à ses départements proviennent de <a href="https://www.data.gouv.fr/en/datasets/donnees-hospitalieres-relatives-a-lepidemie-de-covid-19/#resources"> https://www.data.gouv.fr/en/datasets/donnees-hospitalieres-relatives-a-lepidemie-de-covid-19/#resources</a>, plus précisément de leur entrepôt actualisé chaque jour à 19 heures. Par exemple <code>covid-hospit-2022-05-30-19h00.csv</code>
+                        </li>
+                        <li>
+                            Les fonds des cartes proviennent de sites aux sources explicitement libres de droit; ils ont été profondément modifiés par Éric Guichard (laboratoire <a href="https://triangle.ens-lyon.fr">Triangle</a> et <a href="http://www.ixxi.fr">IXXI</a>. Ils restent libres de droits.
+                        </p>
+                        </li>
+                        <li>
+                            Les populations des pays proviennent, sauf exception, de pages Wikipédia.
+                        </li>
+                        <li>
+                            Les taux de reproduction de la pandémie (le R(t)) ont été estimés par une équipe interdisciplinaire de chercheurs de l'<i>Institut rhône-alpin des Systèmes Complexes</i> (<a href="http://www.ixxi.fr">IXXI</a>), animée par Patrice Abry (Ens-Lyon, Cnrs, équipe SISyPhe).
+                            <br />
+                            Les méthodes sont détaillées dans les articles:
+                            <ul>
+                                <li>
+                                    <a href="https://hal.inria.fr/hal-02921836/file/journal.pone.0237901.pdf">Spatial and temporal regularization to estimate COVID-19 reproduction number R(t): Promoting piecewise smoothness via convex optimization</a> et
+                                </li>
+                                <li>
+                                    <a href="https://hal.archives-ouvertes.fr/hal-03348154/document">Nonsmooth convex optimization to estimate the Covid-19 reproduction number space-time evolution with robustness against low quality</a>.
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            Un article détaille ces méthodes dans une version grand public; il est publié sur le site <i>The Conversation</i>: <a href="https://theconversation.com/comment-estimer-levolution-du-covid-19-malgre-des-donnees-de-contaminations-de-qualite-limitee-177777"> Comment estimer l’évolution du Covid-19 malgré des données de contaminations de qualité limitée</a>.
+                        </li>
+                        <li>
+                            Les <i>scripts</i> (majoritairement en Javascript) ont été produits par Antoine Chemardin.
+                        </li>
+                        <li>
+                            La dynamique des circulations entre serveurs et des mises à jour a été effectuée de concert par Patrice Abry, Antoine Chemardin et Éric Guichard. De même pour les choix de légendes, de seuils, de couleurs, de design des cartes et des graphiques associés.
+                        </li>
+                    </ul>
+
+                    <h2>2. Usage et fonctions</h2>
+                    Les cartes sont animées et interactives.
+        
+                    <h3>2. 1. Animation</h3>
+        
+                    <ul>
+                        <li> 
+                            Le curseur est positionné sur la date du jour. On peut le reculer, le déplacer, etc. les boutons de type
+                            magnétoscope/vidéo permettent de se déplacer dans le temps, d'un seul coup (boutons extrêmes) ou pas à pas,
+                            d'arrêter ou de relancer l'animation.
+                            L'animation peut être activée selon trois vitesses, et trois pas (jour, semaine, mois).
+                        </li>
+                        <li>Variables décrites: la population de chaque pays est représentée par un cercle; trois variables peuvent être décrites par les plages de couleurs:
+                            <ul>
+                                <li>
+                                    taux de mortalité (par million d'habitants),
+                                </li>
+                                <li>
+                                    taux de contamination officiellement enregistrée (pour 10 mille habitants),
+                                </li>
+                    <!-- ***********Préciser données France + denoised*************** -->
+                                <li> 
+                                    taux de reproduction de la pandémie (ce fameux <i>R(t)</i> qui est au centre de la modélisation). Par défaut, c'est le taux le plus <i>réactif</i> qui est disponible. Pour rappel, ce taux donne une estimation de l'évolution de la pandémie avec <b>environ 10 jours d'avance</b>.
+                                </li>
+                                <li>
+                                    <b>Note</b>: chaque taux est décrit selon une plage allant de 0 à un maximum prédéfini. Vous <b>pouvez</b> modifier ce maximum selon vos besoins d'interprétation. La légende s'adapte à vos choix.
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+        
+                    <h3>2. 2. Interactivité</h3>
+                    <ul>
+                        <li> 
+                            Lorsque vous «passez» au-dessus d'un pays, les informations qui lui sont associées s'affichent.
+                        </li>
+                        <li>
+                            Vous pouvez aussi vous focaliser sur un pays spécifique en «cliquant» sur la surface qui le représente. Ses frontières apparaissent alors bleutées et ses informations restent affichées, même si vous «suvolez» un autre pays.
+                        </li>
+                        <li>
+                            Les cartes sont conçues pour s'adapter à de nombreux types d'écrans (ordinateurs, tablettes, voire téléphones portables).
+                        </li>
+                    </ul>
+        
+                    <h3>2. 3. Compléments graphiques</h3>
+                    <p>
+                    <b>Note:</b> dans cette partie, nous entendons par «pays» une zone géographique de la carte. Ainsi, un département français est un tel «pays».
+                    </p><p>
+                    Une nouvelle mention «Graphiques» a été ajoutée en bas à droite des cartes. Elle fait apparaître, dans une nouvelle fenêtre, l'évolution temporelle du <i>R(t)</i> de la pandémie du pays sélectionné, superposée au graphique du nombre de cas pour 10 mille habitants (confirmés).
+                    </p><p>
+                    Par défaut, sont affichés le <i>R fast</i> (échelle verticale de gauche) et les confirmés «débruités» (axe vertical de droite). Par «débruités» nous entendons des valeurs algorithmiquement lissées qui restituent mieux la réalité de la pandémie que les chiffres officiels, parfois erratiques et corrigés après coup.
+                    </p><p>
+                    Ces options et indicateurs sont modifiables et comparables, par exemple en choisissant deux pays.
+                    </p><p>
+                    <h5>À noter:</h5>
+        
+                    <ul>
+                        <li>
+                            Lecture des valeurs: lors du survol des graphiques, les valeurs décrites s'affichent.
+                        </li>
+                    
+                        <li>
+                            Zoom: il est possible de sélectionner une partie des graphiques, de les agrandir, réduire, etc.
+                        </li>
+                    
+                        <li>
+                            Si un pays a déjà été sélectionné dans la carte, son graphique sera directement affiché dans la fenêtre des graphes.
+                        </li>
+                    
+                        <li>
+                            L'option <b>trajectoire</b> (en haut à droite) ouvre une seconde série de graphiques (appelée <i>espace des phases</i>) qui visualise la trajectoire de la pandémie au fil du temps dans un diagramme «R en fonction du nombre de nouvelles infections».
+                            <br>
+                            Cette option permet de repérer les «vagues» de la pandémie, qui apparaissent comme des boucles. Les valeurs les plus récentes apparaissent en couleurs vives. Là encore, les valeurs décrites s'affichent lors du survol des points du ou des graphiques.
+                        </li>
+                    </ul>
+        
+                    <h2>3. Historique</h2>
+                    <ul>
+                        <li> 
+                            Début des travaux et des premiers résultats en ligne (journaux, analyses, etc.) en mars 2020. Cf. <a href="http://barthes.enssib.fr/coronavirus/">http://barthes.enssib.fr/coronavirus</a>.
+                        </li>
+                        <li>
+                            Premières cartes en juillet 2022. Cf. par exemple <a href="http://barthes.enssib.fr/coronavirus/cartes/Morts-Monde-carte-animee-du-jour.svg">l'ancienne carte animée des décès</a>, toujours mise à jour quotidiennement.
+                        </li>
+                        <li>
+                            Premier article publié en août 2020. Cf. <a href="https://hal.inria.fr/hal-02921836/file/journal.pone.0237901.pdf">le lien précité</a>.
+                        </li>
+                        <li>
+                            Développements et améliorations des cartes depuis octobre 2021.
+                        </li>
+                    </ul>
+
+                    <h2>4. Liens, précités ou non</h2>
+                    <ul>
+                        <li>
+                            <a href="http://barthes.enssib.fr/coronavirus/">Répertoire du site <i>barthes</i> dédié à la covid-19</a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://perso.ens-lyon.fr/patrice.abry">Page personnelle de Patrice Abry</a>
+                        </li>
+                    
+                        <li>
+                            <a href="http://www.ixxi.fr/equipes/recherche-covid-a-lixxi">La recherche sur la covid-19 à l'IXXI</a>
+                        </li>
+                    
+                        <li>
+                            Laboratoire <a href="https://triangle.ens-lyon.fr">Triangle</a>
+                        </li>
+                    
+                        <li>
+                            <a href="http://www.ixxi.fr">IXXI</a>
+                        </li>
+                    
+                    </ul> 
+        
+                    <h2>5. Remerciements</h2>
+                    <p>Ces travaux ont été conduits au sein de l'Institut rhône-alpin des Systèmes Complexes ( <a href="https://www.ixxi.fr"> IXXI </a> ) , avec le soutien du CNRS via les dispositifs «80 PRIME-2021» (projet CoModéCartes) et «ModCov19» ( <a href="https://modcov19.math.cnrs.fr"> Modélisation et Covid-19</a> ).</p>
+
+                    <h2>6. Dissémination</h2>
+                    <ul>
+                        <li>
+                            Pour rappel, le but principal de l'ensemble des synthèses, analyses, productions, etc. publiées sous l'adresse <a href="http://barthes.enssib.fr/coronavirus">http://barthes.enssib.fr/coronavirus</a> est d'aider l'ensemble de nos concitoyens et des habitants du monde à mieux comprendre, analyser la pandémie actuelle et à débattre des solutions optimales pour en limiter les méfaits aux plans sanitaire et politique; le second but est d'aider au déploiement de la culture de l'écrit numérique, notamment en SHS, et de favoriser l'interdisciplinarité.
+                        </li>
+                        <li>
+                            D'où l'importance des comparaisons (entre périodes, pays, hypothèses), afin de favoriser les questions, de multiplier les éléments de réponse. Avec l'hypothèse <b>forte</b> qu'un débat entre tous (spécialistes des sciences dites sociales, dites exactes et dites intermédiaires, public éclairé, grand public, Français et étrangers, etc.) nous aidera, collectivement, à prendre <i>à bras le corps</i> la pandémie et à proposer des solutions intelligentes pour accélérer sa résorption.
+                        </li>
+                        <li>Il s'ensuit que les pages qui y sont dédiées peuvent, sans demande d'autorisation, être <b>référencées</b> par quiconque, sur n'importe quel site, blog, via les listes de discussion, les fils de réseaux dits sociaux, etc. <br /> Elles peuvent même être aspirées, recopiées telles quelles. Deux <b>contraintes</b>: ne pas faire commerce de ces pages, productions et informations, et rappeler systématiquement leurs auteurs, contributeurs, sources. En cas de copie, SVP prévenez les auteurs de ces lignes, joignables via l'adresse Eric point Guichard @ ens-lyon point fr
+                        </li>
+                        <li>
+                            Les scripts à l'origine des journaux (<a href="http://barthes.enssib.fr/coronavirus/Graphes-Covid19-du-jour.pdf">morts</a> et <a    href="http://barthes.enssib.fr/coronavirus/Graphes-Covid19-confirmes-du-jour.pdf">confirmés</a>) sontdisponibles à l'URL <a href="https://zenodo.org/record/3763581">https://zenodo.org/record/3763581</a>. Ceux àl'origine des nouvelles cartes le seront prochainement.
+                            <br>
+                            De même pour l'accès aux «données» à l'origine de ces cartes, qui sont en fait déjà sur le serveur.
+                        </li>
+                    </ul>
+                    <br>
+
+                    <h4>Retour à la carte (à faire avec Antoine)</h4>
+                    <a href="#" data-bs-dismiss="modal">Retour à la carte</button>
+                    <a href="http://barthes.enssib.fr">Retour au serveur barthes</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="popupStats" class="modal modal-xl">
+        <div class="modal-dialog modal-dialog-centered" id="modal-stats">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="row stats-row" >
+                    <div class="col-3 pays-column">
+                        <h6>Pays principal</h6> 
+                        <div id="select-pays-1" class="select-pays"></div>
+                        <h6>Pays comparé</h6>
+                        <div id="select-pays-2" class="select-pays"></div>
+                        <button id="invert-stats-country" class="btn btn-primary btn-sm btn-stats" type="button">Inverser</button>
+                        <button id="remove-stats-country" class="btn btn-danger btn-sm btn-stats" type="button">Supprimer</button>
+                    </div>
+                    <div class="col-2 param-column">
+                        <h6>R à afficher</h6>
+                        <input class="stats-control stats-box" type="checkbox" id="rstandard" name="rstandard"><label for="rstandard">R Slow</label>
+                        <br>
+                        <input class="stats-control stats-box" type="checkbox" id="rfast" name="rfast" checked><label for="rfast">R Fast</label>
+                    </div>
+                    <div class="col-4 param-column">
+                        <h6>Indicateur</h6>
+                        <input class="stats-control stats-box" type="radio" value="mortagg" name="stathisto" checked><label for="mortagg">Morts pour 1M h</label><br>
+                        <input class="stats-control stats-box" type="radio" value="confirmeagg" name="stathisto"><label for="confirmeagg">Confirmés pour 10k h</label><br>
+                        <input class="stats-control stats-box" type="radio" value="confirmeaggdenoised" name="stathisto" checked="checked"><label for="confirmeaggdenoised">Confirmés débruités pour 10k h </label><br>
+                        <input class="stats-control stats-box" type="radio" value="desactivatehisto" name="stathisto"><label for="desactivatehisto">Désactiver</label>
+                    </div>
+                    <div class="col-2 param-column">
+                        <input class="stats-control stats-box" type="checkbox" id="display-phase" name="display-phase"><label for="display-phase">Trajectoire</label>
+                    </div>
+                </div>
+                
+                <div class="row stats-row">
+                    <div class="col-12">
+                        <h3 id="title-graph-1"></h3>
+                        <div id="plotStat"></div>
+                    </div>
+                </div>
+
+                
+                <div class="row stats-row" id="pandemic-dynamic">
+                    <div class="col-12">
+                        <h3 id="title-graph-2"></h3>
+                        <div id="plotPhaseSpace"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div id="plotPhaseSpace3D"></div> -->
+    </div>
+
+
+    <div class="loading-overlay">
+        <!-- Place at bottom of page -->
+    </div>
+
+
+    <script src="includes/global.js"></script>
+
+</body>
+
+</html>
