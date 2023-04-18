@@ -1,0 +1,87 @@
+Définition du SVG:
+
+Tout d'abord, on essaye de remplir au minimum les différentes balises pour appliquer du style. Ainsi, on préfèrera définir des styles dans une balise: 
+<defs> 
+    <style type="text/css">
+    <![CDATA[ 
+        #CSS ICI# 
+    ]]>
+    </style>
+</defs>  
+en début de fichier pour éviter de répéter du code.
+
+Dans le CSS, on peut gérer la police avec: 
+-font-size
+-font-family
+-fill 
+l'opacité avec:
+-opactity
+les contours des régions avec:
+-stroke
+-stroke-width
+le remplissage des régions est géré dans les balises directement, pour pouvoir ensuite être modifié par le JS.
+
+Au niveau des éléments attendus:
+
+-les zones géographiques seront dans un conteneur <g> avec un id zones
+<g id="zones">
+    #PATHS ICI#
+</g>
+
+-les zones géographiques seront des <path id="XX-1" class="zone-path" d="M1 2 L2 3"> avec un id correspondant à l'id de la zone dans les données, suivi du numéro de path pour la zone et une classe correspondant à "zone-path". Les coordonnées du path seront dans la propriété "d".
+
+-les zones géographiques contiendront les propriétés suivantes pour gérer les évènements, XX correspondant à l'id de la zone dans les données
+* onmouseover="showTT("XX-TT")
+* onmouseout="hideTT("XX-TT")
+* onclick="lockRegion("XX")
+<path id="XX-1" class="zone-path" onmouseover="showTT('XX-TT')" onmouseout="hideTT('XX-TT')" onclick="lockRegion('XX')" d="M1 2 L2 3"></path>
+
+-les tooltips seront dans un conteneur <g> avec un id popup, la propriété pointer-events="none" et  visibility="hidden"
+<g id="popup" pointer-events="none" visibility="hidden">
+</g>
+
+-et chaque tooltip sera un <text> dans un conteneur <g> avec un id XX-TT. Le <text> contiendra le nom de la zone.
+<g id="popup" pointer-events="none" visibility="hidden">
+    <g id="2A-TT">
+        <text class="data-TT-Region" x="3110" y="3066.5">D2A: Corse-du-Sud</text>
+    </g>
+</g>
+
+-les légendes seront dans un conteneur <g> avec un id caissons. 
+<g id="caissons">
+</g>
+
+-chaque caisson est un <rect> avec class='legBox' et fill="rgb(R,G,B)"
+<g id="caissons">
+    <rect class='legBox' x="200" y="2400" fill="rgb(50, 200, 20)"/>
+</g>
+
+-chaque caisson est accompagné d'un <text> vide avec class="legText" donnant la valeur de transition entre deux cases
+<g id="caissons">
+    <rect class='legBox' x="200" y="2400" fill="rgb(50, 200, 20)"/>
+    <text class='legText' x="100" y="2420"></text>
+</g>
+
+-le titre sera contenu dans un conteneur <g> avec un id "titre", et sera un text avec l'id "txt-titre". C'est ce texte qui sera mis à jour quand le type de coloration sera modifiée.
+<g id="titre">
+    <text x="60" y="100">Covid-19 - France continentale</text>
+    <text x="60" y="192"></text>
+    <text x="60" y="284" id="txt-titre"></text>
+</g>
+
+-les crédits et les infos seront dans un conteneur <g> avec un id "credits" et un contenur <g> avec un id "infos". Ces éléments ne seront pas modifiés par le JS.
+
+-la date sera contenue dans un conteneur <g> avec un id "date" et un <text> avec l'id "txt-date". Ce texte sera mis à jour par le JS.
+<g id="date">
+    <text xmlns="http://www.w3.org/2000/svg" x="200" y="3000">Date: </text>
+    <text id="textDate" xmlns="http://www.w3.org/2000/svg" x="200" y="3070"></text>
+</g>
+
+-la zone d'affichage des données sera dans un conteneur <g> avec un id "TT-FIXED" et un <text> vide avec l'id "Region-fixed". Ce texte sera mis à jour par le JS pour afficher la région dont les données sont affichées.
+<g id="TT-FIXED"> 
+    <text x="2000" y="2800" id="Region-fixed"></text>
+</g>
+
+-les autres informations relatives à la zone géographique seront dans ce même conteneur, les <text> seront ajoutés par le JS en fonction de la configuration de la carte (objet Tootltip).
+
+-il est aussi possible d'ajouter tout autre élément, le plus simple étant de le placer dans un conteneur <g> avec un id unique.

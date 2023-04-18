@@ -1,34 +1,45 @@
 {
     "Nom": "Monde",
+    "Début": "2020-02-02",
     "Series": [
         {
             "Nom":"R Slow: estimation moins réactive",
             "Fichier":"RStandard",
             "Key":"Standard",
-            "Shift": 2
+            "Shift": 2,
+            "Titre":"Taux de reproduction, estimation moins réactive",
+            "Max": 2
         },
         {
             "Nom":"R Fast: estimation réactive",
             "Fichier":"RFast",
             "Key":"Fast",
-            "Shift": 2
+            "Shift": 2,
+            "Titre":"Taux de reproduction, estimation réactive",
+            "Max": 2
         },
         {
             "Nom":"Nouveaux cas pour 10k hab",
             "Fichier":"methode-confirmesaccrjourpop",
             "Key":"Confirmed",
-            "Shift": 2
+            "Shift": 2,
+            "Titre":"Nombre de cas confirmés pour 10000 habitants",
+            "Max": 6
         },
         {
             "Nom":"Nouveaux décès pour 1M hab",
             "Fichier":"methode-mortsaccrjourpop",
             "Key":"Death",
-            "Shift": 2
+            "Shift": 2,
+            "Titre":"Nombre de décès pour 1 million d'habitants",
+            "Max": 10
         }
     ],
     "Correspondance":"nomenclatures-pays",
     "Tooltip":{
         "Hauteur": 4,
-        "Champs":[{"Texte":"Nouvelles infections / 10000","Serie":"Confirmed"},{"Texte":"Nouveaux décès / million","Serie":"Death"}]
+        "HauteurTitre": 5,
+        "LignesInit":1,
+        "Champs":[{"Texte":"RFast","Serie":"Fast"},{"Texte":"RStandard","Serie":"Standard"},{"Texte":"Nouvelles infections / 10000","Serie":"Confirmed"},{"Texte":"Nouveaux décès / million","Serie":"Death"}]
     }
 }

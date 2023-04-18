@@ -1,0 +1,29 @@
+{
+    "Nom": "France",
+    "Début": "2020-03-19",
+    "Series": [
+        {
+            "Nom":"R",
+            "Fichier":"France",
+            "Key":"R",
+            "Shift": 0,
+            "Titre":"Taux de reproduction",
+            "Max": 2
+        },
+        {
+            "Nom":"Nouveaux cas",
+            "Fichier":"Infections",
+            "Key":"Confirmed",
+            "Shift": 0,
+            "Titre":"Nombre de cas confirmés pour 10000 habitants",
+            "Max": 200
+        }
+    ],
+    "Correspondance":"departements",
+    "Tooltip":{
+        "Hauteur": 50,
+        "HauteurTitre": 60,
+        "LignesInit":1,
+        "Champs":[{"Texte":"R","Serie":"R"},{"Texte":"Nouvelles infections","Serie":"Confirmed"}]
+    }
+}

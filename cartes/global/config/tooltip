@@ -1,0 +1,12 @@
+XXX-TT
+XXX doit se retrouver dans la premiere case des données
+Dans la TT: Une ligne text avec le nom de la subdivision
+TT-Fixed: Une ligne text, REgion-fixed pour le nom de la region
+
+txt-titre2 pour le titre de coloration
+
+legende caissons //TODO
+
+path id="AFG-1" onclick="lockCountry('AFG')" onmouseover="showTT('AFG-TT')" onmouseout="hideTT('AFG-TT')"
+
+fichier de correspondance = separateur ; col 1 id, col 2 nom
