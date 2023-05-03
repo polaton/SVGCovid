@@ -16,10 +16,10 @@ Dans le CSS, on peut gérer la police avec:
 -fill 
 l'opacité avec:
 -opactity
-les contours des régions avec:
+les contours des zones avec:
 -stroke
 -stroke-width
-le remplissage des régions est géré dans les balises directement, pour pouvoir ensuite être modifié par le JS.
+le remplissage des zones est géré dans le JS directement.
 
 Au niveau des éléments attendus:
 
@@ -35,17 +35,6 @@ Au niveau des éléments attendus:
 * onmouseout="hideTT("XX-TT")
 * onclick="lockRegion("XX")
 <path id="XX-1" class="zone-path" onmouseover="showTT('XX-TT')" onmouseout="hideTT('XX-TT')" onclick="lockRegion('XX')" d="M1 2 L2 3"></path>
-
--les tooltips seront dans un conteneur <g> avec un id popup, la propriété pointer-events="none" et  visibility="hidden"
-<g id="popup" pointer-events="none" visibility="hidden">
-</g>
-
--et chaque tooltip sera un <text> dans un conteneur <g> avec un id XX-TT. Le <text> contiendra le nom de la zone.
-<g id="popup" pointer-events="none" visibility="hidden">
-    <g id="2A-TT">
-        <text class="data-TT-Region" x="3110" y="3066.5">D2A: Corse-du-Sud</text>
-    </g>
-</g>
 
 -les légendes seront dans un conteneur <g> avec un id caissons. 
 <g id="caissons">
@@ -71,10 +60,10 @@ Au niveau des éléments attendus:
 
 -les crédits et les infos seront dans un conteneur <g> avec un id "credits" et un contenur <g> avec un id "infos". Ces éléments ne seront pas modifiés par le JS.
 
--la date sera contenue dans un conteneur <g> avec un id "date" et un <text> avec l'id "txt-date". Ce texte sera mis à jour par le JS.
+-la date sera contenue dans un conteneur <g> avec un id "date" et un <text> vide avec l'id "txt-date". Ce texte sera mis à jour par le JS.
 <g id="date">
-    <text xmlns="http://www.w3.org/2000/svg" x="200" y="3000">Date: </text>
-    <text id="textDate" xmlns="http://www.w3.org/2000/svg" x="200" y="3070"></text>
+    <text x="200" y="3000">Date: </text>
+    <text id="textDate" x="200" y="3070"></text>
 </g>
 
 -la zone d'affichage des données sera dans un conteneur <g> avec un id "TT-FIXED" et un <text> vide avec l'id "Region-fixed". Ce texte sera mis à jour par le JS pour afficher la région dont les données sont affichées.

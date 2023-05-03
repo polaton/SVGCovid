@@ -16,7 +16,8 @@ var tim; //Fonction d'intervalle pour l'animations
 var selectedRegion = ""; //Pays selectionné
 var lockedRegion = ""; //Pays vérouillé
 
-var corresRegion = {};
+var correspondanceZone = {};
+var availableZones = [];
 
 $(function() {
     loadMap("monde");
@@ -28,7 +29,7 @@ $("#first").click(function(e) {
     //On fait la mise à jour de la carte
     var selectedDate = $("#dateRange").val();
     changeSliderDateLabel(returnDateFormatted(selectedDate));
-    majData(selectedDate);
+    majFixed();
     majCouleurs(selectedDate);
 });
 
@@ -65,7 +66,7 @@ $("#downDate").click(function(e) {
     //On fait la mise à jour de la carte
     var selectedDate = $("#dateRange").val();
     changeSliderDateLabel(returnDateFormatted(selectedDate));
-    majData(selectedDate);
+    majFixed();
     majCouleurs(selectedDate);
 });
 
@@ -100,7 +101,7 @@ $("#play").click(function(e) {
         $("#dateRange").val(parseInt($("#dateRange").val()) + parseInt($("#pas").val()));
         var selectedDate = $("#dateRange").val();
         changeSliderDateLabel(returnDateFormatted(selectedDate));
-        majData(selectedDate);
+        majFixed();
         majCouleurs(selectedDate);
         if (selectedDate == daysPast){
             $("#first").prop("disabled", false);
@@ -122,7 +123,7 @@ $("#upDate").click(function(e) {
     //On fait la mise à jour de la carte
     var selectedDate = $("#dateRange").val();
     changeSliderDateLabel(returnDateFormatted(selectedDate));
-    majData(selectedDate);
+    majFixed();
     majCouleurs(selectedDate);
 });
 
@@ -132,7 +133,7 @@ $("#last").click(function(e) {
     //On fait la mise à jour de la carte
     var selectedDate = $("#dateRange").val();
     changeSliderDateLabel(returnDateFormatted(selectedDate));
-    majData(selectedDate);
+    majFixed();
     majCouleurs(selectedDate);
 });
 
@@ -142,7 +143,7 @@ $("#coloration").change(function(e) {
     selectColoration();
     var selectedDate = $("#dateRange").val();
     initiateColors(false);
-    majData(selectedDate);
+    majFixed();
     majCouleurs(selectedDate);
 });
 
@@ -151,7 +152,7 @@ $("#customMax").change(function(e) {
     //On fait la mise à jour de la carte
     var selectedDate = $("#dateRange").val();
     initiateColors(true);
-    majData(selectedDate);
+    majFixed();
     majCouleurs(selectedDate);
 });
 
@@ -160,7 +161,7 @@ $("#slider").change(function(e) {
     //On fait la mise à jour de la carte
     var selectedDate = $("#dateRange").val();
     changeSliderDateLabel(returnDateFormatted(selectedDate));
-    majData(selectedDate);
+    majFixed();
     majCouleurs(selectedDate);
 });
 
@@ -173,10 +174,11 @@ function loadMap(map) {
     $.get("config/"+map +".json", function(data) {
         configDict = data;
         dataDict = {};
-        corresRegion = {};
+        correspondanceZone = {};
         colors = {};
         selectedRegion = "";
         lockedRegion = "";
+        availableZones = [];
         firstDay = configDict.Début;
         $("#coloration").empty();
 
@@ -195,6 +197,16 @@ function initMap(mapName){
             alert("Le pays demandé n'a pas de carte");
             return;
         }
+
+        $(".zone-path").each(function(){
+            if ($(this).attr("id")){
+                var tmpId = $(this).attr("id").split("-")[0];
+                if (!availableZones.includes(tmpId)){
+                    availableZones.push(tmpId);
+                }
+            }
+        });
+        console.log(availableZones);
 
         var loaded = 0;
         loadData(loaded);
@@ -231,7 +243,7 @@ function initSettings(){
 
     initiateSvg(); //On fait les quelques modifications désirées sur le SVG
     changeSliderDateLabel(returnDateFormatted(daysPast)); //On met à jour le label du slider de date
-    majData($("#dateRange").val()); //On met à jour les données
+    majFixed(); //On met à jour les données
     majCouleurs($("#dateRange").val()); //On met à jour les colorations des pays
     loadCountries();
     $("body").removeClass("loading");
@@ -282,7 +294,7 @@ function loadCountries(){
         data = $.csv.toArrays(data,{'separator':';'});
         data.shift();
         data.forEach(element => {
-            corresRegion[element[0]] = element[1];
+            correspondanceZone[element[0]] = element[1];
         });
     });
 };
@@ -311,35 +323,14 @@ function returnDateFormattedEnglish(offset){
     return today;
 }
 
-
-function majData(offset) {
-    var offset = parseInt(offset);
-    //On traite les tootlitps un par un
-    $("g[id$=-TT]").each(function(index) {
-        for (let i = 0; i < configDict.Tooltip.Champs.length; i++) {
-            const element = configDict.Tooltip.Champs[i];
-            var indexLigne = i + 1 + configDict.Tooltip.LignesInit; 
-            var idTooltip = this.id.split("-")[0];
-
-            if (idTooltip in dataDict[element.Serie]) {
-                $(this).find("text:nth-child("+indexLigne.toString()+")").text(element.Texte + ": " + dataDict[element.Serie][idTooltip][offset]);
-            } else {
-                $(this).find("text:nth-child("+indexLigne.toString()+")").text(element.Texte + ": Pas de données");
-            }
-        }
-    });
-    majFixed();
-};
-
 function majCouleurs(offset) {
-    //Pour chaque tooltip
     var offset = parseInt(offset);
-    $("g[id$=-TT]").each(function(index) {
-        var idTooltip = this.id.split("-")[0];
-        //Selon la coloration choisie par l'utilisateur, 
-        if (idTooltip in dataDict[selectedColoration.Key]) {
+    for (let index = 0; index < availableZones.length; index++) {
+        const element = availableZones[index];
+
+        if (element in dataDict[selectedColoration.Key]) {
             //on récupère la valeur du jour pour le pays
-            var valeurDuJour = dataDict[selectedColoration.Key][idTooltip][offset];
+            var valeurDuJour = dataDict[selectedColoration.Key][element][offset];
         } else {
             //on récupère la valeur du jour pour le pays
             var valeurDuJour = "NA";
@@ -351,26 +342,26 @@ function majCouleurs(offset) {
                 (valeurDuJour > dataMax ? valeurDuJour = dataMax - (dataMax / (nbCaissons * 2)) : valeurDuJour); //Si la valeur du jour est supérieure au max de la légende, on ramène la valeur du jour pour qu'elle corresponde à notre caisson le plus élevé
                 var couleurDuJour = processColor(valeurDuJour);
                 var chaineCouleur = couleurDuJour;
-                // console.log(chaineCouleur);
                 //On remplit le pays avec la couleur
-                $('path[id^=' + idTooltip + '-]').attr('fill', chaineCouleur);
+                $('path[id^=' + element + '-].zone-path').attr('fill', chaineCouleur);
             } else { //Si la valeur == 0 
                 var chaineCouleur = 'rgb(211,211,211)';
                 //On colore le pays en gris
-                $('path[id^=' + idTooltip + '-]').attr('fill', chaineCouleur);
+                $('path[id^=' + element + '-].zone-path').attr('fill', chaineCouleur);
             }
         } else { //Si valeurDuJour == "NA"
             var chaineCouleur = 'rgb(211,211,211)';
             //On colore le pays en gris
-            $('path[id^=' + idTooltip + '-]').attr('fill', chaineCouleur);
+            $('path[id^=' + element + '-].zone-path').attr('fill', chaineCouleur);
         }
-    });
+    };
 };
+
 // TODO Caisson automatiques config
 function initiateColors(custom) {
     nbCaissons =  $(".legBox").length;
     //changement du texte de titre
-    $("#txt-titre2").text(selectedColoration.Titre);
+    $("#txt-titre").text(selectedColoration.Titre);
 
     //modification du max de la légende
     if (custom) {
@@ -382,10 +373,8 @@ function initiateColors(custom) {
     var iLegText = 0;
     //récupération des couleurs de la légende
     $(".legText").each(function(index) {
-        // console.log(dataMax , iLegText , nbCaissons);
         iLegText++;
         $(this).text(String(dataMax * iLegText / nbCaissons).substring(0, 4));
-        // console.log($(this).text());
     });
 
     //initialisation du tableau de couleurs
@@ -404,18 +393,6 @@ function initiateColors(custom) {
 
 function initiateSvg() {
     //On ajoute de nouvelles lignes aux tooltips de tous les pays
-    $("g[id$=-TT]").each(function(index) {
-        for (let i = 0; i < configDict.Tooltip.Champs.length; i++) {
-            const element = configDict.Tooltip.Champs[i];
-            var txtElem = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            txtElem.setAttributeNS(null, "x", $(this).find("text:nth-child(1)").prop("x").animVal[0].valueAsString);
-            txtElem.setAttributeNS(null, "y", parseFloat($(this).find("text:nth-child(1)").prop("y").animVal[0].valueAsString) + (configDict.Tooltip.Hauteur * i));
-            txtElem.setAttributeNS(null, "style", "font-size:"+configDict.Tooltip.Hauteur+"px; font-family:Helvetica");
-            txtElem.setAttributeNS(null, "text", element.Texte);
-            txtElem.setAttributeNS(null, "class", "data-TT-"+ element.Serie );
-            document.getElementById(this.id).appendChild(txtElem);
-        }
-    });
     for (let i = 0; i < configDict.Tooltip.Champs.length; i++) {
         const element = configDict.Tooltip.Champs[i];
         var txtElem = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -432,46 +409,46 @@ function processColor(valeurDuJour) {
     var couleurJour = parseInt((valeurDuJour / dataMax) * nbCaissons) + 1;
     return (colors[couleurJour]);
 }
-// Todo: habitants serie fixe + rework TT (supprimer les XXX-TT)
+// Todo: habitants serie fixe
 function majFixed() {
+    var offset = $("#dateRange").val();
     if (lockedRegion != "") {
-        tooltip = lockedRegion + "-TT";
+        zone = lockedRegion;
     } else if (selectedRegion != "") {
-        tooltip = selectedRegion;
+        zone = selectedRegion;
     } else {
-        tooltip = "";
+        zone = "";
     }
 
-    if (tooltip == "") {
+    if (zone == "") {
         $("#Region-fixed").text("");
         for (let index = 0; index < configDict.Tooltip.Champs.length; index++) {
             const element = configDict.Tooltip.Champs[index];
             $("#"+element.Serie+"-fixed").text("");
         }
     } else {
-        $("#Region-fixed").text($("#" + tooltip).find(".data-TT-Region").text());
+        $("#Region-fixed").text(correspondanceZone[zone]);
         for (let index = 0; index < configDict.Tooltip.Champs.length; index++) {
             const element = configDict.Tooltip.Champs[index];
-            $("#"+element.Serie+"-fixed").text($("#" + tooltip).find(".data-TT-"+element.Serie).text());
+            if (zone in dataDict[element.Serie]) {
+                $("#"+element.Serie+"-fixed").text(element.Texte + ": " + dataDict[element.Serie][zone][offset]);
+            } else {
+                $("#"+element.Serie+"-fixed").text(element.Texte + ": Pas de données");
+            }
         }
     }
 };
 
-// CHECK FRANCE
+// MONDE LOCKED REGION
 function lockRegion(regionCode) {
-
     //Si on a deja un pays verouillé, on repasse ses frontières en noir
     if (lockedRegion != "") {
-        $('path[id^=' + lockedRegion + '-]').attr("stroke", "rgb(0,0,0)");
-        $('path[id^=' + lockedRegion + '-]').attr("stroke-width", "0.1");
         $('path[id^=' + lockedRegion + '-]').removeClass("locked-region");
     }
 
     //Si on a un nouveau code pays a vérouiller et qu'il est différent de l'ancien pays vérouillé, on met à jour le pays vérouillé et on change la couleur de ses frontières
     if (regionCode != "" && regionCode != lockedRegion) {
         lockedRegion = regionCode;
-        $('path[id^=' + regionCode + '-]').attr("stroke", "rgb(25,184,254)");
-        $('path[id^=' + regionCode + '-]').attr("stroke-width", "0.5");
         $('path[id^=' + regionCode + '-]').addClass("locked-region");
     } else {
         lockedRegion = "";
@@ -479,15 +456,12 @@ function lockRegion(regionCode) {
     majFixed();
 };
 
-// TODO Rework showTT et hideTT pour ne plus prendre "-TT" en compte
-function showTT(tooltip) {
-    selectedRegion = tooltip; //Maj du pays selectionné
-    majFixed(); //Maj des infos dans le tooltip fixe
-    // document.getElementById(tooltip).setAttribute('visibility','visible'); //Avant, on affichait le tooltip du pays
+function showData(zone) {
+    selectedRegion = zone;
+    majFixed();
 };
 
-function hideTT(tooltip) {
-    selectedRegion = ""; //Suppression du pays selectionné
-    majFixed(); //Maj des infos dans le tooltip fixe
-    // document.getElementById(tooltip).setAttribute('visibility','hidden');//Avant, on cachait le tooltip du pays
+function hideData() {
+    selectedRegion = "";
+    majFixed();
 };
