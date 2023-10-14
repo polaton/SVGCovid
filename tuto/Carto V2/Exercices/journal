@@ -1,0 +1,20 @@
+Ex1: dessiner 2 polygones en svg avec python, dont un avec deux composantes connexes. poser un texte.
+Ex2: dessiner aussi des cercles, un cadre.
+Ex3: listes python, sleep, exit: précautions contre les pièges.
+Ex4: idem précédents +css + commande format
+Ex5: lire 565 fichiers, inscrire les résultats désirés dans un nouveau fichier.
+Ex6: repérer les indicateurs essentiels d'un fichier numérique (moy, var, quantiles)
+Ex7: voir un fond de carte (Isère), évoquer le pb de l'Open Data, importance des surfaces (ici en perl)
+Ex8: voir/faire une première carte, amusante mais non satisfaisante (ici en perl)
+Ex9: partant d'un fond de carte propre, nettoyé, adapté, faire une première carte (retour à python, beautyfulsoup). 
+Ex10: Idem + produire la légende (caissons)
+Ex10-B-cercles: Idem  + ajout cercles pour les inscrits
+Ex11: idem avec infos textuelles quand on passe sur les lieux + titres et commentaires. js basique
+Ex12: avec un slider qui choisit le % d'abstentions tolérables: js charge les données et fait la carte.
+
+Memo VSC
+- Comm-Maj-P: format
+- Comm-Z: affichage/masquage ligne complète
+- Comm-D: multi sélection 
+
+

@@ -1,0 +1,104 @@
+Ex1
+
+Découvrir à la fois python et le svg, format graphique pour le web.
+
+Le svg a besoin d'un en-tête précis. 
+Comme il est assez long, on va concaténer plusieurs lignes avec le $+$ de python.
+Différences entre simples et doubles quotes (guillemets/apostrophes)
+
+Toujours svg: Attention à la boîte de visualisation, avec son B Majuscule.
+Il n'y a pas d'échelle, juste des coordonnées avec l'axe positif des y qui descend (celui des x est normal)
+le point (0,0) est en haut à gauche de la fenêtre (ou de l'écran)
+
+viewBox="x1 y1 largeur hauteur" 
+
+On donne des noms français à nos objets et variables pour ne pas les confondre avec des fonctions python
+
+Un polygone svg peut avoir beaucoup d'attributs: contour, couleur, etc.
+Le terme polygone est mal choisi car ce peut être une somme de polygones: Z
+D'où le nom de variable polycheminsvg
+
+En théorie, chaque objet a un identifiant unique. 
+En pratique, les navigateurs sont tolérants.
+Mais l'idéal est de décrire les différentes composantes connexes d'un même objet de la façon suivante:
+<objet id="Obj-1" première comp connexe></objet>
+<objet id="Obj-2" seconde comp connexe></objet>
+Et on fera en sorte que tous les Obj-* aient la même couleur.
+Cf. éclaté de la région parisienne
+
+On découvre les fonctions replace et write de python
+
+On écrit du texte en svg
+
+Essai possible avec anaconda-navigator et JupyterLab
+
+Ex2
+
+Comme Ex1, mais  on ajoute un cadre, des cercles, un calque
+
+Le cadre est inséré dans un calque: <g...> </g>: plus propre, plus adapté à des CSS
+
+Ensuite: python: 1ere ouverture d'un fichier (cercles), découverte  de csv.reader, des listes et des boucles
+
+On fabrique les cercles «\,à la main\,»
+
+Jusque là, moitié python, moitié svg
+
+Ex3: protection contre les bugs
+
+Des variables récupèrent directement le contenu d'une ligne-liste
+On fait une pause d'une seconde
+On ajoute le rayon à une liste
+Et si on ne fait pas attention, ce rayon est pris comme un caractère et non comme un nombre
+De ce fait, on découvre que 10 est plus petit que 5 (ordre alphanumérique)
+
+Le min est une fonction de base de python
+la bibliothèque time est nécessaire pour la fonction sleep
+
+La fonction exit() peut être utile aussi pour arrêter le programme, mais la syntaxe qui la suit doit être correcte (différence avec le __END__ de Perl)
+
+Ex4
+
+Retour au svg
+
+Initiation aux feuilles de style, qui offrent des attributs identiques aux objets qui y font référence: directement ou via un méta-objet
+Ici la classe cercle servira de référence
+
+Pour python: reprise de l'Ex2 avec une nuance: découverte de la fonction format
+
+Ce sera le moyen d'introduire beautiful soup et json
+
+Ex5 
+
+Oubli temporaire du svg
+
+Programme: lire les 565 fichiers des résultats du 1er tour des législatives
+et les synthétiser dans un seul fichier. On s'intéresse aux taux d'abstention supérieurs à la «\,norme\,», choisie par l'expérimentateur (ex: 30\%).
+
+On va donc produire un fichier du type ResultatPourAbstentions30pc (ou ...32pc, etc.) dans les lignes duquel on écrira 
+l'ident de la circonscription, le total des inscrits, le pourcentage d'abstentions et ce que serait le pourcentage réel d'un parti des Abstentionnistes (pour le calcul, cf. le fichier partiAbstention.pdf)
+
+Il y a des histoires complexes d'identifiant des circonscriptions
+
+Ensuite, on repère les 2 lignes qui nous intéressent (découverte du startswith), on sépare les valeurs obtenues par des tabulations, on fait attention aux indentations propres à python, et on écrit le résultat dans le fichier ResultatPourAbstentions30pc
+
+Preuve qu'on peut aisément travailler sur beaucoup de fichiers à la fois
+
+Ex6
+Calcul de quelques indicateurs du fichier obtenu
+
+Facile: on fabrique une liste à partir d'une colonne choisie,
+on calcule les quantiles (import numpy), le min, le max, l'écart-type, etc.
+Cela nous servira pour définir des seuils de couleurs 
+
+Ex7 et 8
+Problèmes avec polygones (paths)
+
+Fabrication d'une première carte avec un jeu de coordonnées
+
+
+
+
+
+
+
