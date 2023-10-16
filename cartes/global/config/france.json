@@ -18,15 +18,6 @@
             "Titre":"Nombre de cas confirmés",
             "Max": 200
         }
-        ,
-        {
-            "Nom":"Nouveaux décès",
-            "Fichier":"Morts",
-            "Key":"Morts",
-            "Shift": 0,
-            "Titre":"Nombre de décès",
-            "Max": 100
-        }
     ],
     "Correspondance":{
         "Fichier":"departements",
@@ -51,10 +42,6 @@
                 {
                     "type": "bars",
                     "series":[
-                        {
-                            "name":"Décès",
-                            "data":"Morts"
-                        },
                         {
                             "name":"Nouveaux cas",
                             "data":"Confirmed"
@@ -94,10 +81,6 @@
             "highlightRecent":true,
             "series":{
                 "x":[
-                    {
-                        "name":"Décès",
-                        "data":"Morts"
-                    },
                     {
                         "name":"Nouveaux cas",
                         "data":"Confirmed"
