@@ -33,13 +33,165 @@
             "Shift": 2,
             "Titre":"Nombre de décès pour 1 million d'habitants",
             "Max": 10
+        },
+        {
+            "Nom":"Nouveaux cas débruités 10k hab",
+            "Fichier":"methode-confirmes-debruites-accrjourpop",
+            "Key":"DenoisedConfirmed",
+            "Shift": 2,
+            "Titre":"Nombre de décès pour 1 million d'habitants",
+            "Max": 10,
+            "Hide": true
+        },
+        {
+            "Nom":"Nouveaux décès débruités pour 1M hab",
+            "Fichier":"methode-Morts-debruites-accrjourpop",
+            "Key":"DenoisedDeath",
+            "Shift": 2,
+            "Titre":"Nombre de décès pour 1 million d'habitants",
+            "Max": 10,
+            "Hide": true
         }
+
     ],
-    "Correspondance":"nomenclatures-pays",
+    
+    "Correspondance":{
+        "Fichier":"nomenclatures-pays",
+        "Key":0,
+        "Données":[
+            {"Key":"Nom","Index":1},
+            {"Key":"Population","Index":2}
+        ]
+    },
     "Tooltip":{
         "Hauteur": 4,
         "HauteurTitre": 5,
-        "LignesInit":1,
-        "Champs":[{"Texte":"RFast","Serie":"Fast"},{"Texte":"RStandard","Serie":"Standard"},{"Texte":"Nouvelles infections / 10000","Serie":"Confirmed"},{"Texte":"Nouveaux décès / million","Serie":"Death"}]
-    }
+        "Champs":[{"Texte":"${value} hab.","Data":"Population"},{"Texte":"RFast","Serie":"Fast"},{"Texte":"RStandard","Serie":"Standard"},{"Texte":"Nouvelles infections / 10000","Serie":"Confirmed"},{"Texte":"Nouveaux décès / million","Serie":"Death"}]
+    },
+    "Graphiques":[
+        {
+            "title":"Evolution temporelle de la COVID 19",
+            "type":"dynamic",
+            "compare":true,
+            "traces": [
+                {
+                    "type": "bars",
+                    "series":[
+                        {
+                            "name":"Morts pour 1M h",
+                            "data":"Death"
+                        },
+                        {
+                            "name":"Confirmés pour 10k h",
+                            "data":"Confirmed"
+                        }
+                    ]
+                    
+                },
+                {
+                    "type": "scatter",
+                    "name":"R Slow",
+                    "data": "Standard",
+                    "process": "CleanRSerie"
+                },
+                {
+                    "type": "scatter",
+                    "name":"R Fast",
+                    "data": "Fast",
+                    "process": "CleanRSerie"
+                }
+            ],
+            "axis": {
+                "x": {
+                    "rangemode": "nonnegative",
+                    "autorange": true
+                },
+                "y":{
+                    "title":"R",
+                    "rangemode": "nonnegative"
+                },
+                "y2":{
+                    "title":"Nombre de personnes",
+                    "rangemode": "nonnegative",
+                    "color": "rgb(148, 103, 189)"
+                }
+            },
+            "colorway" : ["#C93756","#4D8FAC",  "#F9690E","#22A7F0", "#CF000F", "#003171"],
+            "columnTitles": ["R à afficher","Indicateur"]
+        },
+        {
+            "title":"Trajectoire de la pandémie",
+            "type":"phase",
+            "compare":true,
+            "highlightRecent":true,
+            "series":{
+                "x":[
+                    {
+                        "name":"Morts pour 1M h",
+                        "data":"DenoisedDeath"
+                    },
+                    {
+                        "name":"Confirmés pour 10k h",
+                        "data":"DenoisedConfirmed"
+                    },
+                    {
+                        "name":"Confirmés bruités pour 10k h",
+                        "data":"Confirmed"
+                    }
+                ],
+                "y":[
+                    {
+                        "name":"R Slow",
+                        "data": "Standard",
+                        "process": "CleanRSerie"
+                    },
+                    {
+                        "name":"R Fast",
+                        "data": "Fast",
+                        "process": "CleanRSerie"
+                    }
+                ]
+            },
+            "axis":{
+                "x": {
+                    "rangemode": "nonnegative",
+                    "autorange": true
+                },
+                "y":{
+                    "rangemode": "nonnegative",
+                    "autorange": true
+                }
+            },
+            "colorway" : ["#EB706E","#75B8C8","#BF211E","#06657D"],
+            "columnTitles": ["X","Y"],
+            "shapes": [
+                {
+                    "xref":"paper", 
+                    "yref":"paper",
+                    "type": "line",
+                    "x0": 0,
+                    "y0": 0.5,
+                    "x1": 1,
+                    "y1": 0.5,
+                    "line": {
+                        "color": "green",
+                        "width": 3,
+                        "dash": "dashdot"
+                    }
+                },
+                {
+                    "type": "line",
+                    "x0": 1,
+                    "y0": 0,
+                    "x1": 1,
+                    "y1": 2,
+                    "line": {
+                        "color": "green",
+                        "width": 3,
+                        "dash": "dashdot"
+                    }
+                }
+            ]
+        }
+    ]
 }

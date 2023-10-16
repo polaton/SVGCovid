@@ -84,11 +84,12 @@
         <div class="col-2">
             <!-- <div class="btn-group"> -->
             <button class="btn btn-primary btn-sm btn-modal" onclick="displayStats()" data-bs-toggle="modal" data-bs-target="#popupStats">&#x1F4C8 Graphiques</button>
+            <button class="btn btn-primary btn-sm btn-modal" data-bs-toggle="modal" data-bs-target="#popupAbout">&#x2753 À propos</button>
             <!-- <a href="#popupStats" onclick="displayStats()" rel="modal:open">&#x1F4C8</a> -->
             <br>
-            <button class="btn btn-primary btn-sm btn-modal" data-bs-toggle="modal" data-bs-target="#popupAbout">&#x2753 À propos</button>
+            <button class="btn btn-primary btn-sm btn-modal" onclick="loadMap('monde')" data-bs-target="#popupAbout">🌍</button>
             <!-- </div> -->
-            <button class="btn btn-primary btn-sm btn-modal" onclick="loadMap('france')" data-bs-target="#popupAbout">&#x2753 À propos</button>
+            <button class="btn btn-primary btn-sm btn-modal" onclick="loadMap('france')" data-bs-target="#popupAbout">🇫🇷</button>
         </div>
     </div>
 
@@ -297,50 +298,9 @@
 
     <div id="popupStats" class="modal modal-xl">
         <div class="modal-dialog modal-dialog-centered" id="modal-stats">
-            <div class="modal-content">
+            <div id="stats-modal-content" class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="row stats-row" >
-                    <div class="col-3 pays-column">
-                        <h6>Pays principal</h6> 
-                        <div id="select-pays-1" class="select-pays"></div>
-                        <h6>Pays comparé</h6>
-                        <div id="select-pays-2" class="select-pays"></div>
-                        <button id="invert-stats-country" class="btn btn-primary btn-sm btn-stats" type="button">Inverser</button>
-                        <button id="remove-stats-country" class="btn btn-danger btn-sm btn-stats" type="button">Supprimer</button>
-                    </div>
-                    <div class="col-2 param-column">
-                        <h6>R à afficher</h6>
-                        <input class="stats-control stats-box" type="checkbox" id="rstandard" name="rstandard"><label for="rstandard">R Slow</label>
-                        <br>
-                        <input class="stats-control stats-box" type="checkbox" id="rfast" name="rfast" checked><label for="rfast">R Fast</label>
-                    </div>
-                    <div class="col-4 param-column">
-                        <h6>Indicateur</h6>
-                        <input class="stats-control stats-box" type="radio" value="mortagg" name="stathisto" checked><label for="mortagg">Morts pour 1M h</label><br>
-                        <input class="stats-control stats-box" type="radio" value="confirmeagg" name="stathisto"><label for="confirmeagg">Confirmés pour 10k h</label><br>
-                        <input class="stats-control stats-box" type="radio" value="confirmeaggdenoised" name="stathisto" checked="checked"><label for="confirmeaggdenoised">Confirmés débruités pour 10k h </label><br>
-                        <input class="stats-control stats-box" type="radio" value="desactivatehisto" name="stathisto"><label for="desactivatehisto">Désactiver</label>
-                    </div>
-                    <div class="col-2 param-column">
-                        <input class="stats-control stats-box" type="checkbox" id="display-phase" name="display-phase"><label for="display-phase">Trajectoire</label>
-                    </div>
-                </div>
-                
-                <div class="row stats-row">
-                    <div class="col-12">
-                        <h3 id="title-graph-1"></h3>
-                        <div id="plotStat"></div>
-                    </div>
-                </div>
-
-                
-                <div class="row stats-row" id="pandemic-dynamic">
-                    <div class="col-12">
-                        <h3 id="title-graph-2"></h3>
-                        <div id="plotPhaseSpace"></div>
-                    </div>
                 </div>
             </div>
         </div>

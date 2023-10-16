@@ -4,7 +4,7 @@
     "Series": [
         {
             "Nom":"R",
-            "Fichier":"France",
+            "Fichier":"RStandard",
             "Key":"R",
             "Shift": 0,
             "Titre":"Taux de reproduction",
@@ -12,18 +12,145 @@
         },
         {
             "Nom":"Nouveaux cas",
-            "Fichier":"Infections",
+            "Fichier":"Confirmed",
             "Key":"Confirmed",
             "Shift": 0,
-            "Titre":"Nombre de cas confirmés pour 10000 habitants",
+            "Titre":"Nombre de cas confirmés",
             "Max": 200
         }
+        ,
+        {
+            "Nom":"Nouveaux décès",
+            "Fichier":"Morts",
+            "Key":"Morts",
+            "Shift": 0,
+            "Titre":"Nombre de décès",
+            "Max": 100
+        }
     ],
-    "Correspondance":"departements",
+    "Correspondance":{
+        "Fichier":"departements",
+        "Key":0,
+        "Données":[
+            {"Key":"Nom","Index":1},
+            {"Key":"Population","Index":2}
+        ]
+    },
     "Tooltip":{
         "Hauteur": 50,
         "HauteurTitre": 60,
         "LignesInit":1,
-        "Champs":[{"Texte":"R","Serie":"R"},{"Texte":"Nouvelles infections","Serie":"Confirmed"}]
-    }
+        "Champs":[{"Texte":"${value} hab.","Data":"Population"},{"Texte":"R","Serie":"R"},{"Texte":"Nouvelles infections","Serie":"Confirmed"}]
+    },
+    "Graphiques":[
+        {
+            "title":"Evolution temporelle de la COVID 19",
+            "type":"dynamic",
+            "compare":"true",
+            "traces": [
+                {
+                    "type": "bars",
+                    "series":[
+                        {
+                            "name":"Décès",
+                            "data":"Morts"
+                        },
+                        {
+                            "name":"Nouveaux cas",
+                            "data":"Confirmed"
+                        }
+                    ]
+                    
+                },
+                {
+                    "type": "scatter",
+                    "name":"R",
+                    "data": "R",
+                    "process": "CleanRSerie"
+                }
+            ],
+            "axis": {
+                "x": {
+                    "rangemode": "nonnegative",
+                    "autorange": true
+                },
+                "y":{
+                    "title":"R",
+                    "rangemode": "nonnegative"
+                },
+                "y2":{
+                    "title":"Nombre de personnes",
+                    "rangemode": "nonnegative",
+                    "color": "rgb(148, 103, 189)"
+                }
+            },
+            "colorway" : ["#C93756","#4D8FAC",  "#F9690E","#22A7F0", "#CF000F", "#003171"],
+            "columnTitles": ["R à afficher","Indicateur"]
+        },
+        {
+            "title":"Trajectoire de la pandémie",
+            "type":"phase",
+            "compare":"true",
+            "highlightRecent":true,
+            "series":{
+                "x":[
+                    {
+                        "name":"Décès",
+                        "data":"Morts"
+                    },
+                    {
+                        "name":"Nouveaux cas",
+                        "data":"Confirmed"
+                    }
+                ],
+                "y":[
+                    {
+                        "name":"R",
+                        "data": "R",
+                        "process": "CleanRSerie"
+                    }
+                ]
+            },
+            "axis":{
+                "x": {
+                    "rangemode": "nonnegative",
+                    "autorange": true
+                },
+                "y":{
+                    "rangemode": "nonnegative",
+                    "autorange": true
+                }
+            },
+            "colorway" : ["#EB706E","#75B8C8","#BF211E","#06657D"],
+            "columnTitles": ["X","Y"],
+            "shapes": [
+                {
+                    "xref":"paper", 
+                    "yref":"paper",
+                    "type": "line",
+                    "x0": 0,
+                    "y0": 0.5,
+                    "x1": 1,
+                    "y1": 0.5,
+                    "line": {
+                        "color": "green",
+                        "width": 3,
+                        "dash": "dashdot"
+                    }
+                },
+                {
+                    "type": "line",
+                    "x0": 1,
+                    "y0": 0,
+                    "x1": 1,
+                    "y1": 2,
+                    "line": {
+                        "color": "green",
+                        "width": 3,
+                        "dash": "dashdot"
+                    }
+                }
+            ]
+        }
+    ]
 }

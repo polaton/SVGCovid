@@ -10,3 +10,5 @@ legende caissons //TODO
 path id="AFG-1" onclick="lockCountry('AFG')" onmouseover="showTT('AFG-TT')" onmouseout="hideTT('AFG-TT')"
 
 fichier de correspondance = separateur ; col 1 id, col 2 nom
+
+Dans l'objet graphiques, les clés data correspondent aux clés Keys des objets Série à la racine de la config

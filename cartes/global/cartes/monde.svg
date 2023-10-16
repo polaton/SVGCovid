@@ -11,7 +11,7 @@
 
     <!-- TITRE -->
     <g xmlns="http://www.w3.org/2000/svg" id="titre">
-        <text x="315" y="20" style="font-size:6px; font-family:Helvetica" opacity="1" id="txt-titre"> Atlas des données de la Covid-19</text>
+        <text x="315" y="20" style="font-size:6px; font-family:Helvetica" opacity="1"> Atlas des données de la Covid-19</text>
         <text x="315" y="26" id="txt-titre" style="font-size:4.5px; font-family:Helvetica" opacity="1"></text>
         <!-- <a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="infoscartes.html"> <text x="270" y="160" style="font-size:4px; font-family:Helvetica" fill="orange">
                 Sources : click here</text></a> -->
