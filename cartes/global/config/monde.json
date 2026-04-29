@@ -51,8 +51,16 @@
             "Titre":"Nombre de décès pour 1 million d'habitants",
             "Max": 10,
             "Hide": true
+        },
+                {
+            "Nom":"Intervale",
+            "Fichier":"Intervale",
+            "Key":"Intervale",
+            "Shift": 1,
+            "Titre":"Intervale",
+            "Max": 2,
+            "Type": "Array"
         }
-
     ],
     
     "Correspondance":{
@@ -99,6 +107,12 @@
                     "name":"R Fast",
                     "data": "Fast",
                     "process": "CleanRSerie"
+                },
+                {
+                    "type": "scatter",
+                    "name":"Intervale",
+                    "data": "Intervale",
+                    "process": "Intervale"
                 }
             ],
             "axis": {
@@ -117,6 +131,51 @@
                 }
             },
             "colorway" : ["#C93756","#4D8FAC",  "#F9690E","#22A7F0", "#CF000F", "#003171"],
+            "columnTitles": ["R à afficher","Indicateur"]
+        },
+        {
+            "title":"Intervales de confiance de R",
+            "type":"interval",
+            "compare":true,
+            "traces": [
+                {
+                    "type": "bars",
+                    "series":[
+                        {
+                            "name":"Morts pour 1M h",
+                            "data":"Death"
+                        },
+                        {
+                            "name":"Confirmés pour 10k h",
+                            "data":"Confirmed"
+                        }
+                    ]
+                    
+                },
+                {
+                    "type": "scatter",
+                    "name":"Intervale",
+                    "data": "Intervale",
+                    "process": "Intervale",
+                    "spread": 1
+                }
+            ],
+            "axis": {
+                "x": {
+                    "rangemode": "nonnegative",
+                    "autorange": true
+                },
+                "y":{
+                    "title":"R",
+                    "rangemode": "nonnegative"
+                },
+                "y2":{
+                    "title":"Nombre de personnes",
+                    "rangemode": "nonnegative",
+                    "color": "rgb(148, 103, 189)"
+                }
+            },
+            "colorway" : ["#fed519","#26A65B"],
             "columnTitles": ["R à afficher","Indicateur"]
         },
         {

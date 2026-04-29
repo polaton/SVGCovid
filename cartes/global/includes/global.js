@@ -272,7 +272,7 @@ function loadData(loaded){
     } else {
         var tmpSerie = configDict.Series[loaded];
         $.get("data/"+configDict.Nom.toLowerCase()+"/"+ tmpSerie.Fichier, function(tmpData) { //On charge RStandard
-            //transformation en tableau, 
+            //transformation en tableau,
             tmpData = $.csv.toArrays(tmpData); //transformation en tableau
             configDict.Series[loaded]["Taille"] = tmpData[0].length - 2;
             for (let index = 0; index < tmpSerie.Shift; index++) {
@@ -280,7 +280,13 @@ function loadData(loaded){
             }
             dataDict[tmpSerie.Key] = {};
             tmpData.forEach(element => dataDict[tmpSerie.Key][element.shift()] = element.map(function(v) {
-                return parseFloat(v, 10);
+                if (tmpSerie.Type && tmpSerie.Type == "Array") {
+                    return v.split(";").map(function(vv) {
+                        return parseFloat(vv, 10);
+                    });
+                } else {
+                    return parseFloat(v, 10);
+                }
             })); //ajout au tableau de données
             $("#coloration").append("<option value='"+tmpSerie.Key+"'>"+tmpSerie.Nom+"</option>");
             loaded++;
@@ -354,6 +360,10 @@ function majCouleurs(offset) {
         if (element in dataDict[selectedColoration.Key]) {
             //on récupère la valeur du jour pour le pays
             var valeurDuJour = dataDict[selectedColoration.Key][element][offset];
+            if (selectedColoration.Type && selectedColoration.Type == "Array") {
+                var middleValue = Math.floor(valeurDuJour.length / 2);
+                valeurDuJour = valeurDuJour[middleValue];
+            }
         } else {
             //on récupère la valeur du jour pour le pays
             var valeurDuJour = "NA";
@@ -496,6 +506,47 @@ function cleanRSerie(serie){
     return tmpSerie;
 }
 
+function generateIntervaleDaysLabel(serie){
+    var tmpSerie = serie.slice();
+    var serieStraight = [];
+    var serieReverse = [];
+    for (let index = 0; index < tmpSerie.length; index++) {
+        const element = tmpSerie[index];
+        serieStraight.push(element);
+        serieReverse.unshift(element);
+    }
+    var labelSerie = serieStraight.concat(serieReverse);
+    console.log(labelSerie);
+    return labelSerie;
+}
+
+function generateIntervaleMargeSerie(serie,spread){
+    var tmpSerie = serie.slice();
+    // todo spread
+    var serieHaute = [];
+    var serieBasse = [];
+    for (let index = 0; index < tmpSerie.length; index++) {
+        const element = tmpSerie[index];
+        let middleValue = Math.floor(element.length / 2);
+        serieHaute.push(element[middleValue+spread]);
+        serieBasse.unshift(element[middleValue-spread]);
+    }
+    var cleanedSerie = serieHaute.concat(serieBasse);
+    console.log(cleanedSerie);
+    return cleanedSerie;
+}
+
+function generateIntervaleSerie(serie){
+    var tmpSerie = serie.slice();
+    var cleanedSerie = [];
+    for (let index = 0; index < tmpSerie.length; index++) {
+        const element = tmpSerie[index];
+        let middleValue = Math.floor(element.length / 2);
+        cleanedSerie.push(element[middleValue]);
+    }
+    return cleanedSerie;
+}
+
 function range(start, end, step = 1) {
     var output = [];
     if (typeof end === 'undefined') {
@@ -520,7 +571,7 @@ function generateSelectZones(id,none){
     });
     return tmpSelectZones;
 }
-// TODO
+
 function orderSelectCountry(id){
     var options = $('select#'+id+' option');
     var arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
@@ -606,6 +657,14 @@ function initStatsControlRow(i,element){
                 }
             }
             break;
+        case "interval":
+            for (let ii = 0; ii < element.traces.length; ii++) {
+                const trace = element.traces[ii];
+                if (trace.type=="scatter") {
+                    $('#param-column-1-'+i.toString()).append('<input class="stats-control-'+i.toString()+' stats-box cbx-stats-1-'+i.toString()+'" type="checkbox" id="cbx-stats-1-'+i.toString()+'-'+trace.data+'" alt="'+trace.name+'" process="'+(trace.process?trace.process:'')+'" spread="'+(trace.spread?trace.spread:'1')+'" value="'+trace.data+'" name="cbx-stats-1-'+i.toString()+'-'+trace.data+'" '+(ii==1?"checked":"")+'><label for="cbx-stats-1-'+i.toString()+'-'+trace.data+'">'+trace.name+'</label><br>');
+                }
+            }
+            break;
         case "phase":
             for (let ii = 0; ii < element.series.x.length; ii++) {
                 const serie = element.series.x[ii];
@@ -620,6 +679,19 @@ function initStatsControlRow(i,element){
     $('#param-column-2-'+i.toString()).append('<h6>'+element.columnTitles[1]+'</h6>')
     switch (element.type) {
         case "dynamic":
+            for (let ii = 0; ii < element.traces.length; ii++) {
+                const trace = element.traces[ii];
+                if (trace.type=="bars") {
+                    for (let j = 0; j < trace.series.length; j++) {
+                        const serie = trace.series[j];
+                            $('#param-column-2-'+i.toString()).append('<input id="radio-stats-2-'+i.toString()+'-'+serie.data+'" class="stats-control-'+i.toString()+' stats-box" type="radio" value="'+serie.data+'" alt="'+serie.name+'" name="radio-stats-2-'+i.toString()+'" '+(j==0?"checked":"")+'><label for="radio-stats-2-'+i.toString()+'-'+serie.data+'">'+serie.name+'</label><br>');
+                    }
+                    $('#param-column-2-'+i.toString()).append('<input id="radio-stats-2-'+i.toString()+'-none" class="stats-control-'+i.toString()+' stats-box" type="radio" value="none" name="radio-stats-2-'+i.toString()+'"><label for="radio-stats-2-'+i.toString()+'-none">Désactiver</label><br>');
+                    break;
+                }
+            }
+            break;
+        case "interval":
             for (let ii = 0; ii < element.traces.length; ii++) {
                 const trace = element.traces[ii];
                 if (trace.type=="bars") {
@@ -782,6 +854,172 @@ function initStatsGraph(i,element){
                                 "y": [],
                                 "x": daysLabelStats,
                                 "type": 'scatter'
+                            });
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            Plotly.newPlot('plot-div-'+i.toString()+'', tmpTraces, layout);
+            dataStats.push(tmpTraces);
+            break;
+        case "interval":
+            var layout = {
+                barmode: 'group',
+                width: $("#modal-stats").width(),
+                height: 450,
+                legend: {
+                    x: 0,
+                    y: 1.2,
+                    xanchor:'left',
+                    yanchor:'top'
+                },
+                pad: {
+                    t: 100
+                }
+            }
+
+            if (element.colorway) layout.colorway = element.colorway;
+
+            if (element.axis) {
+                if (element.axis.x) {
+                    layout.xaxis = {
+                        "tickmode": "array",
+                        "tickvals": range(0,daysPast,35),
+                        "ticktext": extractDaysLabel(range(0,daysPast,35))
+                    }
+                        
+                    if (element.axis.x.rangemode) {
+                        layout.xaxis.rangemode = element.axis.x.rangemode;
+                    }
+
+                    if (element.axis.x.autorange) {
+                        layout.xaxis.autorange = element.axis.x.autorange;
+                    }
+
+                    if (element.axis.x.color) {
+                        layout.xaxis.titlefont = {
+                            color: element.axis.x.color
+                        };
+                        layout.xaxis.tickfont = {
+                            color: element.axis.x.color
+                        };                        
+                    }
+                }
+
+                if (element.axis.y) {
+                    layout.yaxis = {
+                    }
+                        
+                    if (element.axis.y.rangemode) {
+                        layout.yaxis.rangemode = element.axis.y.rangemode;
+                    }
+
+                    if (element.axis.y.autorange) {
+                        layout.yaxis.autorange = element.axis.y.autorange;
+                    }
+
+                    if (element.axis.y.color) {
+                        layout.yaxis.titlefont = {
+                            color: element.axis.y.color
+                        };
+                        layout.yaxis.tickfont = {
+                            color: element.axis.y.color
+                        };                        
+                    }
+                }
+
+                if (element.axis.y2) {
+                    layout.yaxis2 = {
+                        overlaying: 'y',
+                        side: 'right'
+                    }
+                    if (element.axis.y2.title) {
+                        layout.yaxis2.title = element.axis.y2.title;
+                    }
+                        
+                    if (element.axis.y2.rangemode) {
+                        layout.yaxis2.rangemode = element.axis.y2.rangemode;
+                    }
+
+                    if (element.axis.y2.autorange) {
+                        layout.yaxis2.autorange = element.axis.y2.autorange;
+                    }
+
+                    if (element.axis.y2.color) {
+                        layout.yaxis2.titlefont = {
+                            color: element.axis.y2.color
+                        };
+                        layout.yaxis2.tickfont = {
+                            color: element.axis.y2.color
+                        };                        
+                    }
+                }
+            }
+
+            var tmpTraces = [];
+            for (let ii = 0; ii < element.traces.length; ii++) {
+                const trace = element.traces[ii];
+                switch (trace.type) {
+                    case "bars":
+                        tmpTraces.push({
+                            "y": [],
+                            "x": daysLabelStats,
+                            "type": 'bar',
+                            "yaxis": 'y2',
+                            "opacity": 0.5
+                        });
+                        if (element.compare) {
+                            tmpTraces.push({
+                                "y": [],
+                                "x": daysLabelStats,
+                                "type": 'bar',
+                                "yaxis": 'y2',
+                                "opacity": 0.5
+                            });
+                        }
+                        break;
+                    case "scatter":
+                        tmpTraces.push({
+                            "y": [],
+                            "x": daysLabelStats,
+                            "line": {
+                                "color": "rgba(207, 0, 15,1)",
+                                "width": 0.5
+                            },
+                            "type": 'scatter'
+                        });
+                        if (element.compare) {
+                            tmpTraces.push({
+                                "y": [],
+                                "x": daysLabelStats,
+                                "line": {
+                                    "color": "rgba(25, 181, 254,1)",
+                                    "width": 0.5
+                                },
+                                "type": 'scatter'
+                            });
+                        }
+                        tmpTraces.push({
+                            "y": [],
+                            "x": generateIntervaleDaysLabel(daysLabelStats),
+                            "type": 'scatter',
+                            "fill": "tozerox", 
+                            "fillcolor": "rgba(207, 0, 15,0.3)", 
+                            "line": {"color": "transparent"},
+                            "showlegend": false
+                        });
+                        if (element.compare) {
+                            tmpTraces.push({
+                                "y": [],
+                                "x": generateIntervaleDaysLabel(daysLabelStats),
+                                "type": 'scatter',
+                                "fill": "tozerox", 
+                                "fillcolor": "rgba(25, 181, 254,0.3)", 
+                                "line": {"color": "transparent"},
+                                "showlegend": false
                             });
                         }
                         break;
@@ -1002,6 +1240,76 @@ function updateStats(i) {
                         switch (element.process) {
                             case "CleanRSerie":
                                 dataStats[i][startingIndex]["y"] =  cleanRSerie(dataDict[element.key][zoneCompared]);
+                                break;
+                            default:
+                                dataStats[i][startingIndex]["y"] =  dataDict[element.key][zoneCompared];
+                                break;
+                        }
+                        dataStats[i][startingIndex]["name"] = element.name + " " + zoneComparedLabel;
+                    }
+                    startingIndex++;
+                }
+            }
+
+            tmpTitle+= tmpSeriesTitle.join(" | ");
+            break;
+        case "interval":
+            var tmpScatterSeries=[];
+            $('.cbx-stats-1-'+i.toString()+':checked').each(function() {
+                tmpScatterSeries.push({"key":this.value,"name":this.alt,"process":$(this).attr("process"), "spread":parseInt($(this).attr("spread"))});
+            });
+            var tmpBar = $('.stats-control-'+i.toString()+'[name="radio-stats-2-'+i.toString()+'"]:checked').val();
+
+            for (let j = 0; j < dataStats[i].length; j++) {
+                dataStats[i][j]["y"] = [];
+                dataStats[i][j]["name"] = "";
+            }
+
+            if (tmpBar != "none") {
+                var alt = $('.stats-control-'+i.toString()+'[name="radio-stats-2-'+i.toString()+'"]:checked').prop("alt");
+                tmpSeriesTitle.push(alt);
+                dataStats[i][0]["y"] =  dataDict[tmpBar][zoneMain];
+                dataStats[i][0]["name"] = alt + " " + zoneMainLabel;
+                if (tmpGraphique.compare && zoneCompared != "none") {
+                    dataStats[i][1]["y"] =  dataDict[tmpBar][zoneCompared];
+                    dataStats[i][1]["name"] = alt + " " + zoneComparedLabel;
+                }
+            }
+
+            startingIndex = (tmpGraphique.compare?2:1)
+            for (let j = 0; j < tmpScatterSeries.length; j++) {
+                const element = tmpScatterSeries[j];
+                
+                tmpSeriesTitle.push(element.name);
+
+                switch (element.process) {
+                    case "CleanRSerie":
+                        dataStats[i][startingIndex]["y"] =  cleanRSerie(dataDict[element.key][zoneMain]);
+                        break;
+                    case "Intervale":
+                        // TODO: déspécialiser pour permettre de faire des intervales sur autre chose que des RSerie
+                        dataStats[i][startingIndex]["y"] =  generateIntervaleSerie(cleanRSerie(dataDict[element.key][zoneMain]));
+                        if (tmpGraphique.compare) {
+                            dataStats[i][startingIndex+2]["y"] =  generateIntervaleMargeSerie(cleanRSerie(dataDict[element.key][zoneMain]), element.spread);
+                        } else {
+                            dataStats[i][startingIndex+1]["y"] =  generateIntervaleMargeSerie(cleanRSerie(dataDict[element.key][zoneMain]), element.spread);
+                        }
+                        break;
+                    default:
+                        dataStats[i][startingIndex]["y"] =  dataDict[element.key][zoneMain];
+                        break;
+                }
+                dataStats[i][startingIndex]["name"] = element.name + " " + zoneMainLabel;
+                startingIndex++;
+                if (tmpGraphique.compare) {
+                    if (zoneCompared != "none") {
+                        switch (element.process) {
+                            case "CleanRSerie":
+                                dataStats[i][startingIndex]["y"] =  cleanRSerie(dataDict[element.key][zoneCompared]);
+                                break;
+                            case "Intervale":
+                                dataStats[i][startingIndex]["y"] =  generateIntervaleSerie(cleanRSerie(dataDict[element.key][zoneCompared]));
+                                dataStats[i][startingIndex+2]["y"] =  generateIntervaleMargeSerie(cleanRSerie(dataDict[element.key][zoneCompared]), element.spread);
                                 break;
                             default:
                                 dataStats[i][startingIndex]["y"] =  dataDict[element.key][zoneCompared];
