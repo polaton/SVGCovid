@@ -52,17 +52,24 @@
             "Max": 10,
             "Hide": true
         },
-                {
+        {
             "Nom":"Intervale",
             "Fichier":"Intervale",
             "Key":"Intervale",
             "Shift": 1,
             "Titre":"Intervale",
             "Max": 2,
-            "Type": "Array"
+            "Type": "Array",
+            "IntervaleLegende": true,
+            "Spread": 1
         }
     ],
-    
+    "Legende":{
+        "startX" :  32,
+        "startY" : 200,
+        "height" : 90,
+        "width" : 8
+    },
     "Correspondance":{
         "Fichier":"nomenclatures-pays",
         "Key":0,
@@ -74,7 +81,7 @@
     "Tooltip":{
         "Hauteur": 4,
         "HauteurTitre": 5,
-        "Champs":[{"Texte":"${value} hab.","Data":"Population"},{"Texte":"RFast","Serie":"Fast"},{"Texte":"RStandard","Serie":"Standard"},{"Texte":"Nouvelles infections / 10000","Serie":"Confirmed"},{"Texte":"Nouveaux décès / million","Serie":"Death"}]
+        "Champs":[{"Texte":"${value} hab.","Data":"Population"},{"Texte":"RFast","Serie":"Fast"},{"Texte":"RStandard","Serie":"Standard"},{"Texte":"Nouvelles infections / 10000","Serie":"Confirmed"},{"Texte":"Nouveaux décès / million","Serie":"Death"},{"Texte":"Intervale","Serie":"Intervale"}]
     },
     "Graphiques":[
         {

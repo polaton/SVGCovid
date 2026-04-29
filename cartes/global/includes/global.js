@@ -408,8 +408,8 @@ function majFixed() {
                 $("#"+element.Serie+"-fixed").text("");
             } else if (element.Data) {
                 $("#"+element.Data+"-fixed").text("");
-            } 
-            
+            }
+            hideLegendeIntervale();
         }
     } else {
         $("#Region-fixed").text(correspondanceZone[zone]["Nom"]);
@@ -429,8 +429,50 @@ function majFixed() {
                 }
             }    
         }
+
+        if (selectedColoration.Key && selectedColoration.IntervaleLegende && selectedColoration.Spread) {
+            if (zone in dataDict[selectedColoration.Key]) {
+                //on récupère la valeur du jour pour le pays
+                var valeurDuJour = dataDict[selectedColoration.Key][zone][offset];
+                var middle = Math.floor(valeurDuJour.length / 2);
+                var middleValue = valeurDuJour[middle];
+                var spread = selectedColoration.Spread;
+                var lowValue = valeurDuJour[middle - spread];
+                var highValue = valeurDuJour[middle + spread];
+                if (lowValue >= 0 && highValue >= 0) {
+                    var legStartX = configDict.Legende.startX;
+                    var legStartY = configDict.Legende.startY;
+                    var legHeight = configDict.Legende.height;
+                    var legMax = parseFloat($("#legMax").text());
+
+                    var midHeight = (legHeight * middleValue) / legMax;
+                    var lowHeight = (legHeight * lowValue) / legMax;
+                    var highHeight = (legHeight * highValue) / legMax;
+
+                    $("#intervale-stroke-mid").attr("y1", legStartY - midHeight).attr("y2", legStartY - midHeight).attr("visibility","visible");
+                    $("#intervale-stroke-low").attr("y1", legStartY - lowHeight).attr("y2", legStartY - lowHeight).attr("visibility","visible");
+                    $("#intervale-stroke-high").attr("y1", legStartY - highHeight).attr("y2", legStartY - highHeight).attr("visibility","visible");
+                    $("#intervale-stroke-text").attr("y", legStartY - midHeight).text(`Mid: ${middleValue}, Low: ${lowValue}, High: ${highValue}, Spread: ${(highValue - lowValue).toFixed(2)}`).attr("visibility","visible");
+                } else {
+                    hideLegendeIntervale()
+                }
+                
+
+            } else {
+                hideLegendeIntervale()
+            }
+        } else {
+            hideLegendeIntervale();
+        }
     }
 };
+
+function hideLegendeIntervale() {
+    $("#intervale-stroke-mid").attr("visibility","hidden");
+    $("#intervale-stroke-high").attr("visibility","hidden");
+    $("#intervale-stroke-low").attr("visibility","hidden");
+    $("#intervale-stroke-text").attr("visibility","hidden");
+}
 
 // TODO Inner stroker locked zone: https://codepen.io/collection/nJbGEB/?cursor=eyJjb2xsZWN0aW9uX2lkIjoibkpiR0VCIiwiY29sbGVjdGlvbl90b2tlbiI6bnVsbCwibGltaXQiOjQsIm1heF9pdGVtcyI6OCwib2Zmc2V0IjowLCJwYWdlIjoxLCJzb3J0X2J5IjoicG9zaXRpb24iLCJzb3J0X29yZGVyIjoiQXNjIn0=
 function lockRegion(regionCode) {
@@ -516,7 +558,6 @@ function generateIntervaleDaysLabel(serie){
         serieReverse.unshift(element);
     }
     var labelSerie = serieStraight.concat(serieReverse);
-    console.log(labelSerie);
     return labelSerie;
 }
 
@@ -532,7 +573,6 @@ function generateIntervaleMargeSerie(serie,spread){
         serieBasse.unshift(element[middleValue-spread]);
     }
     var cleanedSerie = serieHaute.concat(serieBasse);
-    console.log(cleanedSerie);
     return cleanedSerie;
 }
 
