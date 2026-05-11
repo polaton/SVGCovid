@@ -409,7 +409,7 @@ function majFixed() {
             } else if (element.Data) {
                 $("#"+element.Data+"-fixed").text("");
             }
-            hideLegendeIntervale();
+            hideLegendeIntervalle();
         }
     } else {
         $("#Region-fixed").text(correspondanceZone[zone]["Nom"]);
@@ -417,7 +417,7 @@ function majFixed() {
             const element = configDict.Tooltip.Champs[index];
             if (element.Serie) {
                 if (zone in dataDict[element.Serie]) {
-                    $("#"+element.Serie+"-fixed").text(element.Texte + ": " + dataDict[element.Serie][zone][offset]);
+                    $("#"+element.Serie+"-fixed").text(element.Texte + ": " + (element.Type == "Intervalle" ? `[${dataDict[element.Serie][zone][offset].join(" > ")}]` : dataDict[element.Serie][zone][offset]));
                 } else {
                     $("#"+element.Serie+"-fixed").text(element.Texte + ": Pas de données");
                 }
@@ -430,7 +430,7 @@ function majFixed() {
             }    
         }
 
-        if (selectedColoration.Key && selectedColoration.IntervaleLegende && selectedColoration.Spread) {
+        if (selectedColoration.Key && selectedColoration.IntervalleLegende && selectedColoration.Spread) {
             if (zone in dataDict[selectedColoration.Key]) {
                 //on récupère la valeur du jour pour le pays
                 var valeurDuJour = dataDict[selectedColoration.Key][zone][offset];
@@ -439,39 +439,37 @@ function majFixed() {
                 var spread = selectedColoration.Spread;
                 var lowValue = valeurDuJour[middle - spread];
                 var highValue = valeurDuJour[middle + spread];
-                if (lowValue >= 0 && highValue >= 0) {
+                var legMax = parseFloat($("#legMax").text());
+                if (lowValue >= 0 && highValue >= 0 && middleValue < legMax && highValue < legMax && lowValue < legMax) {
                     var legStartX = configDict.Legende.startX;
                     var legStartY = configDict.Legende.startY;
                     var legHeight = configDict.Legende.height;
-                    var legMax = parseFloat($("#legMax").text());
 
                     var midHeight = (legHeight * middleValue) / legMax;
                     var lowHeight = (legHeight * lowValue) / legMax;
                     var highHeight = (legHeight * highValue) / legMax;
 
-                    $("#intervale-stroke-mid").attr("y1", legStartY - midHeight).attr("y2", legStartY - midHeight).attr("visibility","visible");
-                    $("#intervale-stroke-low").attr("y1", legStartY - lowHeight).attr("y2", legStartY - lowHeight).attr("visibility","visible");
-                    $("#intervale-stroke-high").attr("y1", legStartY - highHeight).attr("y2", legStartY - highHeight).attr("visibility","visible");
-                    $("#intervale-stroke-text").attr("y", legStartY - midHeight).text(`Mid: ${middleValue}, Low: ${lowValue}, High: ${highValue}, Spread: ${(highValue - lowValue).toFixed(2)}`).attr("visibility","visible");
+                    $("#intervalle-stroke-mid").attr("y1", legStartY - midHeight).attr("y2", legStartY - midHeight).attr("visibility","visible");
+                    $("#intervalle-stroke-low").attr("y1", legStartY - lowHeight).attr("y2", legStartY - lowHeight).attr("visibility","visible");
+                    $("#intervalle-stroke-high").attr("y1", legStartY - highHeight).attr("y2", legStartY - highHeight).attr("visibility","visible");
                 } else {
-                    hideLegendeIntervale()
+                    hideLegendeIntervalle()
                 }
                 
 
             } else {
-                hideLegendeIntervale()
+                hideLegendeIntervalle()
             }
         } else {
-            hideLegendeIntervale();
+            hideLegendeIntervalle();
         }
     }
 };
 
-function hideLegendeIntervale() {
-    $("#intervale-stroke-mid").attr("visibility","hidden");
-    $("#intervale-stroke-high").attr("visibility","hidden");
-    $("#intervale-stroke-low").attr("visibility","hidden");
-    $("#intervale-stroke-text").attr("visibility","hidden");
+function hideLegendeIntervalle() {
+    $("#intervalle-stroke-mid").attr("visibility","hidden");
+    $("#intervalle-stroke-high").attr("visibility","hidden");
+    $("#intervalle-stroke-low").attr("visibility","hidden");
 }
 
 // TODO Inner stroker locked zone: https://codepen.io/collection/nJbGEB/?cursor=eyJjb2xsZWN0aW9uX2lkIjoibkpiR0VCIiwiY29sbGVjdGlvbl90b2tlbiI6bnVsbCwibGltaXQiOjQsIm1heF9pdGVtcyI6OCwib2Zmc2V0IjowLCJwYWdlIjoxLCJzb3J0X2J5IjoicG9zaXRpb24iLCJzb3J0X29yZGVyIjoiQXNjIn0=
@@ -548,7 +546,7 @@ function cleanRSerie(serie){
     return tmpSerie;
 }
 
-function generateIntervaleDaysLabel(serie){
+function generateIntervalleDaysLabel(serie){
     var tmpSerie = serie.slice();
     var serieStraight = [];
     var serieReverse = [];
@@ -561,7 +559,7 @@ function generateIntervaleDaysLabel(serie){
     return labelSerie;
 }
 
-function generateIntervaleMargeSerie(serie,spread){
+function generateIntervalleMargeSerie(serie,spread){
     var tmpSerie = serie.slice();
     // todo spread
     var serieHaute = [];
@@ -576,7 +574,7 @@ function generateIntervaleMargeSerie(serie,spread){
     return cleanedSerie;
 }
 
-function generateIntervaleSerie(serie){
+function generateIntervalleSerie(serie){
     var tmpSerie = serie.slice();
     var cleanedSerie = [];
     for (let index = 0; index < tmpSerie.length; index++) {
@@ -1024,42 +1022,20 @@ function initStatsGraph(i,element){
                     case "scatter":
                         tmpTraces.push({
                             "y": [],
-                            "x": daysLabelStats,
-                            "line": {
-                                "color": "rgba(207, 0, 15,1)",
-                                "width": 0.5
-                            },
-                            "type": 'scatter'
-                        });
-                        if (element.compare) {
-                            tmpTraces.push({
-                                "y": [],
-                                "x": daysLabelStats,
-                                "line": {
-                                    "color": "rgba(25, 181, 254,1)",
-                                    "width": 0.5
-                                },
-                                "type": 'scatter'
-                            });
-                        }
-                        tmpTraces.push({
-                            "y": [],
-                            "x": generateIntervaleDaysLabel(daysLabelStats),
+                            "x": generateIntervalleDaysLabel(daysLabelStats),
                             "type": 'scatter',
                             "fill": "tozerox", 
                             "fillcolor": "rgba(207, 0, 15,0.3)", 
-                            "line": {"color": "transparent"},
-                            "showlegend": false
+                            "line": {"color": "transparent"}
                         });
                         if (element.compare) {
                             tmpTraces.push({
                                 "y": [],
-                                "x": generateIntervaleDaysLabel(daysLabelStats),
+                                "x": generateIntervalleDaysLabel(daysLabelStats),
                                 "type": 'scatter',
                                 "fill": "tozerox", 
                                 "fillcolor": "rgba(25, 181, 254,0.3)", 
-                                "line": {"color": "transparent"},
-                                "showlegend": false
+                                "line": {"color": "transparent"}
                             });
                         }
                         break;
@@ -1326,14 +1302,9 @@ function updateStats(i) {
                     case "CleanRSerie":
                         dataStats[i][startingIndex]["y"] =  cleanRSerie(dataDict[element.key][zoneMain]);
                         break;
-                    case "Intervale":
-                        // TODO: déspécialiser pour permettre de faire des intervales sur autre chose que des RSerie
-                        dataStats[i][startingIndex]["y"] =  generateIntervaleSerie(cleanRSerie(dataDict[element.key][zoneMain]));
-                        if (tmpGraphique.compare) {
-                            dataStats[i][startingIndex+2]["y"] =  generateIntervaleMargeSerie(cleanRSerie(dataDict[element.key][zoneMain]), element.spread);
-                        } else {
-                            dataStats[i][startingIndex+1]["y"] =  generateIntervaleMargeSerie(cleanRSerie(dataDict[element.key][zoneMain]), element.spread);
-                        }
+                    case "Intervalle":
+                        // TODO: déspécialiser pour permettre de faire des intervalles sur autre chose que des RSerie
+                        dataStats[i][startingIndex]["y"] =  generateIntervalleMargeSerie(cleanRSerie(dataDict[element.key][zoneMain]), element.spread);
                         break;
                     default:
                         dataStats[i][startingIndex]["y"] =  dataDict[element.key][zoneMain];
@@ -1347,9 +1318,8 @@ function updateStats(i) {
                             case "CleanRSerie":
                                 dataStats[i][startingIndex]["y"] =  cleanRSerie(dataDict[element.key][zoneCompared]);
                                 break;
-                            case "Intervale":
-                                dataStats[i][startingIndex]["y"] =  generateIntervaleSerie(cleanRSerie(dataDict[element.key][zoneCompared]));
-                                dataStats[i][startingIndex+2]["y"] =  generateIntervaleMargeSerie(cleanRSerie(dataDict[element.key][zoneCompared]), element.spread);
+                            case "Intervalle":
+                                dataStats[i][startingIndex]["y"] =  generateIntervalleMargeSerie(cleanRSerie(dataDict[element.key][zoneCompared]), element.spread);
                                 break;
                             default:
                                 dataStats[i][startingIndex]["y"] =  dataDict[element.key][zoneCompared];

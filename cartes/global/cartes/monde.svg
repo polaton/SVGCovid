@@ -15,10 +15,9 @@
         <text x="315" y="26" id="txt-titre" style="font-size:4.5px; font-family:Helvetica" opacity="1"></text>
         <!-- <a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="infoscartes.html"> <text x="270" y="160" style="font-size:4px; font-family:Helvetica" fill="orange">
                 Sources : click here</text></a> -->
-        <text x="150" y="108" style="font-size:4px; font-family:Helvetica" fill="blue" opacity="1">
-                Cliquez sur un pays </text>
-        <text x="150" y="112.5" style="font-size:4px; font-family:Helvetica" fill="blue" opacity="1">
-                pour voir ses valeurs.</text>
+        <text x="365" y="87.5" style="font-size:4px; font-family:Helvetica" fill="blue" opacity="1">
+            Cliquez sur un pays pour voir ses valeurs.
+        </text>
     </g>
     <!-- CREDITS -->
     <g xmlns="http://www.w3.org/2000/svg" id="credits">
@@ -64,10 +63,9 @@
         <text x="32" y="108" style="font-size:4px; font-family:Helvetica">Max=  <tspan id="legMax">2</tspan>
         </text>
         <text x="32" y="101" style="font-size:4px; font-family:Helvetica" id="legTitle"></text>
-        <line id="intervale-stroke-mid" x1="32" x2="40" y1="200" y2="200" stroke="#4B77BE" stroke-width="0.4" visibility="hidden"/>
-        <line id="intervale-stroke-high" x1="32" x2="40" y1="200" y2="200" stroke="#003171" stroke-width="0.4" visibility="hidden"/>
-        <line id="intervale-stroke-low" x1="32" x2="40" y1="200" y2="200" stroke="#19B5FE" stroke-width="0.4" visibility="hidden"/>
-        <text id='intervale-stroke-text' x="43" y="40" style="font-size:4px;font-size:bold" visibility="hidden">BOB</text>
+        <line id="intervalle-stroke-mid" x1="32" x2="40" y1="200" y2="200" stroke="#4B77BE" stroke-width="0.4" visibility="hidden"/>
+        <line id="intervalle-stroke-high" x1="32" x2="40" y1="200" y2="200" stroke="#003171" stroke-width="0.4" visibility="hidden"/>
+        <line id="intervalle-stroke-low" x1="32" x2="40" y1="200" y2="200" stroke="#19B5FE" stroke-width="0.4" visibility="hidden"/>
     </g>
 
     <!-- PAYS -->
@@ -3260,7 +3258,7 @@
 
 
     <g id="TT-FIXED">
-        <text x="170" y="138.5" style="font-size:5px; font-family:Helvetica" id="Region-fixed"></text>
+        <text x="365" y="95" style="font-size:5px; font-family:Helvetica" id="Region-fixed"></text>
     </g>
 
 </svg>

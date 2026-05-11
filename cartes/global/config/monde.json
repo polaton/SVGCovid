@@ -3,20 +3,23 @@
     "Début": "2020-02-02",
     "Series": [
         {
-            "Nom":"R Slow: estimation moins réactive",
-            "Fichier":"RStandard",
-            "Key":"Standard",
-            "Shift": 2,
-            "Titre":"Taux de reproduction, estimation moins réactive",
-            "Max": 2
-        },
-        {
-            "Nom":"R Fast: estimation réactive",
+            "Nom":"Estimation de R",
             "Fichier":"RFast",
             "Key":"Fast",
             "Shift": 2,
-            "Titre":"Taux de reproduction, estimation réactive",
+            "Titre":"Taux de reproduction",
             "Max": 2
+        },
+        {
+            "Nom":"Estimation de R (confiance à 95%)",
+            "Fichier":"Intervalle",
+            "Key":"Intervalle",
+            "Shift": 1,
+            "Titre":"R (confiance à 95%)",
+            "Max": 2,
+            "Type": "Array",
+            "IntervalleLegende": true,
+            "Spread": 1
         },
         {
             "Nom":"Nouveaux cas pour 10k hab",
@@ -51,17 +54,6 @@
             "Titre":"Nombre de décès pour 1 million d'habitants",
             "Max": 10,
             "Hide": true
-        },
-        {
-            "Nom":"Intervale",
-            "Fichier":"Intervale",
-            "Key":"Intervale",
-            "Shift": 1,
-            "Titre":"Intervale",
-            "Max": 2,
-            "Type": "Array",
-            "IntervaleLegende": true,
-            "Spread": 1
         }
     ],
     "Legende":{
@@ -81,7 +73,7 @@
     "Tooltip":{
         "Hauteur": 4,
         "HauteurTitre": 5,
-        "Champs":[{"Texte":"${value} hab.","Data":"Population"},{"Texte":"RFast","Serie":"Fast"},{"Texte":"RStandard","Serie":"Standard"},{"Texte":"Nouvelles infections / 10000","Serie":"Confirmed"},{"Texte":"Nouveaux décès / million","Serie":"Death"},{"Texte":"Intervale","Serie":"Intervale"}]
+        "Champs":[{"Texte":"${value} hab.","Data":"Population"},{"Texte":"Estimation de R","Serie":"Fast"},{"Texte":"R (confiance à 95%)","Serie":"Intervalle", "Type": "Intervalle"},{"Texte":"Nouvelles infections / 10000","Serie":"Confirmed"},{"Texte":"Nouveaux décès / million","Serie":"Death"}]
     },
     "Graphiques":[
         {
@@ -105,21 +97,9 @@
                 },
                 {
                     "type": "scatter",
-                    "name":"R Slow",
-                    "data": "Standard",
-                    "process": "CleanRSerie"
-                },
-                {
-                    "type": "scatter",
-                    "name":"R Fast",
+                    "name":"Estimation de R",
                     "data": "Fast",
                     "process": "CleanRSerie"
-                },
-                {
-                    "type": "scatter",
-                    "name":"Intervale",
-                    "data": "Intervale",
-                    "process": "Intervale"
                 }
             ],
             "axis": {
@@ -141,7 +121,7 @@
             "columnTitles": ["R à afficher","Indicateur"]
         },
         {
-            "title":"Intervales de confiance de R",
+            "title":"Intervalles de confiance de R",
             "type":"interval",
             "compare":true,
             "traces": [
@@ -161,9 +141,9 @@
                 },
                 {
                     "type": "scatter",
-                    "name":"Intervale",
-                    "data": "Intervale",
-                    "process": "Intervale",
+                    "name":"Estimation de R (confiance à 95%)",
+                    "data": "Intervalle",
+                    "process": "Intervalle",
                     "spread": 1
                 }
             ],
@@ -207,12 +187,7 @@
                 ],
                 "y":[
                     {
-                        "name":"R Slow",
-                        "data": "Standard",
-                        "process": "CleanRSerie"
-                    },
-                    {
-                        "name":"R Fast",
+                        "name":"Estimation de R",
                         "data": "Fast",
                         "process": "CleanRSerie"
                     }
