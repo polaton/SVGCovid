@@ -12,14 +12,27 @@
         },
         {
             "Nom":"Estimation de R (confiance à 95%)",
-            "Fichier":"Intervalle",
-            "Key":"Intervalle",
+            "Fichier":"Intervalle95",
+            "Key":"Intervalle95",
             "Shift": 1,
             "Titre":"R (confiance à 95%)",
             "Max": 2,
             "Type": "Array",
             "IntervalleLegende": true,
-            "Spread": 1
+            "Spread": 1,
+            "ElevatorText" : "Confiance à 95%"
+        },
+        {
+            "Nom":"Estimation de R (confiance à 99%)",
+            "Fichier":"Intervalle99",
+            "Key":"Intervalle99",
+            "Shift": 1,
+            "Titre":"R (confiance à 99%)",
+            "Max": 2,
+            "Type": "Array",
+            "IntervalleLegende": true,
+            "Spread": 2,
+            "ElevatorText" : "Confiance à 99%"
         },
         {
             "Nom":"Nouveaux cas pour 10k hab",
@@ -57,10 +70,63 @@
         }
     ],
     "Legende":{
-        "startX" :  32,
-        "startY" : 200,
-        "height" : 90,
-        "width" : 8
+        "startX" :  10,
+        "startY" : 212,
+        "aberrant": {
+            "color": "rgb(142, 68, 173)",
+            "text1": "Valeurs aberrantes",
+            "text1Size": 2.4,
+            "text2": "(ex.: morts négatifs)",
+            "text2Size": 2.2,
+            "textOffsetX": 21,
+            "text1BottomMargin": 3,
+            "height": 6,
+            "width": 8,
+            "legendOffset": 10
+        },
+        "boxes": {
+            "number": 9,
+            "height": 17,
+            "width": 8,
+            "colors": ["rgb(50, 200, 20)","rgb(90, 220, 20)","rgb(160, 230, 25)","rgb(205, 235, 30)","rgb(252, 220, 50)","rgb(255, 150, 0)","rgb(240, 100, 0)","rgb(240, 40, 0)","rgb(200, 20, 20)"],
+            "colorsPriority" : [],
+            "textSize": 4,
+            "textOffsetX": 10
+        },
+        "texts":{
+            "title": {
+                "size": 4,
+                "offsetX": 0,
+                "offsetY": 7,
+                "text": "Ceci est un test"
+            },
+            "min": {
+                "size": 4,
+                "offsetX": 0,
+                "offsetY": 3.2,
+                "text": "Min= 0"
+            },
+            "max": {
+                "size": 4,
+                "offsetX": 0,
+                "offsetY": 2,
+                "text": "Max =",
+                "valueOffsetX": 13
+            }
+        },
+        "width" : 8,
+        "elevator" : {
+            "offsetX": -0.5,
+            "width": 9.1,
+            "middleWidth": 9.1,
+            "middleStrokeWidth": 0.4,
+            "middleColor": "blue",
+            "highColor": "rgba(50, 200, 20, 0)",
+            "lowColor": "rgba(50, 200, 20, 0)",
+            "textOffsetX": 1,
+            "textSize": 3
+
+        }
     },
     "Correspondance":{
         "Fichier":"nomenclatures-pays",
@@ -73,7 +139,7 @@
     "Tooltip":{
         "Hauteur": 4,
         "HauteurTitre": 5,
-        "Champs":[{"Texte":"${value} hab.","Data":"Population"},{"Texte":"Estimation de R","Serie":"Fast"},{"Texte":"R (confiance à 95%)","Serie":"Intervalle", "Type": "Intervalle"},{"Texte":"Nouvelles infections / 10000","Serie":"Confirmed"},{"Texte":"Nouveaux décès / million","Serie":"Death"}]
+        "Champs":[{"Texte":"${value} hab.","Data":"Population"},{"Texte":"Estimation de R","Serie":"Fast"},{"Texte":"R (confiance à 95%)","Serie":"Intervalle95", "Type": "Intervalle", "Spread": 1},{"Texte":"R (confiance à 99%)","Serie":"Intervalle99", "Type": "Intervalle", "Spread": 2},{"Texte":"Nouvelles infections / 10000","Serie":"Confirmed"},{"Texte":"Nouveaux décès / million","Serie":"Death"}]
     },
     "Graphiques":[
         {
@@ -142,9 +208,17 @@
                 {
                     "type": "scatter",
                     "name":"Estimation de R (confiance à 95%)",
-                    "data": "Intervalle",
+                    "data": "Intervalle95",
                     "process": "Intervalle",
                     "spread": 1
+                }
+                ,
+                {
+                    "type": "scatter",
+                    "name":"Estimation de R (confiance à 99%)",
+                    "data": "Intervalle99",
+                    "process": "Intervalle",
+                    "spread": 2
                 }
             ],
             "axis": {

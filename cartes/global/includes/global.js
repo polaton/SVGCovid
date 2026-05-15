@@ -195,6 +195,7 @@ function initMap(mapName){
 }
 
 function initSettings(){
+    initLegende();
     selectColoration();
     initColors(false);
 
@@ -208,11 +209,211 @@ function initSettings(){
     $("body").removeClass("loading");
 }
 
-// TODO Config nombre de caissons
+function initLegende() {
+    var configLegende = configDict.Legende;
+    var currentY = configLegende.startY;
+    // Aberrant values 
+    document.getElementById("caissons").appendChild(
+        generateRectElement(
+            configLegende.startX,
+            currentY - configLegende.aberrant.height,
+            configLegende.aberrant.width, 
+            configLegende.aberrant.height,
+            `stroke-width:0;`,
+            "legBoxAberrant",
+            configLegende.aberrant.color
+        )
+    );
+    document.getElementById("caissons").appendChild(
+        generateTextElement(
+            configLegende.startX - configLegende.aberrant.textOffsetX,
+            currentY - configLegende.aberrant.height/2,
+            `font-size:${configLegende.aberrant.text1Size}px; font-family:Helvetica; color: black;`,
+            configLegende.aberrant.text1, 
+            false,
+            "legAberrant"
+        )
+    );
+    document.getElementById("caissons").appendChild(
+        generateTextElement(
+            configLegende.startX - configLegende.aberrant.textOffsetX,
+            currentY - configLegende.aberrant.height/2 + configLegende.aberrant.text1BottomMargin,
+            `font-size:${configLegende.aberrant.text2Size}px; font-family:Helvetica; color: black;`,
+            configLegende.aberrant.text2,
+            false, 
+            "legAberrant"
+        )
+    );
+    currentY = currentY - configLegende.aberrant.height;
+
+    // Texte min
+    document.getElementById("caissons").appendChild(
+        generateTextElement(
+            configLegende.startX + configLegende.texts.min.offsetX, 
+            currentY - configLegende.texts.min.offsetY,
+            `font-size:${configLegende.texts.min.size}px; font-family:Helvetica; color: black;`,
+            configLegende.texts.min.text,
+            "legTextMin",
+            false
+        )
+    );
+    currentY = currentY - configLegende.aberrant.legendOffset;
+
+    // Légende
+    for (let i = 1; i <= configLegende.boxes.number; i++) {
+        document.getElementById("caissons").appendChild(
+            generateRectElement(
+                configLegende.startX,
+                currentY - configLegende.boxes.height,
+                configLegende.boxes.width,
+                configLegende.boxes.height,
+                `stroke-width:0;`,
+                "legBox",
+                configLegende.boxes.colors[i-1]
+            )
+        );
+        currentY = currentY - configLegende.boxes.height;
+        if (i == configLegende.boxes.number) continue;
+        document.getElementById("caissons").appendChild(
+            generateTextElement(
+                configLegende.startX - configLegende.boxes.textOffsetX, 
+                currentY + (configLegende.boxes.textSize /2),
+                `font-size:${configLegende.boxes.textSize}px; font-family:Helvetica; color: black;`,
+                "",
+                false,
+                "legText"
+            )
+        );
+        
+    }
+
+    // Texte max
+    document.getElementById("caissons").appendChild(
+        generateTextElement(
+            configLegende.startX + configLegende.texts.max.offsetX, 
+            currentY - configLegende.texts.max.offsetY,
+            `font-size:${configLegende.texts.max.size}px; font-family:Helvetica; color: black;`,
+            configLegende.texts.max.text,
+            "legTextMax",
+            false
+        )
+    );
+    document.getElementById("caissons").appendChild(
+        generateTextElement(
+            configLegende.startX + configLegende.texts.max.offsetX + configLegende.texts.max.valueOffsetX, 
+            currentY - configLegende.texts.max.offsetY,
+            `font-size:${configLegende.texts.max.size}px; font-family:Helvetica; color: black;`,
+            2,
+            "legMax",
+            false
+        )
+    );
+    currentY = currentY - configLegende.texts.max.offsetY;
+    // Texte titre
+    document.getElementById("caissons").appendChild(
+        generateTextElement(
+            configLegende.startX + configLegende.texts.title.offsetX, 
+            currentY - configLegende.texts.title.offsetY,
+            `font-size:${configLegende.texts.title.size}px; font-family:Helvetica; color: black;`,
+            configLegende.texts.title.text,
+            "legTitle",
+            false
+        )
+    );
+    // Elevator
+    document.getElementById("caissons").appendChild(
+        generateRectElement(
+            configLegende.startX + configLegende.elevator.offsetX,
+            0,
+            configLegende.elevator.width,
+            0,
+            '',
+            false,
+            configLegende.elevator.lowColor,
+            "intervalle-rect-low",
+            "hidden",
+            0.5,
+            "black"
+        )
+    );
+    $("#intervalle-rect-low").hover(toggleElevatorTooltip);
+
+    document.getElementById("caissons").appendChild(
+        generateRectElement(
+            configLegende.startX + configLegende.elevator.offsetX,
+            0,
+            configLegende.elevator.width,
+            0,
+            '',
+            false,
+            configLegende.elevator.highColor,
+            "intervalle-rect-high",
+            "hidden",
+            0.5,
+            "black"
+        )
+    );
+    $("#intervalle-rect-high").hover(toggleElevatorTooltip);
+
+    document.getElementById("caissons").appendChild(
+        generateTextElement(
+            configLegende.startX + configLegende.elevator.width + configLegende.elevator.textOffsetX, 
+            currentY,
+            `font-size:${configLegende.elevator.textSize}px; font-family:Helvetica; color: black;`,
+            "test",
+            "legElevatorText",
+            false,
+            "hidden"
+        )
+    );
+
+    var lineElem = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    lineElem.setAttributeNS(null, "id", "intervalle-stroke-mid");
+    lineElem.setAttributeNS(null, "x1", configLegende.startX + configLegende.elevator.offsetX);
+    lineElem.setAttributeNS(null, "x2", configLegende.startX + configLegende.elevator.offsetX + configLegende.elevator.middleWidth);
+    lineElem.setAttributeNS(null, "stroke", configLegende.elevator.middleColor);
+    lineElem.setAttributeNS(null, "stroke-width", configLegende.elevator.middleStrokeWidth);
+    document.getElementById("caissons").appendChild(lineElem);
+}
+
+function toggleElevatorTooltip() {
+    $("#legElevatorText").attr("visibility") == "hidden" ? $("#legElevatorText").attr("visibility","visible") : $("#legElevatorText").attr("visibility","hidden");
+}
+
+function generateTextElement(x,y,style,text,id,cssClass,visibility = "visible"){
+    var textElem = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    textElem.setAttributeNS(null, "x", x);
+    textElem.setAttributeNS(null, "y", y);
+    textElem.setAttributeNS(null, "style", style);
+    if (cssClass) textElem.setAttributeNS(null, "class", cssClass);
+    if (id) textElem.setAttributeNS(null, "id", id);
+    textElem.setAttributeNS(null, "visibility", visibility);
+    textElem.textContent = text;
+
+    return textElem;
+}
+
+function generateRectElement(x,y,width,height,style,cssClass,fill,id = false, visibility = "visible", strokeWidth = false, strokeColor = false){
+    var rectElem = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rectElem.setAttributeNS(null, "x", x);
+    rectElem.setAttributeNS(null, "y", y);
+    rectElem.setAttributeNS(null, "width", width);
+    rectElem.setAttributeNS(null, "height", height);
+    rectElem.setAttributeNS(null, "style", style);
+    if (cssClass) rectElem.setAttributeNS(null, "class", cssClass);
+    if (fill) rectElem.setAttributeNS(null, "fill", fill);
+    if (id) rectElem.setAttributeNS(null, "id", id);
+    if (strokeWidth) rectElem.setAttributeNS(null, "stroke-width", strokeWidth);
+    if (strokeColor) rectElem.setAttributeNS(null, "stroke", strokeColor);
+    rectElem.setAttributeNS(null, "visibility", visibility);
+    return rectElem;
+}
+
 function initColors(custom) {
     nbCaissons =  $(".legBox").length;
     //changement du texte de titre
     $("#txt-titre").text(selectedColoration.Titre);
+    if (selectedColoration.ElevatorText) {$("#legElevatorText").text(selectedColoration.ElevatorText)} else {$("#legElevatorText").text("")};
 
     //modification du max de la légende
     if (custom) {
@@ -417,7 +618,13 @@ function majFixed() {
             const element = configDict.Tooltip.Champs[index];
             if (element.Serie) {
                 if (zone in dataDict[element.Serie]) {
-                    $("#"+element.Serie+"-fixed").text(element.Texte + ": " + (element.Type == "Intervalle" ? `[${dataDict[element.Serie][zone][offset].join(" > ")}]` : dataDict[element.Serie][zone][offset]));
+                    if (element.Type == "Intervalle") {
+                        var value = dataDict[element.Serie][zone][offset];
+                        var middleValue = Math.floor(value.length / 2);
+                        $("#"+element.Serie+"-fixed").text(element.Texte + ": " + `[${value[middleValue - element.Spread]} - ${value[middleValue + element.Spread]}]`);
+                    } else {
+                        $("#"+element.Serie+"-fixed").text(element.Texte + ": " + dataDict[element.Serie][zone][offset]);
+                    }
                 } else {
                     $("#"+element.Serie+"-fixed").text(element.Texte + ": Pas de données");
                 }
@@ -441,9 +648,8 @@ function majFixed() {
                 var highValue = valeurDuJour[middle + spread];
                 var legMax = parseFloat($("#legMax").text());
                 if (lowValue >= 0 && highValue >= 0 && middleValue < legMax && highValue < legMax && lowValue < legMax) {
-                    var legStartX = configDict.Legende.startX;
-                    var legStartY = configDict.Legende.startY;
-                    var legHeight = configDict.Legende.height;
+                    var legStartY = configDict.Legende.startY - configDict.Legende.aberrant.height - configDict.Legende.aberrant.legendOffset;
+                    var legHeight = configDict.Legende.boxes.height * configDict.Legende.boxes.number;
 
                     var midHeight = (legHeight * middleValue) / legMax;
                     var lowHeight = (legHeight * lowValue) / legMax;
@@ -452,11 +658,12 @@ function majFixed() {
                     $("#intervalle-stroke-mid").attr("y1", legStartY - midHeight).attr("y2", legStartY - midHeight).attr("visibility","visible");
                     $("#intervalle-stroke-low").attr("y1", legStartY - lowHeight).attr("y2", legStartY - lowHeight).attr("visibility","visible");
                     $("#intervalle-stroke-high").attr("y1", legStartY - highHeight).attr("y2", legStartY - highHeight).attr("visibility","visible");
+                    $("#intervalle-rect-low").attr("y", legStartY - midHeight).attr("height", midHeight - lowHeight).attr("visibility","visible");
+                    $("#intervalle-rect-high").attr("y", legStartY - highHeight).attr("height", highHeight - midHeight).attr("visibility","visible");
+                    $("#legElevatorText").attr("y", legStartY - midHeight + (configDict.Legende.elevator.textSize / 2));
                 } else {
                     hideLegendeIntervalle()
                 }
-                
-
             } else {
                 hideLegendeIntervalle()
             }
@@ -470,6 +677,8 @@ function hideLegendeIntervalle() {
     $("#intervalle-stroke-mid").attr("visibility","hidden");
     $("#intervalle-stroke-high").attr("visibility","hidden");
     $("#intervalle-stroke-low").attr("visibility","hidden");
+    $("#intervalle-rect-high").attr("visibility","hidden");
+    $("#intervalle-rect-low").attr("visibility","hidden");
 }
 
 // TODO Inner stroker locked zone: https://codepen.io/collection/nJbGEB/?cursor=eyJjb2xsZWN0aW9uX2lkIjoibkpiR0VCIiwiY29sbGVjdGlvbl90b2tlbiI6bnVsbCwibGltaXQiOjQsIm1heF9pdGVtcyI6OCwib2Zmc2V0IjowLCJwYWdlIjoxLCJzb3J0X2J5IjoicG9zaXRpb24iLCJzb3J0X29yZGVyIjoiQXNjIn0=

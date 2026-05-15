@@ -12,10 +12,10 @@
     <!-- TITRE -->
     <g xmlns="http://www.w3.org/2000/svg" id="titre">
         <text x="315" y="20" style="font-size:6px; font-family:Helvetica" opacity="1"> Atlas des données de la Covid-19</text>
-        <text x="315" y="26" id="txt-titre" style="font-size:4.5px; font-family:Helvetica" opacity="1"></text>
+        <!-- <text x="315" y="26" id="txt-titre" style="font-size:4.5px; font-family:Helvetica" opacity="1"></text> -->
         <!-- <a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="infoscartes.html"> <text x="270" y="160" style="font-size:4px; font-family:Helvetica" fill="orange">
                 Sources : click here</text></a> -->
-        <text x="365" y="87.5" style="font-size:4px; font-family:Helvetica" fill="blue" opacity="1">
+        <text x="45" y="142.5" style="font-size:4px; font-family:Helvetica" fill="blue" opacity="1">
             Cliquez sur un pays pour voir ses valeurs.
         </text>
     </g>
@@ -35,37 +35,39 @@
     <circle cx="210" cy="165" r="0.5" />
 
     <g id ="caissons">
-        <rect class='legBoxAberrant' x="32" y="206" width="8" height="6" stroke-width="0" stroke="rgb(142, 68, 173)" fill="rgb(142, 68, 173)" opacity="1"/>
+        <!-- LEGENDE -->
+        <!-- <rect class='legBoxAberrant' x="32" y="206" width="8" height="6" stroke-width="0" stroke="rgb(142, 68, 173)" fill="rgb(142, 68, 173)" opacity="1"/>
         <text class='legAberrant' x="11" y="208" style="font-size:2.4px">Valeurs aberrantes</text>
         <text class='legAberrant' x="10" y="211" style="font-size:2.2px">&nbsp;&nbsp;(ex.: morts négatifs)</text>
         
-        <rect class='legBox' x="32" y="190" width="8" height="10" stroke-width="0" stroke="rgb(155, 203, 0)" fill="rgb(50, 200, 20)" opacity="1"/>
+        <rect class='legBox' x="32" y="190" width="8" height="10" fill="rgb(50, 200, 20)" opacity="1"/>
         <text class='legText' x="26" y="190.5" style="font-size:3px"></text>
-        <rect class='legBox' x="32" y="180" width="8" height="10" stroke-width="0" stroke="rgb(171, 208, 0)" fill="rgb(90, 220, 20)" opacity="1"/>
+        <rect class='legBox' x="32" y="180" width="8" height="10" fill="rgb(90, 220, 20)" opacity="1"/>
         <text class='legText' x="26" y="180.5" style="font-size:3px"></text>
-        <rect class='legBox' x="32" y="170" width="8" height="10" stroke-width="0" stroke="rgb(186, 213, 0)" fill="rgb(160, 230, 25)" opacity="1"/>
+        <rect class='legBox' x="32" y="170" width="8" height="10" fill="rgb(160, 230, 25)" opacity="1"/>
         <text class='legText' x="26" y="170.5" style="font-size:3px"></text>
-        <rect class='legBox' x="32" y="160" width="8" height="10" stroke-width="0" stroke="rgb(201, 217, 0)" fill="rgb(205,235,30)" opacity="1"/>
+        <rect class='legBox' x="32" y="160" width="8" height="10" fill="rgb(205,235,30)" opacity="1"/>
         <text class='legText' x="26" y="160.5" style="font-size:3px"></text>
-        <rect class='legBox' x="32" y="150" width="8" height="10" stroke-width="0" stroke="rgb(266, 200, 0)" fill="rgb(252,220,50)" opacity="1"/>
-        <!-- rgb(252,247,94) -->
-        <!-- pastel rgb(253,253,150) -->
-        <!-- original rgb(255, 200, 0) -->
+        <rect class='legBox' x="32" y="150" width="8" height="10" fill="rgb(252,220,50)" opacity="1"/>
         <text class='legText' x="26" y="150.5" style="font-size:3px"></text>
-        <rect class='legBox' x="32" y="140" width="8" height="10" stroke-width="0" stroke="rgb(272, 165, 0)" fill="rgb(255, 150, 0)" opacity="1"/>
+        <rect class='legBox' x="32" y="140" width="8" height="10" fill="rgb(255, 150, 0)" opacity="1"/>
         <text class='legText' x="26" y="140.5" style="font-size:3px"></text>
-        <rect class='legBox' x="32" y="130" width="8" height="10" stroke-width="0" stroke="rgb(276, 127, 0)" fill="rgb(240, 100, 0)" opacity="1"/>
+        <rect class='legBox' x="32" y="130" width="8" height="10" fill="rgb(240, 100, 0)" opacity="1"/>
         <text class='legText' x="26" y="130.5" style="font-size:3px"></text>
-        <rect class='legBox' x="32" y="120" width="8" height="10" stroke-width="0" stroke="rgb(276, 85, 0)" fill="rgb(240, 40, 0)" opacity="1"/>
+        <rect class='legBox' x="32" y="120" width="8" height="10" fill="rgb(240, 40, 0)" opacity="1"/>
         <text class='legText' x="26" y="120.5" style="font-size:3px"></text>
-        <rect class='legBox' x="32" y="110" width="8" height="10" stroke-width="0" stroke="rgb(269, 42, 0)" fill="rgb(200, 20, 20)" opacity="1"/>
+        <rect class='legBox' x="32" y="110" width="8" height="10" fill="rgb(200, 20, 20)" opacity="1"/>
         <text x="32" y="204" style="font-size:4px;  font-family:Helvetica">Min= 0</text>
-        <text x="32" y="108" style="font-size:4px; font-family:Helvetica">Max=  <tspan id="legMax">2</tspan>
-        </text>
-        <text x="32" y="101" style="font-size:4px; font-family:Helvetica" id="legTitle"></text>
-        <line id="intervalle-stroke-mid" x1="32" x2="40" y1="200" y2="200" stroke="#4B77BE" stroke-width="0.4" visibility="hidden"/>
-        <line id="intervalle-stroke-high" x1="32" x2="40" y1="200" y2="200" stroke="#003171" stroke-width="0.4" visibility="hidden"/>
-        <line id="intervalle-stroke-low" x1="32" x2="40" y1="200" y2="200" stroke="#19B5FE" stroke-width="0.4" visibility="hidden"/>
+        <text x="32" y="108" style="font-size:4px; font-family:Helvetica">Max=  <tspan id="legMax">2</tspan></text>
+        <text x="32" y="101" style="font-size:4px; font-family:Helvetica" id="legTitle"></text> -->
+        <!-- ELEVATOR STROKE -->
+        <!--
+        <line id="intervalle-stroke-high" x1="37" x2="45" y1="200" y2="200" stroke="#003171" stroke-width="0.4" visibility="hidden"/>
+        <line id="intervalle-stroke-low" x1="37" x2="45" y1="200" y2="200" stroke="#19B5FE" stroke-width="0.4" visibility="hidden"/> -->
+        <!-- ELEVATOR RECT -->
+        <!-- <line id="intervalle-stroke-mid" x1="37" x2="48" y1="200" y2="200" stroke="#4B77BE" stroke-width="0.4" visibility="hidden"/>
+        <rect id='intervalle-rect-high' x="37" y="200" width="8" height="10" stroke-width="0" stroke="rgb(276, 85, 0)" fill="#003171" opacity="1" visibility="hidden"/>
+        <rect id='intervalle-rect-low' x="37" y="200" width="8" height="10" stroke-width="0" stroke="rgb(276, 85, 0)" fill="#19B5FE" opacity="1" visibility="hidden"/> -->
     </g>
 
     <!-- PAYS -->
@@ -3233,9 +3235,9 @@
         </g>
     </g>
 
-    <text xmlns="http://www.w3.org/2000/svg" x="153" y="75" style="font-size:6px; font-family:Helvetica" fill="black" opacity="1">Date: </text>
+    <text xmlns="http://www.w3.org/2000/svg" x="45" y="136.5" style="font-size:6px; font-family:Helvetica" fill="black" opacity="1">Date: </text>
     <text id="textDate"
-        xmlns="http://www.w3.org/2000/svg" x="168" y="75" style="font-size:5px; font-family:Helvetica" fill="black" opacity="1"></text>
+        xmlns="http://www.w3.org/2000/svg" x="60" y="136.5" style="font-size:5px; font-family:Helvetica" fill="black" opacity="1"></text>
 
     <g id ="legendecercles">
         <text x="410" y="197" style="font-size:4px; font-family:Helvetica">Populations</text>
@@ -3258,7 +3260,7 @@
 
 
     <g id="TT-FIXED">
-        <text x="365" y="95" style="font-size:5px; font-family:Helvetica" id="Region-fixed"></text>
+        <text x="45" y="150" style="font-size:5px; font-family:Helvetica" id="Region-fixed"></text>
     </g>
 
 </svg>
