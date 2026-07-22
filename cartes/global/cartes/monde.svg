@@ -4,10 +4,16 @@
 
     <style type="text/css"><![CDATA[
             path.locked-region{
-                stroke:rgb(25,184,254);
-                stroke-width:0.5;
+                stroke:rgb(0, 67, 176);
+                
+                stroke-width:0.7;
             }
-        ]]>    </style>
+
+            #TT-FIXED text {
+                fill: rgb(0, 67, 176);
+            }
+        ]]>    
+    </style>
 
     <!-- TITRE -->
     <g xmlns="http://www.w3.org/2000/svg" id="titre">
@@ -15,7 +21,7 @@
         <!-- <text x="315" y="26" id="txt-titre" style="font-size:4.5px; font-family:Helvetica" opacity="1"></text> -->
         <!-- <a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="infoscartes.html"> <text x="270" y="160" style="font-size:4px; font-family:Helvetica" fill="orange">
                 Sources : click here</text></a> -->
-        <text x="45" y="142.5" style="font-size:4px; font-family:Helvetica" fill="blue" opacity="1">
+        <text x="45" y="142.5" style="font-size:4px; font-family:Helvetica" fill="rgb(0, 67, 176)" opacity="1">
             Cliquez sur un pays pour voir ses valeurs.
         </text>
     </g>

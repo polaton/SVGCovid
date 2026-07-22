@@ -91,7 +91,7 @@
             "colors": ["rgb(50, 200, 20)","rgb(90, 220, 20)","rgb(160, 230, 25)","rgb(205, 235, 30)","rgb(252, 220, 50)","rgb(255, 150, 0)","rgb(240, 100, 0)","rgb(240, 40, 0)","rgb(200, 20, 20)"],
             "colorsPriority" : [],
             "textSize": 4,
-            "textOffsetX": 10
+            "textOffsetX": 12
         },
         "texts":{
             "title": {
@@ -116,13 +116,14 @@
         },
         "width" : 8,
         "elevator" : {
-            "offsetX": -0.5,
-            "width": 9.1,
-            "middleWidth": 9.1,
+            "offsetX": -1.2,
+            "width": 10.5,
+            "middleWidth": 10.5,
             "middleStrokeWidth": 0.4,
-            "middleColor": "blue",
-            "highColor": "rgba(50, 200, 20, 0)",
-            "lowColor": "rgba(50, 200, 20, 0)",
+            "strokeWidth": 0.1,
+            "middleColor": "rgba(0, 67, 176, 0)",
+            "highColor": "rgba(0, 67, 176, 1)",
+            "lowColor": "rgba(0, 67, 176, 1)",
             "textOffsetX": 1,
             "textSize": 3
 
