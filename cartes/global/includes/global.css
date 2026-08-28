@@ -361,4 +361,26 @@ body.loading .loading-overlay {
     .controls-row{
         padding-top: 30px !important;   
     }
-} 
+}
+
+path.locked-region{
+    stroke:var(--selected-region-frontier-color);
+    stroke-width:var(--selected-region-frontier-width);
+    fill: var(--selected-region-fill);
+}
+
+circle.locked-region{
+    opacity:var(--selected-region-circle-opacity);
+    stroke-width:var(--selected-region-circle-stroke-width);
+    fill:var(--selected-region-circle-fill);
+    stroke:var(--selected-region-circle-stroke-color);
+}
+
+#TT-FIXED text {
+    fill: var(--fixed-tooltip-color);
+}
+
+#chevron path {
+    fill: var(--day-color);
+    stroke:none;
+}

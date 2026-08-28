@@ -15,6 +15,7 @@ var tim; //Fonction d'intervalle pour l'animations
 
 var selectedRegion = ""; //Pays selectionné
 var lockedRegion = ""; //Pays vérouillé
+var zone = "";
 
 var correspondanceZone = {};
 var availableZones = [];
@@ -333,10 +334,10 @@ function initLegende() {
             "intervalle-rect-low",
             "hidden",
             0.5,
-            "black"
+            configLegende.elevator.strokeColor
         )
     );
-    $("#intervalle-rect-low").hover(toggleElevatorTooltip);
+    // $("#intervalle-rect-low").hover(toggleElevatorTooltip);
 
     document.getElementById("caissons").appendChild(
         generateRectElement(
@@ -350,10 +351,10 @@ function initLegende() {
             "intervalle-rect-high",
             "hidden",
             0.5,
-            "black"
+            configLegende.elevator.strokeColor
         )
     );
-    $("#intervalle-rect-high").hover(toggleElevatorTooltip);
+    // $("#intervalle-rect-high").hover(toggleElevatorTooltip);
 
     document.getElementById("caissons").appendChild(
         generateTextElement(
@@ -363,7 +364,18 @@ function initLegende() {
             "test",
             "legElevatorText",
             false,
-            "hidden"
+            "visible"
+        )
+    );
+    document.getElementById("caissons").appendChild(
+        generateTextElement(
+            configLegende.startX + configLegende.elevator.width + configLegende.elevator.textOffsetX, 
+            currentY - (configLegende.elevator.textSize),
+            `font-size:${configLegende.elevator.textSize}px; font-family:Helvetica; color: black;`,
+            "test",
+            "legElevatorTitle",
+            false,
+            "visible"
         )
     );
 
@@ -420,6 +432,12 @@ function initColors(custom) {
         dataMax = $("#customMax").val();
     } else {
         dataMax = selectedColoration.Max;
+    }
+
+    if (configDict.CSS) {
+        for (const [key, value] of Object.entries(configDict.CSS)) {
+            document.documentElement.style.setProperty(`--${key}`, value);
+        }
     }
 
     var iLegText = 0;
@@ -577,15 +595,24 @@ function majCouleurs(offset) {
                 var chaineCouleur = couleurDuJour;
                 //On remplit le pays avec la couleur
                 $('path[id^=' + element + '-].zone-path').attr('fill', chaineCouleur);
+                if (lockedRegion == element) {
+                    document.documentElement.style.setProperty(`--day-color`, chaineCouleur);
+                }
             } else { //Si la valeur == 0 
                 var chaineCouleur = 'rgb(211,211,211)';
                 //On colore le pays en gris
                 $('path[id^=' + element + '-].zone-path').attr('fill', chaineCouleur);
+                if (lockedRegion == element) {
+                    document.documentElement.style.setProperty(`--day-color`, chaineCouleur);
+                }
             }
         } else { //Si valeurDuJour == "NA"
             var chaineCouleur = 'rgb(211,211,211)';
             //On colore le pays en gris
             $('path[id^=' + element + '-].zone-path').attr('fill', chaineCouleur);
+            if (lockedRegion == element) {
+                document.documentElement.style.setProperty(`--day-color`, chaineCouleur);
+            }
         }
     };
 };
@@ -613,7 +640,19 @@ function majFixed() {
             hideLegendeIntervalle();
         }
     } else {
-        $("#Region-fixed").text(correspondanceZone[zone]["Nom"]);
+        if (correspondanceZone[zone] && correspondanceZone[zone]["Nom"]) {
+            $("#Region-fixed").text(correspondanceZone[zone]["Nom"]);
+        }
+
+        if (selectedColoration && selectedColoration.ElevatorTitle) {
+            
+            console.log(correspondanceZone[zone]);
+            if (correspondanceZone[zone] && correspondanceZone[zone]["Nom"] && correspondanceZone[zone]["Nom"].length < 20) {
+                $("#legElevatorTitle").text(selectedColoration.ElevatorTitle.replace("${selectedKey}", correspondanceZone[zone]["Nom"]));
+            } else {
+                $("#legElevatorTitle").text(selectedColoration.ElevatorTitle.replace("${selectedKey}", zone));
+            }
+        }
         for (let index = 0; index < configDict.Tooltip.Champs.length; index++) {
             const element = configDict.Tooltip.Champs[index];
             if (element.Serie) {
@@ -661,6 +700,7 @@ function majFixed() {
                     $("#intervalle-rect-low").attr("y", legStartY - midHeight).attr("height", midHeight - lowHeight).attr("visibility","visible");
                     $("#intervalle-rect-high").attr("y", legStartY - highHeight).attr("height", highHeight - midHeight).attr("visibility","visible");
                     $("#legElevatorText").attr("y", legStartY - midHeight + (configDict.Legende.elevator.textSize / 2));
+                    $("#legElevatorTitle").attr("y", legStartY - midHeight + (configDict.Legende.elevator.textSize / 2) - 5);
                 } else {
                     hideLegendeIntervalle()
                 }
@@ -685,16 +725,20 @@ function hideLegendeIntervalle() {
 function lockRegion(regionCode) {
     //Si on a deja un pays verouillé, on repasse ses frontières en noir
     if (lockedRegion != "") {
+        $('circle[id^=' + lockedRegion + '-]').removeClass("locked-region");
         $('path[id^=' + lockedRegion + '-]').removeClass("locked-region");
     }
 
     //Si on a un nouveau code pays a vérouiller et qu'il est différent de l'ancien pays vérouillé, on met à jour le pays vérouillé et on change la couleur de ses frontières
     if (regionCode != "" && regionCode != lockedRegion) {
         lockedRegion = regionCode;
+        $('circle[id^=' + regionCode + '-]').addClass("locked-region");
         $('path[id^=' + regionCode + '-]').addClass("locked-region");
     } else {
         lockedRegion = "";
     }
+    var selectedDate = $("#dateRange").val();
+    majCouleurs(selectedDate);
     majFixed();
 };
 

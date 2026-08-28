@@ -20,7 +20,8 @@
             "Type": "Array",
             "IntervalleLegende": true,
             "Spread": 1,
-            "ElevatorText" : "Confiance à 95%"
+            "ElevatorText" : "Confiance à 95%",
+            "ElevatorTitle" : "${selectedKey}"
         },
         {
             "Nom":"Estimation de R (confiance à 99%)",
@@ -32,7 +33,8 @@
             "Type": "Array",
             "IntervalleLegende": true,
             "Spread": 2,
-            "ElevatorText" : "Confiance à 99%"
+            "ElevatorText" : "Confiance à 99%",
+            "ElevatorTitle" : "${selectedKey}"
         },
         {
             "Nom":"Nouveaux cas pour 10k hab",
@@ -44,7 +46,7 @@
         },
         {
             "Nom":"Nouveaux décès pour 1M hab",
-            "Fichier":"methode-mortsaccrjourpop",
+            "Fichier":"methode-Morts-debruites-accrjourpop",
             "Key":"Death",
             "Shift": 2,
             "Titre":"Nombre de décès pour 1 million d'habitants",
@@ -54,15 +56,6 @@
             "Nom":"Nouveaux cas débruités 10k hab",
             "Fichier":"methode-confirmes-debruites-accrjourpop",
             "Key":"DenoisedConfirmed",
-            "Shift": 2,
-            "Titre":"Nombre de décès pour 1 million d'habitants",
-            "Max": 10,
-            "Hide": true
-        },
-        {
-            "Nom":"Nouveaux décès débruités pour 1M hab",
-            "Fichier":"methode-Morts-debruites-accrjourpop",
-            "Key":"DenoisedDeath",
             "Shift": 2,
             "Titre":"Nombre de décès pour 1 million d'habitants",
             "Max": 10,
@@ -104,28 +97,30 @@
                 "size": 4,
                 "offsetX": 0,
                 "offsetY": 3.2,
-                "text": "Min= 0"
+                "text": "Min = 0"
             },
             "max": {
                 "size": 4,
                 "offsetX": 0,
                 "offsetY": 2,
-                "text": "Max =",
+                "text": "Max = ",
                 "valueOffsetX": 13
             }
         },
         "width" : 8,
+        "elevatorOffsetX": -1.2,
         "elevator" : {
-            "offsetX": -1.2,
-            "width": 10.5,
+            "offsetX": -3.45,
+            "width": 15,
             "middleWidth": 10.5,
             "middleStrokeWidth": 0.4,
             "strokeWidth": 0.1,
+            "strokeColor": "rgb(0, 67, 176)",
             "middleColor": "rgba(0, 67, 176, 0)",
-            "highColor": "rgba(0, 67, 176, 1)",
-            "lowColor": "rgba(0, 67, 176, 1)",
-            "textOffsetX": 1,
-            "textSize": 3
+            "highColor": "rgba(0, 67, 176, 0)",
+            "lowColor": "rgba(0, 67, 176, 0)",
+            "textOffsetX": 0.3,
+            "textSize": 3.8
 
         }
     },
@@ -196,12 +191,12 @@
                     "type": "bars",
                     "series":[
                         {
-                            "name":"Morts pour 1M h",
-                            "data":"Death"
-                        },
-                        {
                             "name":"Confirmés pour 10k h",
                             "data":"Confirmed"
+                        },
+                        {
+                            "name":"Morts pour 1M h",
+                            "data":"Death"
                         }
                     ]
                     
@@ -248,16 +243,16 @@
             "series":{
                 "x":[
                     {
-                        "name":"Morts pour 1M h",
-                        "data":"DenoisedDeath"
-                    },
-                    {
                         "name":"Confirmés pour 10k h",
                         "data":"DenoisedConfirmed"
                     },
                     {
                         "name":"Confirmés bruités pour 10k h",
                         "data":"Confirmed"
+                    },
+                    {
+                        "name":"Morts pour 1M h",
+                        "data":"Death"
                     }
                 ],
                 "y":[
@@ -309,5 +304,17 @@
                 }
             ]
         }
-    ]
+    ],
+    "CSS": {
+        "fixed-tooltip-color": "rgb(0, 67, 176)",
+        "selected-region-frontier-color": "rgb(0, 67, 176)",
+        "selected-region-frontier-width": "0.7",
+        "selected-region-fill": "var(--day-color)",
+        "selected-region-fill-solid": "var(--day-color)",
+        "selected-region-fill-pattern": "url(#pattern-chevron)",
+        "selected-region-circle-opacity": "0.7",
+        "selected-region-circle-stroke-width": "0.6",
+        "selected-region-circle-fill": "none",
+        "selected-region-circle-stroke-color": "rgb(0, 67, 176)"
+    }
 }
