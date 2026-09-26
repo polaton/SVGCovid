@@ -465,8 +465,8 @@ function initSvg() {
     for (let i = 0; i < configDict.Tooltip.Champs.length; i++) {
         const element = configDict.Tooltip.Champs[i];
         var txtElem = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        txtElem.setAttributeNS(null, "x", $("#TT-FIXED").find("text:nth-child(1)").prop("x").animVal[0].valueAsString);
-        txtElem.setAttributeNS(null, "y", parseFloat($("#TT-FIXED").find("text:nth-child(1)").prop("y").animVal[0].valueAsString) + (i==0?configDict.Tooltip.HauteurTitre:(configDict.Tooltip.HauteurTitre + (configDict.Tooltip.Hauteur * (i)))) );
+        txtElem.setAttributeNS(null, "x", $("#TT-FIXED").find("#Region-fixed").prop("x").animVal[0].valueAsString);
+        txtElem.setAttributeNS(null, "y", parseFloat($("#TT-FIXED").find("#Region-fixed").prop("y").animVal[0].valueAsString) + (i==0?configDict.Tooltip.HauteurTitre:(configDict.Tooltip.HauteurTitre + (configDict.Tooltip.Hauteur * (i)))) );
         txtElem.setAttributeNS(null, "style", "font-size:"+configDict.Tooltip.Hauteur+"px; font-family:Helvetica");
         txtElem.setAttributeNS(null, "text", "");
         if (element.Data) {
@@ -747,19 +747,21 @@ function lockRegion(regionCode) {
     var selectedDate = $("#dateRange").val();
     majCouleurs(selectedDate);
     majFixed();
-
+    updateSelectionOutline();
     syncStatsWithLockedRegion(); // Add this
 };
 
-function showData(zone) {
-    selectedRegion = zone;
+function showData(regionCode) {
+    selectedRegion = regionCode;
+    updateSelectionOutline();
     majFixed();
-};
+}
 
 function hideData() {
     selectedRegion = "";
+    updateSelectionOutline();
     majFixed();
-};
+}
 
 // -------UTILS-------
 function processColor(valeurDuJour) {
@@ -2152,4 +2154,67 @@ function syncStatsWithLockedRegion() {
             updateStats(i);
         }
     });
+}
+
+function updateSelectionOutline() {
+    const countries = document.getElementById("GALL.S");
+    if (!countries) return;
+
+    const svgNS = "http://www.w3.org/2000/svg";
+
+    function drawOutline(layerId, regionCode, color, width) {
+        let layer = countries.querySelector(`#${layerId}`);
+
+        if (!layer) {
+            layer = document.createElementNS(svgNS, "g");
+            layer.id = layerId;
+            layer.setAttribute("aria-hidden", "true");
+        }
+
+        layer.style.setProperty("pointer-events", "none", "important");
+
+        countries.appendChild(layer);
+        layer.replaceChildren();
+
+        if (!regionCode) return;
+
+        const prefix = `${regionCode}-`;
+
+        countries.querySelectorAll("path.zone-path").forEach(path => {
+            if (!path.id.startsWith(prefix)) return;
+
+            const outline = document.createElementNS(svgNS, "path");
+            outline.setAttribute("d", path.getAttribute("d"));
+
+            if (path.hasAttribute("transform")) {
+                outline.setAttribute(
+                    "transform",
+                    path.getAttribute("transform")
+                );
+            }
+
+            // Transparent interior — only the border is drawn.
+            outline.style.setProperty("fill", "none", "important");
+            outline.style.setProperty("stroke", color, "important");
+            outline.style.setProperty(
+                "stroke-width", `${width}px`, "important"
+            );
+            outline.style.setProperty(
+                "pointer-events", "none", "important"
+            );
+
+            outline.style.strokeLinejoin = "round";
+            outline.style.strokeLinecap = "round";
+            outline.style.vectorEffect = "non-scaling-stroke";
+
+            layer.appendChild(outline);
+        });
+    }
+
+    // Locked country remains blue, even when hovered.
+    const hoveredRegion =
+        selectedRegion !== lockedRegion ? selectedRegion : "";
+
+    drawOutline("hover-outline", hoveredRegion, "#000000", 1.6);
+    drawOutline("selection-outline", lockedRegion, "#2563eb", 2);
 }

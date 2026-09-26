@@ -387,3 +387,285 @@ circle.locked-region{
     fill: var(--day-color);
     stroke:none;
 }
+
+#cadre-carte {
+    background: #f3f6fa;
+    border: 1px solid #dbe3ec;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#loaded-map {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Override the existing inline Helvetica declarations. */
+#loaded-map text {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif !important;
+    fill: #334155;
+}
+
+#loaded-map #Region-fixed {
+    font-weight: 650;
+    fill: #0f172a;
+}
+
+#loaded-map #credits text {
+    fill: #475569;
+}
+
+/* Leave fill untouched: JavaScript controls the data colors. */
+#loaded-map .zone-path {
+    stroke: #64748b;
+    stroke-width: 0.55px;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+    cursor: pointer;
+}
+
+#loaded-map .zone-path.locked-region {
+    stroke: #2563eb;
+    stroke-width: 2px;
+}
+
+/* Population circles must not intercept country mouse events. */
+#loaded-map [id="GALL.P"],
+#loaded-map [id="GALL.P"] circle {
+    pointer-events: none;
+}
+
+#loaded-map [id="GALL.P"] circle,
+#loaded-map #legendecercles circle {
+    stroke: #475569;
+    stroke-width: 0.8px;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.45;
+}
+
+#loaded-map #legendecercles line {
+    stroke: #64748b;
+    stroke-width: 0.6px;
+    vector-effect: non-scaling-stroke;
+}
+
+.atlas-layout {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 0;
+
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-width: 0;
+}
+
+/* Map gets all space not required by the controls. */
+.atlas-layout > #cadre-carte {
+    position: relative;
+    inset: auto;
+    transform: none;
+
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+    box-sizing: border-box;
+    background: #f3f6fa;
+}
+
+#cadre-carte > #loaded-map {
+    position: static;
+    display: block;
+
+    width: 100%;
+    height: 100% !important; /* Overrides inline height:auto */
+    max-width: none;
+    max-height: none;
+
+    margin: 0;
+    transform: none;
+}
+
+/* Not fixed or absolute: cannot cover the map. */
+.atlas-layout > #atlas-controls {
+    position: static;
+    inset: auto;
+    transform: none;
+
+    width: 100%;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    padding: 12px 20px;
+
+    overflow: visible;
+    box-sizing: border-box;
+    background: #fff;
+    border-top: 1px solid #dbe3ec;
+}
+
+/* Compact, centered controls rather than screen-wide inputs. */
+#atlas-controls .atlas-controls-grid {
+    display: grid;
+    grid-template-columns:
+        270px
+        110px
+        130px
+        minmax(200px, 1fr)
+        100px
+        260px;
+    gap: 16px;
+    align-items: center;
+
+    width: 100%;
+    max-width: 1340px;
+    margin: 0 auto;
+}
+
+#atlas-controls .control-group {
+    min-width: 0;
+}
+
+#atlas-controls label {
+    display: block;
+    margin: 0 0 5px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+#atlas-controls select,
+#atlas-controls input[type="number"],
+#atlas-controls input[type="text"] {
+    width: 100%;
+    min-width: 0;
+    height: 36px;
+    box-sizing: border-box;
+}
+
+#atlas-controls .playback-buttons {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+#atlas-controls .playback-buttons button {
+    flex: 0 0 auto;
+    width: 38px;
+    min-width: 0;
+    padding: 6px;
+}
+
+#atlas-controls .timeline-slider {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 6px;
+}
+
+#atlas-controls #selectedDate {
+    font-size: 13px;
+}
+
+#atlas-controls #slider,
+#atlas-controls #dateRange {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+}
+
+#atlas-controls .control-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+}
+
+#atlas-controls .control-actions > * {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 13px;
+}
+
+/* Smaller screens: wrap controls and allow page scrolling. */
+@media (max-width: 1200px) {
+    .atlas-layout {
+        height: auto;
+        grid-template-rows: auto auto;
+    }
+
+    .atlas-layout > #cadre-carte {
+        height: auto;
+    }
+
+    #cadre-carte > #loaded-map {
+        height: auto !important;
+    }
+
+    #atlas-controls .atlas-controls-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    #atlas-controls {
+        padding: 12px;
+    }
+
+    #atlas-controls .atlas-controls-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    #atlas-controls .control-timeline,
+    #atlas-controls .control-actions {
+        grid-column: 1 / -1;
+    }
+}
+
+:root {
+    --ocean-color: #D6E7F3;
+}
+
+.atlas-layout > #cadre-carte,
+#cadre-carte > #loaded-map {
+    background-color: var(--ocean-color);
+}
+
+/* Neither outline layer should intercept mouse events. */
+#covid-world-map #hover-outline,
+#covid-world-map #hover-outline path,
+#covid-world-map #selection-outline,
+#covid-world-map #selection-outline path {
+    pointer-events: none;
+}
+
+/* Shared outline appearance. */
+#covid-world-map #hover-outline path,
+#covid-world-map #selection-outline path {
+    fill: none;
+    stroke: var(--selected-region-frontier-color, #2563eb);
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+}
+
+/* Hover: slightly lighter and thinner. */
+#covid-world-map #hover-outline path {
+    stroke-width: 1.6px;
+    stroke-opacity: 0.8;
+}
+
+/* Locked selection: stronger outline. */
+#covid-world-map #selection-outline path {
+    stroke-width: 2px;
+    stroke-opacity: 1;
+}

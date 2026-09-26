@@ -1,6 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox=" 10 13 420 202" width="100%" height="100%" style="background-color:rgb(207, 233, 250)">
-
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    id="loaded-map"
+    viewBox="-18 10 485 210"
+    width="100%"
+    preserveAspectRatio="xMidYMid meet"
+    aria-labelledby="world-map-title"
+    style="display:block; width:100%; height:auto;"
+>
+    <title id="world-map-title">
+        Atlas des données de la Covid-19
+    </title>
     <pattern
         id="pattern-chevron"
         x="0"
@@ -43,7 +53,7 @@
     <g xmlns="http://www.w3.org/2000/svg" id="credits">
         <text xmlns="http://www.w3.org/2000/svg" x="152" y="195" style="font-size:3px; font-family:Helvetica" opacity="1">
                 Modèle et sources</text>
-        <text xmlns="http://www.w3.org/2000/svg" x="152" y="199.5" style="font-size:3px; font-family:Helvetica" opacity="1"> Patrice Abry &
+        <text xmlns="http://www.w3.org/2000/svg" x="152" y="199.5" style="font-size:3px; font-family:Helvetica" opacity="1"> Patrice Abry &amp;
                 équipe SISyPhe-IXXI (Ens de Lyon)</text>
         <text xmlns="http://www.w3.org/2000/svg" x="152" y="204" style="font-size:3px; font-family:Helvetica" opacity="1">
                 Cartographie: Éric Guichard (Triangle + IXXI), juil-oct. 2020,</text>
@@ -51,8 +61,6 @@
                 oct. 2020-mai 2022.</text>
     </g>
     <!-- LEGENDE -->
-
-    <circle cx="210" cy="165" r="0.5" />
 
     <g id ="caissons">
         <!-- LEGENDE -->
