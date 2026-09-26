@@ -2017,6 +2017,10 @@ function updateStats(i) {
 
     if (tmpGraphique.type === "phase") {
         dataStats[i].forEach((trace, index) => {
+            trace.showlegend =
+                Boolean(trace.name) &&
+                Array.isArray(trace.y) &&
+                trace.y.length > 0;
             // Trace order with comparison:
             // main, compared, main recent, compared recent.
             const isCompared =
@@ -2091,30 +2095,22 @@ function updateStats(i) {
 
     if (tmpGraphique.type === "phase") {
         Plotly.relayout(plotId, {
-            // Margins.
-            "margin.l": 0,
-            "margin.r": 240,
+            // Always display the legend, even for one country.
+            height: 560,
+            showlegend: true,
+            "margin.t": 20,
+            "margin.b": 65,
+            "margin.l": 55,
+            "margin.r": 20,
+            "margin.autoexpand": true,
+            "yaxis.title.text": "Estimation de R",
             "yaxis.automargin": true,
-
-            // Numeric X-axis and selected indicator title.
-            "xaxis.type": "linear",
-            "xaxis.tickmode": "auto",
-            "xaxis.tickvals": null,
-            "xaxis.ticktext": null,
-            "xaxis.tickformat": "",
-            "xaxis.autorange": true,
-            "xaxis.rangemode": "nonnegative",
-            "xaxis.automargin": true,
-            "xaxis.title.text": xOptions.name,
-
-            // Legend on the right, outside the plotting area.
-            "legend.orientation": "v",
-            "legend.x": 1.05,
+            "legend.x": 1.01,
             "legend.y": 1,
             "legend.xanchor": "left",
             "legend.yanchor": "top",
-            "legend.itemwidth": 40,
-            "legend.font.size": 11
+            "legend.itemwidth": 30,
+            "legend.groupclick": "togglegroup"
         });
     }
 }

@@ -290,29 +290,18 @@
             "columnTitles": ["X","Y"],
             "shapes": [
                 {
-                    "xref":"paper", 
-                    "yref":"paper",
                     "type": "line",
+                    "xref": "paper",
+                    "yref": "y",
                     "x0": 0,
-                    "y0": 0.5,
                     "x1": 1,
-                    "y1": 0.5,
+                    "y0": 1,
+                    "y1": 1,
+                    "layer": "below",
                     "line": {
-                        "color": "green",
-                        "width": 3,
-                        "dash": "dashdot"
-                    }
-                },
-                {
-                    "type": "line",
-                    "x0": 1,
-                    "y0": 0,
-                    "x1": 1,
-                    "y1": 2,
-                    "line": {
-                        "color": "green",
-                        "width": 3,
-                        "dash": "dashdot"
+                        "color": "#666666",
+                        "width": 1.5,
+                        "dash": "dash"
                     }
                 }
             ]
