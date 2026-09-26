@@ -28,15 +28,15 @@
         <!-- <text x="315" y="26" id="txt-titre" style="font-size:4.5px; font-family:Helvetica" opacity="1"></text> -->
         <!-- <a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="infoscartes.html"> <text x="270" y="160" style="font-size:4px; font-family:Helvetica" fill="orange">
                 Sources : click here</text></a> -->
-        <text x="53" y="167.5" style="font-size:4px; font-family:Helvetica" fill="rgb(0, 67, 176)" opacity="1">
+        <text x="57" y="167.5" style="font-size:4px; font-family:Helvetica" fill="rgb(0, 67, 176)" opacity="1">
             Cliquez sur un pays pour voir ses valeurs.
         </text>
     </g>
 
-    <text xmlns="http://www.w3.org/2000/svg" x="53" y="161.5" style="font-size:6px; font-family:Helvetica" fill="black" opacity="1">Date: </text>
-    <text id="textDate" xmlns="http://www.w3.org/2000/svg" x="68" y="161.5" style="font-size:5px; font-family:Helvetica" fill="black" opacity="1"></text>
+    <text xmlns="http://www.w3.org/2000/svg" x="57" y="161.5" style="font-size:6px; font-family:Helvetica" fill="black" opacity="1">Date: </text>
+    <text id="textDate" xmlns="http://www.w3.org/2000/svg" x="72" y="161.5" style="font-size:4px; font-family:Helvetica" fill="black" opacity="1"></text>
     <g id="TT-FIXED">
-        <text x="53" y="175" style="font-size:5px; font-family:Helvetica" id="Region-fixed"></text>
+        <text x="57" y="175" style="font-size:5px; font-family:Helvetica" id="Region-fixed"></text>
     </g>
 
     <!-- CREDITS -->

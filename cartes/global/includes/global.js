@@ -500,9 +500,16 @@ function loadData(loaded){
             dataDict[tmpSerie.Key] = {};
             tmpData.forEach(element => dataDict[tmpSerie.Key][element.shift()] = element.map(function(v) {
                 if (tmpSerie.Type && tmpSerie.Type == "Array") {
-                    return v.split(";").map(function(vv) {
-                        return parseFloat(vv, 10);
-                    });
+                    if (tmpSerie.Spread && tmpSerie.Spread != 0) {
+                        return v.split(";").map(function(vv) {
+                            return parseFloat(vv, 10);
+                        });
+                    } else {
+                        // Spread is 0: parse and return the middle value of the semicolon-separated array
+                        var parts = v.split(";");
+                        var mid = Math.floor(parts.length / 2);
+                        return parseFloat(parts[mid], 10);
+                    }
                 } else {
                     return parseFloat(v, 10);
                 }
@@ -579,7 +586,7 @@ function majCouleurs(offset) {
         if (element in dataDict[selectedColoration.Key]) {
             //on récupère la valeur du jour pour le pays
             var valeurDuJour = dataDict[selectedColoration.Key][element][offset];
-            if (selectedColoration.Type && selectedColoration.Type == "Array") {
+            if (selectedColoration.Type && selectedColoration.Type == "Array" && selectedColoration.Spread && selectedColoration.Spread != 0) {
                 var middleValue = Math.floor(valeurDuJour.length / 2);
                 valeurDuJour = valeurDuJour[middleValue];
             }
@@ -645,8 +652,6 @@ function majFixed() {
         }
 
         if (selectedColoration && selectedColoration.ElevatorTitle) {
-            
-            console.log(correspondanceZone[zone]);
             if (correspondanceZone[zone] && correspondanceZone[zone]["Nom"] && correspondanceZone[zone]["Nom"].length < 20) {
                 $("#legElevatorTitle").text(selectedColoration.ElevatorTitle.replace("${selectedKey}", correspondanceZone[zone]["Nom"]));
             } else {
@@ -699,8 +704,8 @@ function majFixed() {
                     $("#intervalle-stroke-high").attr("y1", legStartY - highHeight).attr("y2", legStartY - highHeight).attr("visibility","visible");
                     $("#intervalle-rect-low").attr("y", legStartY - midHeight).attr("height", midHeight - lowHeight).attr("visibility","visible");
                     $("#intervalle-rect-high").attr("y", legStartY - highHeight).attr("height", highHeight - midHeight).attr("visibility","visible");
-                    $("#legElevatorText").attr("y", legStartY - midHeight + (configDict.Legende.elevator.textSize / 2));
-                    $("#legElevatorTitle").attr("y", legStartY - midHeight + (configDict.Legende.elevator.textSize / 2) - 5);
+                    $("#legElevatorText").attr("y", legStartY - midHeight + (configDict.Legende.elevator.textSize / 2)).attr("visibility","visible");
+                    $("#legElevatorTitle").attr("y", legStartY - midHeight + (configDict.Legende.elevator.textSize / 2) - 5).attr("visibility","visible");
                 } else {
                     hideLegendeIntervalle()
                 }
@@ -719,6 +724,8 @@ function hideLegendeIntervalle() {
     $("#intervalle-stroke-low").attr("visibility","hidden");
     $("#intervalle-rect-high").attr("visibility","hidden");
     $("#intervalle-rect-low").attr("visibility","hidden");
+    $("#legElevatorText").attr("visibility","hidden");
+    $("#legElevatorTitle").attr("visibility","hidden");
 }
 
 // TODO Inner stroker locked zone: https://codepen.io/collection/nJbGEB/?cursor=eyJjb2xsZWN0aW9uX2lkIjoibkpiR0VCIiwiY29sbGVjdGlvbl90b2tlbiI6bnVsbCwibGltaXQiOjQsIm1heF9pdGVtcyI6OCwib2Zmc2V0IjowLCJwYWdlIjoxLCJzb3J0X2J5IjoicG9zaXRpb24iLCJzb3J0X29yZGVyIjoiQXNjIn0=
@@ -1273,23 +1280,39 @@ function initStatsGraph(i,element){
                         }
                         break;
                     case "scatter":
-                        tmpTraces.push({
-                            "y": [],
-                            "x": generateIntervalleDaysLabel(daysLabelStats),
-                            "type": 'scatter',
-                            "fill": "tozerox", 
-                            "fillcolor": "rgba(207, 0, 15,0.3)", 
-                            "line": {"color": "transparent"}
-                        });
-                        if (element.compare) {
+                        if (trace.process && trace.process === "Intervalle") {
                             tmpTraces.push({
                                 "y": [],
                                 "x": generateIntervalleDaysLabel(daysLabelStats),
                                 "type": 'scatter',
                                 "fill": "tozerox", 
-                                "fillcolor": "rgba(25, 181, 254,0.3)", 
+                                "fillcolor": "rgba(207, 0, 15,0.3)", 
                                 "line": {"color": "transparent"}
                             });
+                            if (element.compare) {
+                                tmpTraces.push({
+                                    "y": [],
+                                    "x": generateIntervalleDaysLabel(daysLabelStats),
+                                    "type": 'scatter',
+                                    "fill": "tozerox", 
+                                    "fillcolor": "rgba(25, 181, 254,0.3)", 
+                                    "line": {"color": "transparent"}
+                                });
+                            }
+                        } else {
+                            tmpTraces.push({
+                                "y": [],
+                                "x": daysLabelStats,
+                                "type": 'scatter'
+                            });
+                            if (element.compare) {
+                                tmpTraces.push({
+                                    "y": [],
+                                    "x": daysLabelStats,
+                                    "type": 'scatter'
+                                });
+                            }
+                            break;
                         }
                         break;
                     default:

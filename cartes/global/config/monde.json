@@ -1,65 +1,111 @@
 {
     "Nom": "monde",
-    "Début": "2020-02-02",
+    "Début": "2020-03-01",
     "Series": [
         {
             "Nom":"Estimation de R",
-            "Fichier":"RFast",
+            "Fichier":"R3ans",
             "Key":"Fast",
             "Shift": 2,
             "Titre":"Taux de reproduction",
-            "Max": 2
+            "Max": 2,
+            "Type": "Array",
+            "IntervalleLegende": true,
+            "Spread": 0
         },
         {
-            "Nom":"Estimation de R (confiance à 95%)",
-            "Fichier":"Intervalle95",
-            "Key":"Intervalle95",
-            "Shift": 1,
-            "Titre":"R (confiance à 95%)",
+            "Nom":"Estimation de R (confiance à 90%)",
+            "Fichier":"R3ans",
+            "Key":"RIntervalle90",
+            "Shift": 2,
+            "Titre":"R (confiance à 90%)",
             "Max": 2,
             "Type": "Array",
             "IntervalleLegende": true,
             "Spread": 1,
+            "ElevatorText" : "Confiance à 90%",
+            "ElevatorTitle" : "${selectedKey}"
+        },
+        {
+            "Nom":"Estimation de R (confiance à 95%)",
+            "Fichier":"R3ans",
+            "Key":"RIntervalle95",
+            "Shift": 2,
+            "Titre":"R (confiance à 95%)",
+            "Max": 2,
+            "Type": "Array",
+            "IntervalleLegende": true,
+            "Spread": 2,
             "ElevatorText" : "Confiance à 95%",
             "ElevatorTitle" : "${selectedKey}"
         },
         {
             "Nom":"Estimation de R (confiance à 99%)",
-            "Fichier":"Intervalle99",
-            "Key":"Intervalle99",
-            "Shift": 1,
+            "Fichier":"R3ans",
+            "Key":"RIntervalle99",
+            "Shift": 2,
             "Titre":"R (confiance à 99%)",
             "Max": 2,
             "Type": "Array",
             "IntervalleLegende": true,
-            "Spread": 2,
+            "Spread": 3,
             "ElevatorText" : "Confiance à 99%",
             "ElevatorTitle" : "${selectedKey}"
         },
         {
             "Nom":"Nouveaux cas pour 10k hab",
-            "Fichier":"methode-confirmesaccrjourpop",
+            "Fichier":"Confirmés",
             "Key":"Confirmed",
             "Shift": 2,
             "Titre":"Nombre de cas confirmés pour 10000 habitants",
             "Max": 6
         },
         {
+            "Nom":"Nouveaux cas pour 10k hab (confiance à 90%)",
+            "Fichier":"ConfirmesEstimes3ans",
+            "Key":"CIntervalle90",
+            "Shift": 2,
+            "Titre":"Nouveaux cas pour 10k hab (confiance à 90%)",
+            "Max": 6,
+            "Type": "Array",
+            "IntervalleLegende": true,
+            "Spread": 1,
+            "ElevatorText" : "Confiance à 90%",
+            "ElevatorTitle" : "${selectedKey}"
+        },
+        {
+            "Nom":"Nouveaux cas pour 10k hab (confiance à 95%)",
+            "Fichier":"ConfirmesEstimes3ans",
+            "Key":"CIntervalle95",
+            "Shift": 2,
+            "Titre":"Nouveaux cas pour 10k hab (confiance à 95%)",
+            "Max": 6,
+            "Type": "Array",
+            "IntervalleLegende": true,
+            "Spread": 2,
+            "ElevatorText" : "Confiance à 95%",
+            "ElevatorTitle" : "${selectedKey}"
+        },
+        {
+            "Nom":"Nouveaux cas pour 10k hab (confiance à 99%)",
+            "Fichier":"ConfirmesEstimes3ans",
+            "Key":"CIntervalle99",
+            "Shift": 2,
+            "Titre":"Nouveaux cas pour 10k hab (confiance à 99%)",
+            "Max": 6,
+            "Type": "Array",
+            "IntervalleLegende": true,
+            "Spread": 3,
+            "ElevatorText" : "Confiance à 99%",
+            "ElevatorTitle" : "${selectedKey}"
+        },
+        {
             "Nom":"Nouveaux décès pour 1M hab",
-            "Fichier":"methode-Morts-debruites-accrjourpop",
+            "Fichier":"Morts",
             "Key":"Death",
             "Shift": 2,
             "Titre":"Nombre de décès pour 1 million d'habitants",
             "Max": 10
-        },
-        {
-            "Nom":"Nouveaux cas débruités 10k hab",
-            "Fichier":"methode-confirmes-debruites-accrjourpop",
-            "Key":"DenoisedConfirmed",
-            "Shift": 2,
-            "Titre":"Nombre de décès pour 1 million d'habitants",
-            "Max": 10,
-            "Hide": true
         }
     ],
     "Legende":{
@@ -135,7 +181,7 @@
     "Tooltip":{
         "Hauteur": 4,
         "HauteurTitre": 5,
-        "Champs":[{"Texte":"${value} hab.","Data":"Population"},{"Texte":"Estimation de R","Serie":"Fast"},{"Texte":"R (confiance à 95%)","Serie":"Intervalle95", "Type": "Intervalle", "Spread": 1},{"Texte":"R (confiance à 99%)","Serie":"Intervalle99", "Type": "Intervalle", "Spread": 2},{"Texte":"Nouvelles infections / 10000","Serie":"Confirmed"},{"Texte":"Nouveaux décès / million","Serie":"Death"}]
+        "Champs":[{"Texte":"${value} hab.","Data":"Population"},{"Texte":"Estimation de R","Serie":"Fast"},{"Texte":"R (confiance à 90%)","Serie":"RIntervalle90", "Type": "Intervalle", "Spread": 3},{"Texte":"R (confiance à 95%)","Serie":"RIntervalle95", "Type": "Intervalle", "Spread": 2},{"Texte":"R (confiance à 99%)","Serie":"RIntervalle99", "Type": "Intervalle", "Spread": 1},{"Texte":"Nouvelles infections / 10000","Serie":"Confirmed"},{"Texte":"Nouveaux décès / million","Serie":"Death"}]
     },
     "Graphiques":[
         {
@@ -159,18 +205,31 @@
                 },
                 {
                     "type": "scatter",
-                    "name":"Estimation de R (confiance à 95%)",
-                    "data": "Intervalle95",
+                    "name":"Estimation de R",
+                    "data": "Fast",
+                    "process": "CleanRSerie"
+                },
+                {
+                    "type": "scatter",
+                    "name":"Estimation de R (confiance à 90%)",
+                    "data": "RIntervalle90",
                     "process": "Intervalle",
                     "spread": 1
+                },
+                {
+                    "type": "scatter",
+                    "name":"Estimation de R (confiance à 95%)",
+                    "data": "RIntervalle95",
+                    "process": "Intervalle",
+                    "spread": 2
                 }
                 ,
                 {
                     "type": "scatter",
                     "name":"Estimation de R (confiance à 99%)",
-                    "data": "Intervalle99",
+                    "data": "RIntervalle99",
                     "process": "Intervalle",
-                    "spread": 2
+                    "spread": 3
                 }
             ],
             "axis": {
@@ -200,10 +259,6 @@
                 "x":[
                     {
                         "name":"Confirmés pour 10k h",
-                        "data":"DenoisedConfirmed"
-                    },
-                    {
-                        "name":"Confirmés bruités pour 10k h",
                         "data":"Confirmed"
                     },
                     {

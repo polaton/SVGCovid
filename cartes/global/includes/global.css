@@ -75,9 +75,12 @@ body{
 }
 .stats-row{
     margin-bottom: 15px;
-    border-bottom: 1px gainsboro solid;
     padding-bottom: 8px;
     padding-top: 8px;
+}
+
+.stats-row:nth-child(odd){
+    border-bottom: 1px gainsboro solid;
 }
 
 .stats-row button a{
