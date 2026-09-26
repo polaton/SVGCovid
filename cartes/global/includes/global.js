@@ -747,6 +747,8 @@ function lockRegion(regionCode) {
     var selectedDate = $("#dateRange").val();
     majCouleurs(selectedDate);
     majFixed();
+
+    syncStatsWithLockedRegion(); // Add this
 };
 
 function showData(zone) {
@@ -870,27 +872,118 @@ function generateSelectZones(id,none){
     return tmpSelectZones;
 }
 
-function orderSelectCountry(id){
-    var options = $('select#'+id+' option');
-    var arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
-    arr.sort(function(o1, o2) { return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0; });
-    options.each(function(i, o) {
-        o.value = arr[i].v;
-        $(o).text(arr[i].t);
+function orderSelectCountry(id) {
+    const select = document.getElementById(id);
+    if (!select) return;
+
+    // Custom display order—not a formal ranking.
+    // Includes ISO 2-letter/3-letter codes and common country names.
+    const priorityCountries = [
+        ["FR", "FRA", "France"],
+        ["US", "USA", "United States", "United States of America",
+            "États-Unis", "États-Unis d'Amérique"],
+        ["CN", "CHN", "China", "Chine"],
+        ["RU", "RUS", "Russia", "Russian Federation", "Russie"],
+
+        // Europe
+        ["DE", "DEU", "Germany", "Allemagne"],
+        ["GB", "GBR", "UK", "United Kingdom", "Royaume-Uni"],
+        ["IT", "ITA", "Italy", "Italie"],
+        ["ES", "ESP", "Spain", "Espagne"],
+
+        // Asia / Middle East
+        ["IN", "IND", "India", "Inde"],
+        ["JP", "JPN", "Japan", "Japon"],
+        ["KR", "KOR", "South Korea", "Corée du Sud"],
+        ["ID", "IDN", "Indonesia", "Indonésie"],
+        ["TR", "TUR", "Turkey", "Türkiye", "Turquie"],
+        ["SA", "SAU", "Saudi Arabia", "Arabie saoudite"],
+
+        // Americas
+        ["CA", "CAN", "Canada"],
+        ["BR", "BRA", "Brazil", "Brésil"],
+        ["MX", "MEX", "Mexico", "Mexique"],
+        ["AR", "ARG", "Argentina", "Argentine"],
+
+        // Africa
+        ["ZA", "ZAF", "South Africa", "Afrique du Sud"],
+        ["NG", "NGA", "Nigeria", "Nigéria"],
+        ["EG", "EGY", "Egypt", "Égypte"],
+        ["KE", "KEN", "Kenya"],
+        ["ET", "ETH", "Ethiopia", "Éthiopie"],
+
+        // Oceania
+        ["AU", "AUS", "Australia", "Australie"],
+        ["NZ", "NZL", "New Zealand", "Nouvelle-Zélande"]
+    ];
+
+    function normalize(value) {
+        return String(value)
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, "");
+    }
+
+    const priorityLookup = new Map();
+
+    priorityCountries.forEach((aliases, index) => {
+        aliases.forEach(alias => {
+            priorityLookup.set(normalize(alias), index);
+        });
     });
+
+    function getPriority(option) {
+        // Keep the empty "no comparison" option at the very top.
+        if (option.value === "none" || option.value === "") {
+            return -1;
+        }
+
+        return priorityLookup.get(normalize(option.value))
+            ?? priorityLookup.get(normalize(option.textContent))
+            ?? Infinity;
+    }
+
+    const selectedValue = select.value;
+    const options = Array.from(select.options);
+
+    options.sort((a, b) => {
+        const rankA = getPriority(a);
+        const rankB = getPriority(b);
+
+        if (rankA !== rankB) {
+            return rankA < rankB ? -1 : 1;
+        }
+
+        return a.textContent.localeCompare(b.textContent, "fr", {
+            sensitivity: "base"
+        });
+    });
+
+    // Move the actual options rather than rewriting their values.
+    options.forEach(option => select.appendChild(option));
+
+    // Preserve the user's current selection.
+    select.value = selectedValue;
 }
 
 // -------STATS-------
 
 function displayStats() {
     $("body").addClass("loading");
-    // if (!dataStats || !dataStatsPhase || !dataStatsPhase3D) {
-    if (!dataStats) {
-        initStats();
+
+    try {
+        if (!dataStats) {
+            // initStatsControlRow already applies lockedRegion
+            // when each chart is first created.
+            initStats();
+        } else {
+            syncStatsWithLockedRegion();
+        }
+    } finally {
+        $("body").removeClass("loading");
     }
-    // updateStats();
-    $("body").removeClass("loading");
-};
+}
 
 function initStats(){
     $(".stats-row").remove();
@@ -940,8 +1033,20 @@ function initStatsControlRow(i,element){
         updateStats(i);
     });
 
-    if (lockedRegion != "") {
-        $('#stats-zone-'+i.toString()+' option[value="'+lockedRegion+'"]').prop('selected', true);
+    const mainSelect = document.getElementById(`stats-zone-${i}`);
+
+    const franceOption = Array.from(mainSelect.options).find(option => {
+        const code = option.value.trim().toUpperCase();
+        const name = option.textContent.trim().toLowerCase();
+
+        return code === "FR" || code === "FRA" || name === "france";
+    });
+
+    // Use the country locked on the map, otherwise default to France.
+    if (lockedRegion !== "") {
+        mainSelect.value = lockedRegion;
+    } else if (franceOption) {
+        mainSelect.value = franceOption.value;
     }
 
     // Boutons colonne 1
@@ -1340,10 +1445,12 @@ function initStatsGraph(i,element){
             if (element.axis) {
                 if (element.axis.x) {
                     layout.xaxis = {
-                        "tickmode": "array",
-                        "tickvals": range(0,daysPast,35),
-                        "ticktext": extractDaysLabel(range(0,daysPast,35))
-                    }
+                        type: "linear",
+                        tickmode: "auto",
+                        autorange: true,
+                        rangemode: "nonnegative",
+                        automargin: true
+                    };
                         
                     if (element.axis.x.rangemode) {
                         layout.xaxis.rangemode = element.axis.x.rangemode;
@@ -1477,7 +1584,297 @@ function initStatsGraph(i,element){
     }
 }
 
+const STATS_PALETTE = {
+    main: {
+        dark: [139, 0, 0],
+        bar:   "#F28E2B"
+    },
+    compared: {
+        dark: [0, 45, 114],
+        bar: "#219E9A"
+    }
+};
+
+// amount = 0: original color
+// amount = 1: white
+function lightenStatsColor(rgb, amount) {
+    return rgb.map(channel =>
+        Math.round(channel + (255 - channel) * amount)
+    );
+}
+
+function statsRgb(rgb, alpha = 1) {
+    return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
+}
+
+function getStatsTraceColor(definition, zoneRole, confidenceLevels) {
+    const base = STATS_PALETTE[zoneRole].dark;
+
+    // CleanRSerie always uses the darkest shade.
+    if (definition.process === "CleanRSerie") {
+        return base;
+    }
+
+    if (definition.process === "Intervalle") {
+        // A single selected confidence level gets a lighter shade.
+        if (confidenceLevels.length <= 1) {
+            return lightenStatsColor(base, 0.55);
+        }
+
+        // confidenceLevels is sorted from lowest to highest.
+        const rank = confidenceLevels.indexOf(
+            Number(definition.confidence)
+        );
+
+        // Lowest confidence: lightest.
+        // Highest confidence: darker, but still lighter than CleanRSerie.
+        const amount =
+            0.75 - (rank / (confidenceLevels.length - 1)) * 0.40;
+
+        return lightenStatsColor(base, amount);
+    }
+
+    // Default for other line processes.
+    return lightenStatsColor(base, 0.40);
+}
+
+function updateTimeStats(i) {
+    const graph = configDict.Graphiques[i];
+    const plot = document.getElementById(`plot-div-${i}`);
+
+    const mainSelect = $(`#stats-zone-${i}`);
+    const comparedSelect = $(`#stats-compared-${i}`);
+
+    const zones = [{
+        key: mainSelect.val(),
+        label: mainSelect.find("option:selected").text(),
+        role: "main"
+    }];
+
+    if (
+        graph.compare &&
+        comparedSelect.val() &&
+        comparedSelect.val() !== "none"
+    ) {
+        zones.push({
+            key: comparedSelect.val(),
+            label: comparedSelect.find("option:selected").text(),
+            role: "compared"
+        });
+    }
+
+    const selectedKeys = new Set(
+        $(`.cbx-stats-1-${i}:checked`)
+            .map(function () {
+                return this.value;
+            })
+            .get()
+    );
+
+    const selectedDefinitions = graph.traces.filter(definition =>
+        definition.type === "scatter" &&
+        selectedKeys.has(definition.data)
+    );
+
+    const confidenceLevels = [...new Set(
+        selectedDefinitions
+            .filter(definition => definition.process === "Intervalle")
+            .map(definition => Number(definition.confidence))
+    )].sort((a, b) => a - b);
+
+    const traces = [];
+    const titleParts = [];
+
+    // ----- Bars -----
+    const barControl = $(
+        `.stats-control-${i}[name="radio-stats-2-${i}"]:checked`
+    );
+    const barKey = barControl.val();
+
+    if (barKey && barKey !== "none") {
+        const barName = barControl.attr("alt");
+        titleParts.push(barName);
+
+        for (const zone of zones) {
+            const values = dataDict[barKey]?.[zone.key];
+
+            if (!Array.isArray(values)) continue;
+
+            traces.push({
+                type: "bar",
+                x: daysLabelStats.slice(0, values.length),
+                y: values,
+                yaxis: "y2",
+                name: barName,
+                legendgroup: zone.role,
+                legendgrouptitle: {
+                    text: zone.label
+                },
+                marker: {
+                    color: STATS_PALETTE[zone.role].bar
+                },
+                opacity: 0.65
+            });
+        }
+    }
+
+    // Draw wide/high-confidence intervals first,
+    // then narrower intervals, then the ordinary lines.
+    const intervalDefinitions = selectedDefinitions
+        .filter(definition => definition.process === "Intervalle")
+        .sort((a, b) => Number(b.confidence) - Number(a.confidence));
+
+    const lineDefinitions = selectedDefinitions.filter(
+        definition => definition.process !== "Intervalle"
+    );
+
+    for (const definition of selectedDefinitions) {
+        titleParts.push(definition.name);
+    }
+
+    for (const definition of [
+        ...intervalDefinitions,
+        ...lineDefinitions
+    ]) {
+        for (const zone of zones) {
+            const values = dataDict[definition.data]?.[zone.key];
+
+            if (!Array.isArray(values)) continue;
+
+            const dates = daysLabelStats.slice(0, values.length);
+            const rgb = getStatsTraceColor(
+                definition,
+                zone.role,
+                confidenceLevels
+            );
+
+            const legendName =
+                definition.process === "Intervalle"
+                    ? `IC ${definition.confidence}%`
+                    : definition.process === "CleanRSerie"
+                        ? "Estimation de R"
+                        : definition.name;
+
+            const trace = {
+                type: "scatter",
+                mode: "lines",
+
+                name: legendName,
+
+                // Group entries under the country name.
+                legendgroup: zone.role,
+                legendgrouptitle: {
+                    text: zone.label
+                },
+
+                line: {
+                    color: statsRgb(rgb),
+                    width: definition.process === "CleanRSerie" ? 2.5 : 2
+                },
+
+                // The full description remains available on hover.
+                hovertemplate:
+                    `${definition.name} — ${zone.label}` +
+                    "<br>%{x}<br>%{y:.3f}<extra></extra>"
+            };
+
+            switch (definition.process) {
+                case "Intervalle": {
+                    const spread = Number(definition.spread ?? 1);
+
+                    trace.x = generateIntervalleDaysLabel(dates);
+                    trace.y = generateIntervalleMargeSerie(values, spread);
+
+                    trace.fill = "toself";
+                    trace.fillcolor = statsRgb(rgb, 0.22);
+
+                    trace.line.dash = {
+                        90: "solid",
+                        95: "dash",
+                        99: "dot"
+                    }[definition.confidence] ?? "solid";
+
+                    trace.hoveron = "points";
+
+                    break;
+                }
+
+                case "CleanRSerie":
+                    trace.x = dates;
+                    trace.y = cleanRSerie(values);
+                    break;
+
+                default:
+                    trace.x = dates;
+                    trace.y = values;
+                    break;
+            }
+
+            traces.push(trace);
+        }
+    }
+
+    dataStats[i] = traces;
+
+    const zoneTitle = zones.map(zone => zone.label).join(" vs ");
+
+    $(`#title-graph-${i}`)
+        .empty()
+        .append(document.createTextNode(graph.title))
+        .append("<br>")
+        .append(document.createTextNode(titleParts.join(" | ")))
+        .append("<br>")
+        .append(document.createTextNode(zoneTitle));
+
+    const layout = {
+        ...plot.layout,
+
+        legend: {
+            orientation: "v",
+            // Closer to the right Y-axis, with room for its numbers.
+            x: 1.05,
+            y: 1,
+            xanchor: "left",
+            yanchor: "top",
+            traceorder: "grouped",
+            tracegroupgap: 10,
+            groupclick: "toggleitem",
+            // Keep stroke samples long enough to distinguish dash styles.
+            itemwidth: 40,
+            font: {
+                size: 11
+            },
+            // Country heading.
+            grouptitlefont: {
+                size: 12
+            }
+        },
+        margin: {
+            ...plot.layout.margin,
+            l: 0,
+            r: 240
+        },
+        yaxis: {
+            ...plot.layout.yaxis,
+            automargin: true
+        },
+        yaxis2: {
+            ...plot.layout.yaxis2,
+            automargin: true
+        }
+    };
+
+    Plotly.react(plot, traces, layout);
+}
+
 function updateStats(i) {
+    const graphType = configDict.Graphiques[i].type;
+
+    if (graphType === "dynamic" || graphType === "interval") {
+        updateTimeStats(i);
+        return;
+    }
+
     var tmpGraphique = configDict.Graphiques[i];
     var zoneMain = $("#select-zone-main-"+i.toString()+ " option:selected").val();
     var zoneMainLabel = $("#select-zone-main-"+i.toString()+" option:selected").text();
@@ -1488,127 +1885,6 @@ function updateStats(i) {
     var tmpSeriesTitle = [];
 
     switch (configDict.Graphiques[i].type) {
-        case "dynamic":
-            var tmpScatterSeries=[];
-            $('.cbx-stats-1-'+i.toString()+':checked').each(function() {
-                tmpScatterSeries.push({"key":this.value,"name":this.alt,"process":$(this).attr("process")});
-            });
-            var tmpBar = $('.stats-control-'+i.toString()+'[name="radio-stats-2-'+i.toString()+'"]:checked').val();
-
-            for (let j = 0; j < dataStats[i].length; j++) {
-                dataStats[i][j]["y"] = [];
-                dataStats[i][j]["name"] = "";
-            }
-
-            if (tmpBar != "none") {
-                var alt = $('.stats-control-'+i.toString()+'[name="radio-stats-2-'+i.toString()+'"]:checked').prop("alt");
-                tmpSeriesTitle.push(alt);
-                dataStats[i][0]["y"] =  dataDict[tmpBar][zoneMain];
-                dataStats[i][0]["name"] = alt + " " + zoneMainLabel;
-                if (tmpGraphique.compare && zoneCompared != "none") {
-                    dataStats[i][1]["y"] =  dataDict[tmpBar][zoneCompared];
-                    dataStats[i][1]["name"] = alt + " " + zoneComparedLabel;
-                }
-            }
-
-            startingIndex = (tmpGraphique.compare?2:1)
-            for (let j = 0; j < tmpScatterSeries.length; j++) {
-                const element = tmpScatterSeries[j];
-                
-                tmpSeriesTitle.push(element.name);
-
-                switch (element.process) {
-                    case "CleanRSerie":
-                        dataStats[i][startingIndex]["y"] =  cleanRSerie(dataDict[element.key][zoneMain]);
-                        break;
-                    default:
-                        dataStats[i][startingIndex]["y"] =  dataDict[element.key][zoneMain];
-                        break;
-                }
-                dataStats[i][startingIndex]["name"] = element.name + " " + zoneMainLabel;
-                startingIndex++;
-                if (tmpGraphique.compare) {
-                    if (zoneCompared != "none") {
-                        switch (element.process) {
-                            case "CleanRSerie":
-                                dataStats[i][startingIndex]["y"] =  cleanRSerie(dataDict[element.key][zoneCompared]);
-                                break;
-                            default:
-                                dataStats[i][startingIndex]["y"] =  dataDict[element.key][zoneCompared];
-                                break;
-                        }
-                        dataStats[i][startingIndex]["name"] = element.name + " " + zoneComparedLabel;
-                    }
-                    startingIndex++;
-                }
-            }
-
-            tmpTitle+= tmpSeriesTitle.join(" | ");
-            break;
-        case "interval":
-            var tmpScatterSeries=[];
-            $('.cbx-stats-1-'+i.toString()+':checked').each(function() {
-                tmpScatterSeries.push({"key":this.value,"name":this.alt,"process":$(this).attr("process"), "spread":parseInt($(this).attr("spread"))});
-            });
-            var tmpBar = $('.stats-control-'+i.toString()+'[name="radio-stats-2-'+i.toString()+'"]:checked').val();
-
-            for (let j = 0; j < dataStats[i].length; j++) {
-                dataStats[i][j]["y"] = [];
-                dataStats[i][j]["name"] = "";
-            }
-
-            if (tmpBar != "none") {
-                var alt = $('.stats-control-'+i.toString()+'[name="radio-stats-2-'+i.toString()+'"]:checked').prop("alt");
-                tmpSeriesTitle.push(alt);
-                dataStats[i][0]["y"] =  dataDict[tmpBar][zoneMain];
-                dataStats[i][0]["name"] = alt + " " + zoneMainLabel;
-                if (tmpGraphique.compare && zoneCompared != "none") {
-                    dataStats[i][1]["y"] =  dataDict[tmpBar][zoneCompared];
-                    dataStats[i][1]["name"] = alt + " " + zoneComparedLabel;
-                }
-            }
-
-            startingIndex = (tmpGraphique.compare?2:1)
-            for (let j = 0; j < tmpScatterSeries.length; j++) {
-                const element = tmpScatterSeries[j];
-                
-                tmpSeriesTitle.push(element.name);
-
-                switch (element.process) {
-                    case "CleanRSerie":
-                        dataStats[i][startingIndex]["y"] =  cleanRSerie(dataDict[element.key][zoneMain]);
-                        break;
-                    case "Intervalle":
-                        // TODO: déspécialiser pour permettre de faire des intervalles sur autre chose que des RSerie
-                        dataStats[i][startingIndex]["y"] =  generateIntervalleMargeSerie(cleanRSerie(dataDict[element.key][zoneMain]), element.spread);
-                        break;
-                    default:
-                        dataStats[i][startingIndex]["y"] =  dataDict[element.key][zoneMain];
-                        break;
-                }
-                dataStats[i][startingIndex]["name"] = element.name + " " + zoneMainLabel;
-                startingIndex++;
-                if (tmpGraphique.compare) {
-                    if (zoneCompared != "none") {
-                        switch (element.process) {
-                            case "CleanRSerie":
-                                dataStats[i][startingIndex]["y"] =  cleanRSerie(dataDict[element.key][zoneCompared]);
-                                break;
-                            case "Intervalle":
-                                dataStats[i][startingIndex]["y"] =  generateIntervalleMargeSerie(cleanRSerie(dataDict[element.key][zoneCompared]), element.spread);
-                                break;
-                            default:
-                                dataStats[i][startingIndex]["y"] =  dataDict[element.key][zoneCompared];
-                                break;
-                        }
-                        dataStats[i][startingIndex]["name"] = element.name + " " + zoneComparedLabel;
-                    }
-                    startingIndex++;
-                }
-            }
-
-            tmpTitle+= tmpSeriesTitle.join(" | ");
-            break;
         case "phase":
             var xOptions = {
                 "key":$('.stats-control-'+i.toString()+'[name="radio-stats-1-'+i.toString()+'"]:checked').val(),
@@ -1738,7 +2014,109 @@ function updateStats(i) {
 
     tmpTitle+="<br>"+zoneMainLabel+(zoneCompared!="none"?" vs " + zoneComparedLabel:"")
     $("#title-graph-"+i.toString()).empty().append(tmpTitle);
-    Plotly.redraw('plot-div-'+i.toString());
+
+    if (tmpGraphique.type === "phase") {
+        dataStats[i].forEach((trace, index) => {
+            // Trace order with comparison:
+            // main, compared, main recent, compared recent.
+            const isCompared =
+                tmpGraphique.compare && index % 2 === 1;
+
+            const role = isCompared ? "compared" : "main";
+            const zoneKey = isCompared ? zoneCompared : zoneMain;
+            const base = STATS_PALETTE[role].dark;
+
+            const recentStart = tmpGraphique.compare ? 2 : 1;
+            const isRecent =
+                tmpGraphique.highlightRecent && index >= recentStart;
+
+            // Use the complete series so the gradient continues
+            // smoothly from the historical trace to the recent trace.
+            const totalPoints =
+                dataDict[xOptions.key]?.[zoneKey]?.length ?? 0;
+
+            const pointCount = trace.x?.length ?? 0;
+
+            const firstPointIndex = isRecent
+                ? Math.max(0, totalPoints - pointCount)
+                : 0;
+
+            const pointColors = Array.from(
+                { length: pointCount },
+                (_, pointIndex) => {
+                    const absoluteIndex = firstPointIndex + pointIndex;
+
+                    // 0 = oldest point, 1 = newest point.
+                    const progress = Math.min(
+                        1,
+                        absoluteIndex / Math.max(1, totalPoints - 1)
+                    );
+
+                    // Oldest: lightened by 80%.
+                    // Newest: original dark red/blue.
+                    const lightness = 0.80 * (1 - progress);
+
+                    return statsRgb(
+                        lightenStatsColor(base, lightness)
+                    );
+                }
+            );
+
+            trace.mode = "markers+lines";
+
+            trace.marker = {
+                ...trace.marker,
+                color: pointColors,
+                size: isRecent ? 6 : 4,
+                opacity: 1,
+                line: {
+                    width: 0
+                }
+            };
+
+            // Plotly requires one color per connecting-line trace.
+            trace.line = {
+                ...trace.line,
+                color: statsRgb(
+                    lightenStatsColor(base, isRecent ? 0 : 0.55)
+                ),
+                width: isRecent ? 2.5 : 1
+            };
+        });
+    }
+
+    const plotId = `plot-div-${i}`;
+
+    Plotly.redraw(plotId);
+
+    if (tmpGraphique.type === "phase") {
+        Plotly.relayout(plotId, {
+            // Margins.
+            "margin.l": 0,
+            "margin.r": 240,
+            "yaxis.automargin": true,
+
+            // Numeric X-axis and selected indicator title.
+            "xaxis.type": "linear",
+            "xaxis.tickmode": "auto",
+            "xaxis.tickvals": null,
+            "xaxis.ticktext": null,
+            "xaxis.tickformat": "",
+            "xaxis.autorange": true,
+            "xaxis.rangemode": "nonnegative",
+            "xaxis.automargin": true,
+            "xaxis.title.text": xOptions.name,
+
+            // Legend on the right, outside the plotting area.
+            "legend.orientation": "v",
+            "legend.x": 1.05,
+            "legend.y": 1,
+            "legend.xanchor": "left",
+            "legend.yanchor": "top",
+            "legend.itemwidth": 40,
+            "legend.font.size": 11
+        });
+    }
 }
 
 function removeZone(i) {
@@ -1753,3 +2131,29 @@ function invertZones(i) {
     $('#select-zone-compared-'+i.toString() +' option[value="'+tmpMain+'"]').prop('selected', true);
     updateStats(i);
 };
+
+function syncStatsWithLockedRegion() {
+    // Charts have not been initialized, or no country is locked.
+    if (!Array.isArray(dataStats) || lockedRegion === "") {
+        return;
+    }
+
+    configDict.Graphiques.forEach((graph, i) => {
+        const select = document.getElementById(`stats-zone-${i}`);
+        const plot = document.getElementById(`plot-div-${i}`);
+
+        if (!select || !plot || !dataStats[i]) {
+            return;
+        }
+
+        // Do not clear the selection if this country is unavailable.
+        const hasCountry = Array.from(select.options).some(
+            option => option.value === lockedRegion
+        );
+
+        if (hasCountry && select.value !== lockedRegion) {
+            select.value = lockedRegion;
+            updateStats(i);
+        }
+    });
+}

@@ -181,7 +181,7 @@
     "Tooltip":{
         "Hauteur": 4,
         "HauteurTitre": 5,
-        "Champs":[{"Texte":"${value} hab.","Data":"Population"},{"Texte":"Estimation de R","Serie":"Fast"},{"Texte":"R (confiance à 90%)","Serie":"RIntervalle90", "Type": "Intervalle", "Spread": 3},{"Texte":"R (confiance à 95%)","Serie":"RIntervalle95", "Type": "Intervalle", "Spread": 2},{"Texte":"R (confiance à 99%)","Serie":"RIntervalle99", "Type": "Intervalle", "Spread": 1},{"Texte":"Nouvelles infections / 10000","Serie":"Confirmed"},{"Texte":"Nouveaux décès / million","Serie":"Death"}]
+        "Champs":[{"Texte":"${value} hab.","Data":"Population"},{"Texte":"Estimation de R","Serie":"Fast"},{"Texte":"R (confiance à 90%)","Serie":"RIntervalle90", "Type": "Intervalle", "Spread": 1},{"Texte":"R (confiance à 95%)","Serie":"RIntervalle95", "Type": "Intervalle", "Spread": 2},{"Texte":"R (confiance à 99%)","Serie":"RIntervalle99", "Type": "Intervalle", "Spread": 3},{"Texte":"Nouvelles infections / 10000","Serie":"Confirmed"},{"Texte":"Nouveaux décès / million","Serie":"Death"}]
     },
     "Graphiques":[
         {
@@ -211,25 +211,27 @@
                 },
                 {
                     "type": "scatter",
-                    "name":"Estimation de R (confiance à 90%)",
+                    "name": "Estimation de R (confiance à 90%)",
                     "data": "RIntervalle90",
                     "process": "Intervalle",
-                    "spread": 1
+                    "spread": 1,
+                    "confidence": 90
                 },
                 {
                     "type": "scatter",
-                    "name":"Estimation de R (confiance à 95%)",
+                    "name": "Estimation de R (confiance à 95%)",
                     "data": "RIntervalle95",
                     "process": "Intervalle",
-                    "spread": 2
-                }
-                ,
+                    "spread": 2,
+                    "confidence": 95
+                },
                 {
                     "type": "scatter",
-                    "name":"Estimation de R (confiance à 99%)",
+                    "name": "Estimation de R (confiance à 99%)",
                     "data": "RIntervalle99",
                     "process": "Intervalle",
-                    "spread": 3
+                    "spread": 3,
+                    "confidence": 99
                 }
             ],
             "axis": {
@@ -254,7 +256,7 @@
             "title":"Trajectoire de la pandémie",
             "type":"phase",
             "compare":true,
-            "highlightRecent":true,
+            "highlightRecent":false,
             "series":{
                 "x":[
                     {
